@@ -3,6 +3,7 @@ import pandas as pd
 import json
 import os
 
+
 def getComorbGroups(df, idx, icds, mapping="icd9"):
     """
     Summary:
@@ -19,11 +20,12 @@ def getComorbGroups(df, idx, icds, mapping="icd9"):
         or False if the icd code was found in the mapping
 
     """
-    validMappings = ["quan_elixhauser10", "charlson10", "icd9"] # Add extra mappings to this list 
+    validMappings = ["quan_elixhauser10", "charlson10",
+                     "icd9"]  # Add extra mappings to this list
 
     if isinstance(mapping, str) and mapping not in validMappings:
-    	raise Exception("Didn't recognize comorbidity mapping. Please use a valid comorbidity or create your own.")
-
+        raise Exception(
+            "Didn't recognize comorbidity mapping. Please use a valid comorbidity or create your own.")
     if isinstance(mapping, str):
         script_dir = os.path.dirname(__file__)
         rel_path = "comorbidity_mappings/" + mapping + ".json"
@@ -35,31 +37,36 @@ def getComorbGroups(df, idx, icds, mapping="icd9"):
     else:
         raise Exception("Bad mapping type")
 
-
     comorb_cols = list(mapping.keys())
     comorb_df = pd.DataFrame(index=df[idx], columns=comorb_cols)
 
-    for comorb in comorb_cols:
-        #reset truth list then
-        #Create a list of lists, will end up with rows of df by len(idxs) long
+    for comorb in comorb_cols: # Construct mapping for each comorbidity column 
+        # reset truth list then
+        # Create a list of lists, will end up with rows of df by len(idxs) long
         # Line below is modified to suit column containing list format (items in the column must be in list format)
-        truth_list = [[any([code for code in code_list if any(condition in code for condition in mapping[comorb])]) for code_list in df[idx]] for idx in icds]
+        truth_list = [[any([code for code in code_list if any(
+            condition == code for condition in mapping[comorb])]) for code_list in df[idx]] for idx in icds]
+        # Take a code from code_list in column containing ICD codes
+        # Only take code if the code is equivalent to a condition contained in the mapping of the respective comorbidity mapping
+        # Cannot just search for the code in condition or vice versa using string functions, otherwise shorter codes will be incorrectly mapped to longer codes that contain a small snippit of them
+        # E.g., "42" for HIV will match positive for "8242" which may be a TBI diagnosis
+        # Code_list is from a df in memory with items in lists rather than contained within a string 
 
-        #Swapping dimensions on list of lists so we can apply a listwise operation to the longer dimension (rows of df)
+        # Swapping dimensions on list of lists so we can apply a listwise operation to the longer dimension (rows of df)
         truth_list = list(map(list, zip(*truth_list)))
 
-        #Condense the icd truth dimensions on a column basis to get a bool yes or no if multiple or at least one icd code is true
-        condensed_truth = [any(truth_list[i]) == True for i in range(0,len(truth_list))]
+        # Condense the icd truth dimensions on a column basis to get a bool yes or no if multiple or at least one icd code is true
+        condensed_truth = [any(truth_list[i]) ==
+                           True for i in range(0, len(truth_list))]
 
-        #assign the column of comorb_df with the appropriate truth values
+        # assign the column of comorb_df with the appropriate truth values
         comorb_df[comorb] = condensed_truth
 
     # comorb_df[idx] = comorb_df.index.tolist()
 
     return comorb_df
 
-#%% dev
+# %% dev
 
 
-
-#%%
+# %%

@@ -1,3 +1,5 @@
+# Script used to convert copied sql commands to JSON format
+
 import re
 import json
 
