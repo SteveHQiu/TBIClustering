@@ -2,5 +2,8 @@
 .Rhistory
 .RData
 .Ruserdata
-/figures/*
-/archive/*
+figures/
+figures/*
+archive/
+archive/*
+manual_versioning/
