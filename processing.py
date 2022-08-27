@@ -59,4 +59,4 @@ df_comorb = getComorbGroups(df1, "SUBJECT_ID", ["COMORB"])
 #%%
 df_final = df1.merge(df_comorb, on="SUBJECT_ID", how="left")
 df_final.to_excel("data/merged_output_elix.xlsx")
-# %%
+#%%

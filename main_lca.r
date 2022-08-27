@@ -1,4 +1,5 @@
-# Import from LCA_R.ipynb
+# Installation 
+
 # Imports
 getwd()
 library(poLCA)
