@@ -1,14 +1,29 @@
 # Installation 
 
 # Imports
-getwd()
+
 library(poLCA)
 library(readxl)
 library(writexl)
+library(dplyr) # Df tools 
+library(ggplot2)
+library(patchwork) # For adding plots together
+
 
 # Import data
-df <- read_excel("tbi_admission_comorbidities_age_elix_formatted.xlsx")
-df <- read_excel("elix_formatted.xlsx")
+df <- read_excel("data/tbi_admit_icd_age_elix.xlsx")
+df <- df %>% select(congestive_heart_failure, cardiac_arrhythmia, valvular_disease,
+               pulmonary_circulation_disorder, peripheral_vascular_disorder,
+               hypertension_uncomplicated, hypertension_complicated, paralysis,
+               other_neurological_disorder, chronic_pulmonary_disease, 
+               diabetes_uncomplicated, diabetes_complicated, hypothyroidism,
+               renal_failure, liver_disease, peptic_ulcer_disease_excluding_bleeding, 
+               aids_hiv, lymphoma, metastatic_cancer, solid_tumor_wo_metastasis, 
+               rheumatoid_arhritis, coagulopathy, obesity, weight_loss, 
+               fluid_and_electrolyte_disorders, blood_loss_anemia, deficiency_anemia,
+               alcohol_abuse, drug_abuse, psychoses, depression
+               )
+df <- df * 1 # Turns TRUE/FALSE into 1/0
 # Manifest values needs to be an integer starting from 1 and not 0 https://stackoverflow.com/questions/52008147/polca-alert-values-that-are-not-positive-integers
 df <- df + 1 # Adds 1 to every value
 
@@ -24,7 +39,79 @@ model <- cbind(congestive_heart_failure, cardiac_arrhythmia, valvular_disease,
                fluid_and_electrolyte_disorders, blood_loss_anemia, deficiency_anemia,
                alcohol_abuse, drug_abuse, psychoses, depression
                ) ~ 1
-cluster <- poLCA(model, data = df, nclass = 6, graphs = TRUE, na.rm = TRUE)
+cluster <- poLCA(model, data = df, nclass = 9, graphs = TRUE, na.rm = TRUE)
+df_results <- data.frame(cluster$probs) # Outputs probability of each input group for all clusters (1=False, 2=True)
+df_means <- df_results[,seq(2, ncol(df_results), 2)] # Get every second column starting at col 2
+model_means <- as.data.frame(t(df_means))
+model_means <- model_means * 100 # Scale everything by 100
+colnames(model_means) <- paste("Endotype_", seq(1, ncol(model_means)), sep="")
 
-# Export data if needed
-write_xlsx(df, "exported_output.xlsx")
+df_means <- data.frame(model_means)
+df_means$vars <- row.names(df_means) # Make separate variable of row names to be accessed later
+df_means$id <- seq(1, nrow(df_means))
+df_means$labels <- c("CHF", "Arrhythmia", "Valvular disease", "Pulmonary circulation disorder",
+                     "Peripheral vascular disorder", "Uncomplicated hypertension",
+                     "Complicated hypertension", "Paralysis", "Other neurological disorder",
+                     "COPD", "Uncomplicated diabetes", "Complicated diabetes", "Hypothyroidism",
+                     "Renal failure", "Liver disease", "AID/HIV",
+                     "Lymphoma", "Metastatic cancer", "Solid tumor (no metastasis)",
+                     "Rheumatoid arthritis", "Coagulopathy", "Obesity", "Weight loss",
+                     "Fluid and electrolyte disorders", "Blood loss anemia", "Deficiency anemia",
+                     "Alcohol abuse", "Drug abuse", "Psychoses", "Depression") # Age and peptic ulcer removed
+num_rows = nrow(df_means)
+angles <- 90 - 360 * (df_means$id - 0.5)/num_rows # Need to use sequence attached to df to maintain index, otherwise labels and angles are mismatched
+# Subtract 0.5 because the letter must have the angle of the center of the bars. Not extreme right(1) or extreme left (0)
+df_means$hjust<-ifelse(angles < -90, 1, 0) # Assign left or right alignment 
+df_means$angles<-ifelse(angles < -90, angles+180, angles) # Rectify angles if needed
+
+first_graph_col <- "Endotype_1"
+start_graph <- ggplot(df_means, aes_string(x = "id", y = first_graph_col, fill = first_graph_col)) + 
+  geom_bar(stat = "identity") + 
+  ylim(-100, 150) +
+  scale_fill_gradient(low = "light blue", high = "blue", limits = c(0, 100),
+                      name = "Probability (%) or Age (Years)") +
+  theme_minimal() + # Remove grid and titles
+  guides(fill = guide_colorbar(title.position = "top", direction = "vertical")) +
+  theme(
+    axis.text = element_blank(),
+    axis.title = element_blank(),
+    legend.position = "top",
+    legend.box.just = "center",
+    # legend.key.width = unit(2.5, "cm"), # To scale colorbar size
+    # legend.title.align = 0.5,
+    # legend.title = element_text(angle = 90), # Adjust angle of title
+    # legend.direction = "horizontal",
+    # panel.grid = element_blank()
+  ) +
+  coord_polar(start = 0, clip = "off") + # This addition makes graph use polar coordinates, clip = "off" to prevent label clipping
+  geom_text(data = df_means, aes(label = labels, hjust = hjust), size = 3, angle = df_means$angles)
+
+df_clust <- data.frame(model_means)
+for (i in colnames(df_clust)) {
+  if (i != first_graph_col) {
+    rgraph <- ggplot(df_means, aes_string(x = "id", y = i, fill = i)) + # Note that id is a factor. If x is numeric, there is some space between the first bar
+      geom_bar(stat = "identity") + 
+      ylim(-100, 150) +
+      scale_fill_gradient(low = "light blue", high = "blue", limits = c(0, 100),
+                          name = "Probability (%) or Age (Years)") +
+      theme_minimal() + # Remove grid and titles
+      guides(fill = guide_colorbar(title.position = "top", direction = "vertical")) +
+      theme(
+        axis.text = element_blank(),
+        axis.title = element_blank(),
+        legend.position = "top",
+        legend.box.just = "center",
+        # legend.key.width = unit(2.5, "cm"), # To scale colorbar size
+        # legend.title.align = 0.5,
+        # legend.title = element_text(angle = 90), # Adjust angle of title
+        # legend.direction = "horizontal",
+        # panel.grid = element_blank()
+      ) +
+      coord_polar(start = 0, clip = "off") + # This addition makes graph use polar coordinates, clip = "off" to prevent label clipping
+      geom_text(data = df_means, aes(label = labels, hjust = hjust), size = 3, angle = df_means$angles)
+    start_graph <- start_graph + rgraph
+  }
+}
+
+final_graph <- start_graph + plot_layout(guides = "collect")
+ggsave("LCA clusters.png", final_graph, width = 17, height = 17)

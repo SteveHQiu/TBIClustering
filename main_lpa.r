@@ -107,7 +107,8 @@ angles <- 90 - 360 * (df_means$id - 0.5)/num_rows # Need to use sequence attache
 df_means$hjust<-ifelse(angles < -90, 1, 0) # Assign left or right alignment 
 df_means$angles<-ifelse(angles < -90, angles+180, angles) # Rectify angles if needed
 
-start_graph <- ggplot(df_means, aes_string(x = "id", y = "X1", fill = "X1")) + 
+first_graph_col <- "X1"
+start_graph <- ggplot(df_means, aes_string(x = "id", y = first_graph_col, fill = first_graph_col)) + 
   geom_bar(stat = "identity") + 
   ylim(-100, 150) +
   scale_fill_gradient(low = "light blue", high = "blue", limits = c(0, 100),
@@ -130,7 +131,7 @@ start_graph <- ggplot(df_means, aes_string(x = "id", y = "X1", fill = "X1")) +
 
 df_clust <- data.frame(model_means)
 for (i in colnames(df_clust)) {
-  if (i != "X1") {
+  if (i != first_graph_col) {
     rgraph <- ggplot(df_means, aes_string(x = "id", y = i, fill = i)) + # Note that id is a factor. If x is numeric, there is some space between the first bar
       geom_bar(stat = "identity") + 
       ylim(-100, 150) +
@@ -156,7 +157,7 @@ for (i in colnames(df_clust)) {
 }
 
 final_graph <- start_graph + plot_layout(guides = "collect")
-ggsave("testplot.png", final_graph, width = 17, height = 17)
+ggsave("LPA clusters.png", final_graph, width = 17, height = 17)
 #%%
 #%% Vertical graph
 vgraph <- ggplot(df_means, aes(x = vars, y = X1, fill = X1)) + # Generates vertical graph

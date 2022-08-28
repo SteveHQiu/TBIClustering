@@ -13,14 +13,14 @@ from lca import LCA
 from network_visualization import Grapher
 
 #%% Read data
-columns = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease", "pulmonary_circulation_disorder", "peripheral_vascular_disorder", "hypertension_uncomplicated", "hypertension_complicated", "paralysis", "other_neurological_disorder", "chronic_pulmonary_disease", "diabetes_uncomplicated", "diabetes_complicated", "hypothyroidism", "renal_failure", "liver_disease", "peptic_ulcer_disease_excluding_bleeding", "aids_hiv", "lymphoma", "metastatic_cancer", "solid_tumor_wo_metastasis", "rheumatoid_arhritis", "coagulopathy", "obesity", "weight_loss", "fluid_and_electrolyte_disorders", "blood_loss_anemia", "deficiency_anemia", "alcohol_abuse", "drug_abuse", "psychoses", "depression"]
+col_origin = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease", "pulmonary_circulation_disorder", "peripheral_vascular_disorder", "hypertension_uncomplicated", "hypertension_complicated", "paralysis", "other_neurological_disorder", "chronic_pulmonary_disease", "diabetes_uncomplicated", "diabetes_complicated", "hypothyroidism", "renal_failure", "liver_disease", "peptic_ulcer_disease_excluding_bleeding", "aids_hiv", "lymphoma", "metastatic_cancer", "solid_tumor_wo_metastasis", "rheumatoid_arhritis", "coagulopathy", "obesity", "weight_loss", "fluid_and_electrolyte_disorders", "blood_loss_anemia", "deficiency_anemia", "alcohol_abuse", "drug_abuse", "psychoses", "depression"]
 columns = ["CHF", "Arrhythmia", "Valvular disease", "Pulmonary circulation disorder", "Peripheral vascular disorder", "Uncomplicated hypertension", "Complicated hypertension", "Paralysis", "Other neurological disorder", "COPD", "Uncomplicated diabetes", "Complicated diabetes", "Hypothyroidism", "Renal failure", "Liver disease", "Peptic ulcer disease", "AID/HIV", "Lymphoma", "Metastatic cancer", "Solid tumor (no metastasis)", "Rheumatoid arthritis", "Coagulopathy", "Obesity", "Weight loss", "Fluid and electrolyte disorders", "Blood loss anemia", "Deficiency anemia", "Alcohol abuse", "Drug abuse", "Psychoses", "Depression"]
 # Pandas doesn't seem to support column names with underscores?
-df1: DataFrame = pd.read_excel("data/merged_elix_formatted.xlsx") # Spreadsheet with only elix groupings 
-
+df1: DataFrame = pd.read_excel("data/tbi_admit_icd_age_elix.xlsx") # Spreadsheet with only elix groupings 
+df1 = df1[col_origin] # Only take cols of interest
+df1 = df1.replace({True: 1, False: 0}) # Convert True to 1 and False to 0
 print(df1.shape)
 # df1 = df1[df1.sum(axis=1)!=0] # Remove empty rows?
-# print(df1.shape)
 data = df1.to_numpy() # Need conversion before you can use in LCA model
 
 #%% Generate data (optional)
@@ -42,7 +42,7 @@ data = np.concatenate(data)
 
 #%% LCA Algorithm
 
-classes = 8
+classes = 9
 lca = LCA(n_components=classes, tol=1e-10, max_iter=1000)
 lca.fit(data)
 print(lca.weight)
@@ -55,7 +55,7 @@ ax.set_xlabel("iteration")
 ax.set_ylabel(r"p(x|$\theta$)")
 ax.grid(True)
 
-#%% Plot LCA results 1
+#%% Results pt1: Bar plots of elix distributions over clusters
 fig, axs = plt.subplots(nrows=lca.theta.shape[0], figsize=(15,lca.theta.shape[0]*10))
 axs = axs.ravel()
 for i,ax in enumerate(axs):
@@ -65,23 +65,15 @@ for i,ax in enumerate(axs):
     ax.set(xlabel = "Elixhauser comorbidity group", ylabel = "Prevalence of elixidity group in latent class",
         title = f"Latent class {i+1}")
     
+
+
+
+#%% Results pt2: Stacked horizontal bar plots of elix distributions
 lca.theta.shape[0] # Gives number of classes
 lca.theta.shape[1] # Gives number of input variables 
 probs_classes = [lca.theta[:,i] for i in range(lca.theta.shape[1])] # Returns a list of arrays corresponding to the probabilities of each variable in each class
 dict_probs = dict(zip(columns, probs_classes))
 print(len(dict_probs))
-
-#%% Results pt2
-df_list = [] # Container for DFs containing elixidity distributions for each subgroup 
-for i in range(lca.theta.shape[0]):
-    entry = pd.DataFrame({
-        "Name": columns,
-        "Value": lca.theta[i,:]
-    }) # Need comprehension to package every value in its own list for DF creation
-    df_list.append(entry)
-print(df_list)
-
-#%% Results pt3
 
 # Discrete distribution horizontal bar chart https://matplotlib.org/stable/gallery/lines_bars_and_markers/horizontal_barchart_distribution.html#sphx-glr-gallery-lines-bars-and-markers-horizontal-barchart-distribution-py
 category_names = [f"Endotype {i}" for i in range(1, len(columns)+1)]
@@ -120,15 +112,27 @@ ax.legend(ncol=len(category_names), bbox_to_anchor=(0, 1),
 
 plt.show()
 
-#%% Results pt4 (endotype visualization)
+#%% Results pt3 (endotype visualization)
+
+df_list = [] # Container for DFs containing elix distributions for each subgroup 
+for i in range(lca.theta.shape[0]):
+    entry = pd.DataFrame({
+        "Name": columns,
+        "Value": lca.theta[i,:]
+    }) # Need comprehension to package every value in its own list for DF creation
+    df_list.append(entry)
+print(df_list)
+
 # Radial bar plots
 max_height = 100
 lower_radius = 50
 max_value = 1
+n_cols = 3
+n_rows = (classes + n_cols - 1) // n_cols
 category_colors = plt.colormaps['jet'](
     np.linspace(0.15, 0.85, len(df_list)))
-fig, axs = plt.subplots(2,4, figsize=(20,21), dpi = 300, subplot_kw={'projection': 'polar'})
-axs: ndarray[Axes] = axs.ravel() # Returns flattened version of array (i.e., array of axes)
+fig, axs = plt.subplots(n_rows, n_cols, figsize=(20,21), dpi = 300, subplot_kw={'projection': 'polar'})
+axs = axs.ravel() # Returns flattened version of array (i.e., array of axes)
 
 for index, ax in enumerate(axs):
     ax: Axes
@@ -160,7 +164,7 @@ for index, ax in enumerate(axs):
         alpha = 0.8)
 
     # Add labels
-    for bar, angle, height, label in zip(bars,angles, heights, columns):
+    for bar, angle, height, label in zip(bars, angles, heights, columns):
 
         # Labels are rotated. Rotation must be specified in degrees :(
         rotation = np.rad2deg(angle)
@@ -182,7 +186,8 @@ for index, ax in enumerate(axs):
             va='center', 
             rotation=rotation, 
             rotation_mode="anchor") 
-    ax.set_title(f"Endotype {str(index+1)}", y = 1.4, pad = 15)
+    # ax.set_title(f"Endotype {str(index+1)}", y = 1.4, pad = 15) # Use title
+    ax.text(0.5, 0.5, f"Endotype {str(index+1)}", horizontalalignment="center", transform=ax.transAxes) # Use text placement to place text at center of plots
 
 #%% Generate annotations
 # Generate annotations
