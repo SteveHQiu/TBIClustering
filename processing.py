@@ -22,41 +22,45 @@ WHERE (((LOWER(d_items.LABEL) Like "%parin%") Or (LOWER(d_items.LABEL) Like "%ob
 df = pd.read_sql(sql=QUERY, con=CONN)
 df.to_excel("data/chartevents_test.xlsx", index=False) # Exclude index column
 
-#%% 
-
+#%% DF Processing
+import os
 import pandas as pd
 from pandas import DataFrame
 from icd_to_comorbidities import getComorbGroups
 
 #%%
-
-df: DataFrame = pd.read_excel("data/tbi_admission_comorbidities_age.xlsx")
+DF_PATH = "data/tbi_admit_icd.xlsx"
+ROOT_NAME = os.path.splitext(DF_PATH)[0]
+df: DataFrame = pd.read_excel(DF_PATH)
 
 #%% Merging of raw admission entries into single entries grouped by subject ID,
 
 df1: DataFrame = df.sort_values(["SUBJECT_ID", "SEQ_NUM"]) \
     .groupby(["SUBJECT_ID", "GENDER", "DOB"])["ICD9_CODE"] \
     .apply(",".join) \
-    .reset_index(name = "COMORB") # Output 
+    .reset_index(name = "comorb") # Gather ICD9 codes for each subject and store them in list
 
-df2: DataFrame = df.groupby(["SUBJECT_ID"])["ADMITTIME"].max()
+df2: DataFrame = df.groupby(["SUBJECT_ID"])["ADMITTIME"].max() # Get most recent admission time
     
-df3: DataFrame = df.groupby(["SUBJECT_ID"])["DOD"].max()
+df3: DataFrame = df.groupby(["SUBJECT_ID"])["DOD"].max() # Get last DOD in case if there are 
 
 df1: DataFrame = df1.merge(df2, on="SUBJECT_ID", how="left") \
-    .merge(df3, on="SUBJECT_ID", how="left")
+    .merge(df3, on="SUBJECT_ID", how="left") # Merge most recent admission and most recent date of death into comorb df
     
-# Data format processing 
+# Data format processing and adding of age
 df1["DOB"] = pd.to_datetime(df1["DOB"]).dt.date # .dt.date conversion needed to prevent overflow during addition 
-df1["ADMITTIME"] = pd.to_datetime(df1["ADMITTIME"]).dt.date # .dt.date conversion needed to prevent overflow during addition 
-df1["AGE"] = df1.apply(lambda e: (e["ADMITTIME"] - e["DOB"]).days/365, axis=1) # Need .apply() method by bypass overflow addition error as the dates are scrambled and some are 300+ years in the future
-df1["COMORB"] = [code_list.split(",") for code_list in df1["COMORB"]] # Convert ICD code string into list 
+df1["ADMITTIME"] = pd.to_datetime(df1["ADMITTIME"]).dt.date 
+df1["age"] = df1.apply(lambda row: (row["ADMITTIME"] - row["DOB"]).days/365, axis=1) # Need .apply() method by bypass overflow addition error as the dates are scrambled and some are 300+ years in the future
+df1["age"] = df1.apply(lambda row: row["age"] if row["age"] < 90 else 90, axis=1) # Merge all ages above 90 to 90 since MIMIC-III shifts all ages above 89 to 300
+max_age = max(df1["age"])
+df1["age_normalized"] = df1.apply(lambda row: row["age"]/max_age, axis=1) # Generate normalized age by dividing by max age in group 
+df1["comorb"] = [code_list.split(",") for code_list in df1["comorb"]] # Convert ICD code string into list 
 
 #%%
-df_comorb = getComorbGroups(df1, "SUBJECT_ID", ["COMORB"])
-# df_comorb.to_excel("data/merged.xlsx")
+df_comorb = getComorbGroups(df1, "SUBJECT_ID", ["comorb"]) # Retrieve elixhauser comorbidity groups
+
 
 #%%
 df_final = df1.merge(df_comorb, on="SUBJECT_ID", how="left")
-df_final.to_excel("data/merged_output_elix.xlsx")
+df_final.to_excel(F"{ROOT_NAME}_age_elix.xlsx")
 #%%
