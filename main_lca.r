@@ -128,5 +128,5 @@ for (clust_name in colnames(df_clust)) {
 }
 
 final_graph <- start_graph + plot_layout(guides = "auto") # guides = "collect" to collect duplicate legends
-ggsave("LCA clusters.png", final_graph, width = 17, height = 17)
+ggsave("figures/LCA clusters.png", final_graph, width = 17, height = 17)
 

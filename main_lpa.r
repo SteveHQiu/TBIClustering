@@ -172,7 +172,7 @@ for (clust_name in colnames(df_clust)) {
 }
 
 final_graph <- start_graph + plot_layout(guides = "auto") # guides = "collect" to collect duplicate legends
-ggsave("LPA clusters.png", final_graph, width = 17, height = 17)
+ggsave("figures/LPA clusters.png", final_graph, width = 17, height = 17)
 
 #%%
 #%% Vertical graph
