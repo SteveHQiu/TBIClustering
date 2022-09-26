@@ -1,0 +1,6 @@
+{
+    "r.helpPanel.enableSyntaxHighlighting": true,
+    "workbench.colorCustomizations": {
+        "editorInfo.foreground":"#00b3ff08",
+    }
+}

@@ -24,9 +24,13 @@ df_init.to_excel("data/chartevents_test.xlsx", index=False) # Exclude index colu
 
 #%% DF Processing
 import os
+import seaborn as sns
 import pandas as pd
 from pandas import DataFrame
+import matplotlib.pyplot as plt
+from matplotlib.axes import Axes
 from icd_to_comorbidities import getComorbGroups
+
 
 #%%
 DF_PATH = "data/tbi_admit_icd.xlsx"
@@ -66,6 +70,27 @@ df_final.to_excel(F"{ROOT_NAME}_age_elix.xlsx")
 #%% Getting df for population info
 col_origin = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease", "pulmonary_circulation_disorder", "peripheral_vascular_disorder", "hypertension_uncomplicated", "hypertension_complicated", "paralysis", "other_neurological_disorder", "chronic_pulmonary_disease", "diabetes_uncomplicated", "diabetes_complicated", "hypothyroidism", "renal_failure", "liver_disease", "peptic_ulcer_disease_excluding_bleeding", "aids_hiv", "lymphoma", "metastatic_cancer", "solid_tumor_wo_metastasis", "rheumatoid_arhritis", "coagulopathy", "obesity", "weight_loss", "fluid_and_electrolyte_disorders", "blood_loss_anemia", "deficiency_anemia", "alcohol_abuse", "drug_abuse", "psychoses", "depression"]
 df_raw_info = pd.read_excel(F"{ROOT_NAME}_age_elix.xlsx")
+num_subjs = len(df_raw_info) # Each row is a unique patient 
+
 #%%
-df1 = DataFrame()
+df1 = df_raw_info[["age", "GENDER"]]
+df1["alive_logical"] = df_raw_info["DOD"].isnull() # NaN counts as null, if Nan then is considered alive
+df1["alive"] = df1["alive_logical"].apply(lambda x: "Alive" if x else "Expired") # Label for coding category (ggplot2 doesn't consider logical as categorical)
 df1["num_comorbs"] = df_raw_info[col_origin].sum(axis=1)
+survival = df1["alive_logical"].sum(axis=0)/num_subjs # 0.5843676618584368
+df1.to_excel(F"{ROOT_NAME}_popinfo.xlsx")
+
+
+#%%
+df2 = DataFrame()
+df2["comorb_count"] = df_raw_info[col_origin].sum(axis=0)
+df2["comorb_prop"] = df2["comorb_count"]/num_subjs
+df2.to_excel(F"{ROOT_NAME}_comorbdistr.xlsx")
+
+#%%
+sns.set_theme()
+fig, ax = plt.subplots()
+fig.set_size_inches(18, 10)
+ax.bar(df2.index, df2["comorb_prop"])
+ax.set_xticklabels(df2.index, rotation=45, ha="right") # df2.index re-writes previous labels
+# %%

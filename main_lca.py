@@ -206,7 +206,7 @@ df2.to_excel("data/merged_output_elix_formatted_annotated.xlsx")
 #%% Calculating mortality in each cluster
 df3 = pd.read_excel("data/merged_output_elix_formatted_annotated.xlsx")
 print(df3["DOD"].count())
-num_clusters = 8
+num_clusters = classes
 df_export = pd.DataFrame()
 for i in range(num_clusters): 
     df_sub = df3.loc[df3["LCA class"] == i] # Get all rows of this cluster

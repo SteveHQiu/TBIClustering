@@ -1,17 +1,19 @@
 #%% Installation
 install.packages("tidyLPA")
-
 install.packages("tidyverse")
 install.packages("dplyr")
 install.packages("comprehenr")
 install.packages("inflection")
 install.packages("patchwork")
+install.packages("viridis")
+install.packages("colorspace")
+
+
 
 
 #%%
 #%% Imports
 library(tidyLPA) # Wrapper around mclust for easier usage, but doesn't support mixed categorical and continuous data
-
 library(dplyr) # Df tools 
 library(readxl) # To read excel files
 library(mclust) # Main clustering algorithm 
@@ -87,6 +89,13 @@ model_means <- model1$parameters$mean
 model_means["age",] <- model_means["age",]/100 # Divide by 100 to give age in decimal format to match probabilities
 model_means <- model_means * 100 # Scale everything by 100
 # model_means <- model_means + 50 # Add 50 to all values as base
+colnames(model_means) <- paste("Endotype_", seq(1, ncol(model_means)), sep="")
+clust_names <- c(colnames(model_means))
+clust_colors <- rainbow(length(colnames(model_means)))
+clust_colors_desat <- lighten(clust_colors, 0.75)
+clust_seq <- seq_len(length(clust_colors))
+image(clust_seq, 1, as.matrix(clust_seq), col=clust_colors) # Show colors
+image(clust_seq, 1, as.matrix(clust_seq), col=clust_colors_desat) # Show colors
 
 
 df_means <- data.frame(model_means)
@@ -107,18 +116,21 @@ angles <- 90 - 360 * (df_means$id - 0.5)/num_rows # Need to use sequence attache
 df_means$hjust<-ifelse(angles < -90, 1, 0) # Assign left or right alignment 
 df_means$angles<-ifelse(angles < -90, angles+180, angles) # Rectify angles if needed
 
-first_graph_col <- "X1"
+first_graph_col <- "Endotype_1"
+clust_num = match(first_graph_col, clust_names)
+plot_color = clust_colors[clust_num]
+plot_color_desat = clust_colors_desat[clust_num]
 start_graph <- ggplot(df_means, aes_string(x = "id", y = first_graph_col, fill = first_graph_col)) + 
   geom_bar(stat = "identity") + 
   ylim(-100, 150) +
-  scale_fill_gradient(low = "light blue", high = "blue", limits = c(0, 100),
-                      name = "Probability (%) or Age (Years)") +
+  scale_fill_gradient(low = plot_color_desat, high = plot_color, limits = c(0, 100),
+                      name = "Probability (%)") +
   theme_minimal() + # Remove grid and titles
   guides(fill = guide_colorbar(title.position = "top", direction = "vertical")) +
   theme(
     axis.text = element_blank(),
     axis.title = element_blank(),
-    legend.position = "top",
+    legend.position = "right",
     legend.box.just = "center",
     # legend.key.width = unit(2.5, "cm"), # To scale colorbar size
     # legend.title.align = 0.5,
@@ -130,19 +142,22 @@ start_graph <- ggplot(df_means, aes_string(x = "id", y = first_graph_col, fill =
   geom_text(data = df_means, aes(label = labels, hjust = hjust), size = 3, angle = df_means$angles)
 
 df_clust <- data.frame(model_means)
-for (i in colnames(df_clust)) {
-  if (i != first_graph_col) {
-    rgraph <- ggplot(df_means, aes_string(x = "id", y = i, fill = i)) + # Note that id is a factor. If x is numeric, there is some space between the first bar
+for (clust_name in colnames(df_clust)) {
+  if (clust_name != first_graph_col) {
+    clust_num = match(clust_name, clust_names)
+    plot_color = clust_colors[clust_num]
+    plot_color_desat = clust_colors_desat[clust_num]
+    rgraph <- ggplot(df_means, aes_string(x = "id", y = clust_name, fill = clust_name)) + # Note that id is a factor. If x is numeric, there is some space between the first bar
       geom_bar(stat = "identity") + 
       ylim(-100, 150) +
-      scale_fill_gradient(low = "light blue", high = "blue", limits = c(0, 100),
-                          name = "Probability (%) or Age (Years)") +
+      scale_fill_gradient(low = plot_color_desat, high = plot_color, limits = c(0, 100),
+                          name = "Probability (%)") +
       theme_minimal() + # Remove grid and titles
       guides(fill = guide_colorbar(title.position = "top", direction = "vertical")) +
       theme(
         axis.text = element_blank(),
         axis.title = element_blank(),
-        legend.position = "top",
+        legend.position = "right",
         legend.box.just = "center",
         # legend.key.width = unit(2.5, "cm"), # To scale colorbar size
         # legend.title.align = 0.5,
@@ -156,8 +171,9 @@ for (i in colnames(df_clust)) {
   }
 }
 
-final_graph <- start_graph + plot_layout(guides = "collect")
+final_graph <- start_graph + plot_layout(guides = "auto") # guides = "collect" to collect duplicate legends
 ggsave("LPA clusters.png", final_graph, width = 17, height = 17)
+
 #%%
 #%% Vertical graph
 vgraph <- ggplot(df_means, aes(x = vars, y = X1, fill = X1)) + # Generates vertical graph
@@ -168,14 +184,4 @@ vgraph
 
 
 #%%
-#%% Show entries with missing data
-new_DF <- data[rowSums(is.na(data)) > 0,]
 
-
-#%%
-#%% Test using diabetes dataset
-data(diabetes)
-X <- diabetes[,-1] # Remove class variable
-testmodel <- Mclust(X)
-
-#%%
