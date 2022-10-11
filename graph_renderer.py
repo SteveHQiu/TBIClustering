@@ -99,7 +99,7 @@ class GraphVisualizer:
             elif data["ent_type"] == "diseases_broad":
                 node_colors.append("red")
             else:
-                node_colors.append("#000000")
+                node_colors.append("#699DEB")
         self.node_colors = node_colors
         
         
@@ -112,10 +112,16 @@ class GraphVisualizer:
         self.edge_widths_alpha = edge_alphas # For manually width to transparency 
         
         edge_probs = [prob for (node1, node2, prob) in self.graph.edges(data="prob")]
+        edge_probs = [prob**2 for prob in edge_probs]
         self.edge_probs = edge_probs
         
         edge_zeroes = [0 for i in edge_width_true]
         self.edge_zeroes = edge_zeroes # Array with zero for each edge
+        
+    def exportNewGraph(self):
+        edge_dict = {self.edge_probs.index(prob): prob for prob in self.edge_probs}
+        nx.set_edge_attributes(self.graph, edge_dict, name="prob")
+        return
         
     def genLegend(self):
         def _roundNum(num, base):
@@ -134,7 +140,7 @@ class GraphVisualizer:
         # Draw legend: https://stackoverflow.com/questions/29973952/how-to-draw-legend-for-scatter-plot-indicating-size
         # Same scaling factor but different rounding thresholds
         scaling = self.scaling
-        color = '#8338ec'
+        color = '#699DEB'
         max_original = max(self.node_sizes)/scaling # Get original max node size by dividing by scaling factor
         l1 = _roundNum(0.02*max_original, 5) # Reference of 5 for max of 250
         l2 = _roundNum(0.08*max_original, 10) # Reference of 20 for max of 250 
@@ -157,8 +163,10 @@ class GraphVisualizer:
         save_prefix: prefix for saving figures
         cmap: use color mapping in the stead of transparency 
         """
-       
-        layout: dict[Hashable, tuple[float, float]] = nx.shell_layout(self.graph) # Different position solvers available: https://networkx.org/documentation/stable/reference/generated/networkx.drawing.nx_pylab.draw_kamada_kawai.html
+
+        # layout: dict[Hashable, tuple[float, float]] = nx.shell_layout(self.graph) # Different position solvers available: https://networkx.org/documentation/stable/reference/generated/networkx.drawing.nx_pylab.draw_kamada_kawai.html
+        layout: dict[Hashable, tuple[float, float]] = nx.kamada_kawai_layout(self.graph) # Different position solvers available: https://networkx.org/documentation/stable/reference/generated/networkx.drawing.nx_pylab.draw_kamada_kawai.html
+        
         
         fig_size = self.fig_size
         
@@ -181,7 +189,8 @@ class GraphVisualizer:
         upper_bound = np.percentile(y_coords, 90)
         lower_bound = np.percentile(y_coords, 10)
         for node, (x, y) in layout.items():
-            label_size = log(self.scaling*self.graph.nodes[node]["size"], 2) # Retrieve size information via node identity in graph
+            # label_size = log(self.scaling*self.graph.nodes[node]["size"], 2) # Retrieve size information via node identity in graph
+            label_size = 10 # Retrieve size information via node identity in graph
             label = plt.text(x, y, node, fontsize = label_size, ha = "center", va = "center", alpha = 0.7) # Manually draw text
             if y > upper_bound or y < lower_bound: # Only adjust labels that are outside of bounds
                 labels_adjust.append(label)
@@ -195,7 +204,7 @@ class GraphVisualizer:
         # Plot legend
         plt.legend(self.legend["points"], self.legend["labels"],
             scatterpoints=1, ncol=4,
-            title="Number of articles reporting factor/outcome", title_fontsize=fig_size,
+            title="Number of patients with comorbidity", title_fontsize=fig_size,
             loc='lower left', prop={'size': fig_size},borderpad = 0.8,
             )
         # scatterpoints = number of points in each size demo
@@ -405,8 +414,13 @@ class GraphVisualizer:
 
 if __name__ == "__main__": # For testing
     # a = GraphVisualizer("data/gpt3_output_gpt3F_entsF_t10.xml")
-    a = GraphVisualizer("test graph.xml")
-    a.renderGraphPyvis()
+    a = GraphVisualizer("data/test_comorb.xml")
+    
+    # a.renderGraphPyvis(log_size=0, log_width=0)
+    
+    a.genRenderArgs()
+    a.genLegend()
+    a.renderGraphNX(cmap=False)
 
 
 

@@ -168,6 +168,48 @@ class GraphBuilder:
                     self.graph.add_edge(node_s, node_t, width=count, prob=probability) # "width" attribute affects pyvis rendering, pyvis doesn't support edge opacity
         self.graph_root_name = self.df_root_name + f"_t{thresh}" # Add threshold information 
 
+    def buildGraphLogistic(self, df_path,
+                           multidi: bool = True):
+        """
+        Takes df with rows representing observations and columns representing factors with 
+        each cell having 0 or 1 indicator presence of factor
+        ---
+        thresh: lower threshold for number of counts needed for each node (exclusive)
+        """
+        # Reminder that nx nodes can have abitrary attributes that don't contribute to rendering, need to manually adjust visual parameters with drawing methods
+        # nx.Graph is just a way to store data, data can be stored in node attributes         
+        if multidi:
+            self.graph = nx.MultiDiGraph() # Instantiate multidigraph
+            # Allows parallel and directed relationships to be rendered
+        else:
+            self.graph = nx.Graph() # Instantiate regular graph
+
+        self.df_root_name = os.path.splitext(df_path)[0] # Store root name
+        df = importData(df_path)
+
+        columns = list(df.columns)
+        nodes = {column: df[column].sum() for column in columns if df[column].sum() > 0} # Dict comprehension to get sums of each column
+        for node in nodes:
+            count = nodes[node]
+            self.graph.add_node(node, size = count, ent_type = "column")
+            
+        edges = Counter()
+        for index, row in df.iterrows(): # Count edges 
+            nodes_row = [] # Store list of nodes in this row # Shouldn't  have any duplicates
+            for column in columns:
+                if row[column] == 1:
+                    nodes_row.append(column)
+            for node_start, node_end in combinations(nodes_row, 2):
+                edges[(node_start, node_end)] += 1 # Bidirectional connection
+                edges[(node_end, node_start)] += 1
+            
+        for node_s, node_t in edges:
+            count = edges[(node_s, node_t)]
+            node_s_mentions = nodes[node_s]
+            probability = count/node_s_mentions # Probability of this connection is number of articles supporting this connection divided by total number of articles mentioning source
+            self.graph.add_edge(node_s, node_t, width=count, prob=probability, prob2=probability**2)
+        return None
+
     def exportGraph(self, path: Union[str, bytes, os.PathLike] = ""):
         """
         Exports currently stored graph to an XML file with the specified path 
@@ -189,11 +231,15 @@ class GraphBuilder:
         self.graph = nx.Graph()
 
 if __name__ == "__main__": # For testing purposes
-    b = GraphBuilder()
-    topic = 0
-    thresh = 1
-    b.popCountersMulti(f"data/gpt3_output_gpt3F_entsF_topics.xlsx",
-                       col_sub="Topic", subset=topic)
-    b.buildGraph(thresh=thresh, multidi=True)
-    b.exportGraph(f"data/gpt3_output_gpt3F_entsF_topics{topic}_t{thresh}.xml")
+    a = GraphBuilder()
+    a.buildGraphLogistic("data/tbi_elix_btlabels.xlsx")
+    a.exportGraph("data/comorb_probscaled.xml")
+    
+    # b = GraphBuilder()
+    # topic = 0
+    # thresh = 1
+    # b.popCountersMulti(f"data/gpt3_output_gpt3F_entsF_topics.xlsx",
+    #                    col_sub="Topic", subset=topic)
+    # b.buildGraph(thresh=thresh, multidi=True)
+    # b.exportGraph(f"data/gpt3_output_gpt3F_entsF_topics{topic}_t{thresh}.xml")
 

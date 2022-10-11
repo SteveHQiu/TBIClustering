@@ -1,0 +1,4100 @@
+<?xml version='1.0' encoding='utf-8'?>
+<graphml xmlns="http://graphml.graphdrawing.org/xmlns" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://graphml.graphdrawing.org/xmlns http://graphml.graphdrawing.org/xmlns/1.0/graphml.xsd">
+  <key id="d4" for="edge" attr.name="prob2" attr.type="float" />
+  <key id="d3" for="edge" attr.name="prob" attr.type="float" />
+  <key id="d2" for="edge" attr.name="width" attr.type="long" />
+  <key id="d1" for="node" attr.name="ent_type" attr.type="string" />
+  <key id="d0" for="node" attr.name="size" attr.type="int" />
+  <graph edgedefault="directed">
+    <node id="CHF">
+      <data key="d0">295</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Arrhythmia">
+      <data key="d0">702</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Valvular disease">
+      <data key="d0">156</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Pulmonary circulation disorder">
+      <data key="d0">81</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Peripheral vascular disorder">
+      <data key="d0">68</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Uncomplicated hypertension">
+      <data key="d0">1141</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Complicated hypertension">
+      <data key="d0">162</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Paralysis">
+      <data key="d0">42</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Other neurological disorder">
+      <data key="d0">654</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" COPD">
+      <data key="d0">271</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Uncomplicated diabetes">
+      <data key="d0">400</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Complicated diabetes">
+      <data key="d0">62</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Hypothyroidism">
+      <data key="d0">208</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Renal failure">
+      <data key="d0">156</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Liver disease">
+      <data key="d0">74</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" AID/HIV">
+      <data key="d0">22</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Lymphoma">
+      <data key="d0">29</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Metastatic cancer">
+      <data key="d0">76</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Solid tumor (no metastasis)">
+      <data key="d0">96</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Rheumatoid arthritis">
+      <data key="d0">50</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Coagulopathy">
+      <data key="d0">155</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Obesity">
+      <data key="d0">39</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Weight loss">
+      <data key="d0">130</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Fluid and electrolyte disorders">
+      <data key="d0">438</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Blood loss anemia">
+      <data key="d0">17</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Deficiency anemia">
+      <data key="d0">285</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Alcohol abuse">
+      <data key="d0">468</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Drug abuse">
+      <data key="d0">134</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Psychoses">
+      <data key="d0">33</data>
+      <data key="d1">column</data>
+    </node>
+    <node id=" Depression">
+      <data key="d0">173</data>
+      <data key="d1">column</data>
+    </node>
+    <edge source="CHF" target=" Arrhythmia" id="0">
+      <data key="d2">177</data>
+      <data key="d3">0.6</data>
+      <data key="d4">0.36</data>
+    </edge>
+    <edge source="CHF" target=" Valvular disease" id="0">
+      <data key="d2">68</data>
+      <data key="d3">0.2305084745762712</data>
+      <data key="d4">0.05313415685147946</data>
+    </edge>
+    <edge source="CHF" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">130</data>
+      <data key="d3">0.4406779661016949</data>
+      <data key="d4">0.19419706980752657</data>
+    </edge>
+    <edge source="CHF" target=" Complicated hypertension" id="0">
+      <data key="d2">54</data>
+      <data key="d3">0.18305084745762712</data>
+      <data key="d4">0.03350761275495547</data>
+    </edge>
+    <edge source="CHF" target=" Renal failure" id="0">
+      <data key="d2">54</data>
+      <data key="d3">0.18305084745762712</data>
+      <data key="d4">0.03350761275495547</data>
+    </edge>
+    <edge source="CHF" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.04067796610169491</data>
+      <data key="d4">0.0016546969261706404</data>
+    </edge>
+    <edge source="CHF" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">87</data>
+      <data key="d3">0.29491525423728815</data>
+      <data key="d4">0.08697500718184431</data>
+    </edge>
+    <edge source="CHF" target=" Drug abuse" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.01694915254237288</data>
+      <data key="d4">0.0002872737719046251</data>
+    </edge>
+    <edge source="CHF" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">25</data>
+      <data key="d3">0.0847457627118644</data>
+      <data key="d4">0.007181844297615627</data>
+    </edge>
+    <edge source="CHF" target=" Other neurological disorder" id="0">
+      <data key="d2">59</data>
+      <data key="d3">0.2</data>
+      <data key="d4">0.04000000000000001</data>
+    </edge>
+    <edge source="CHF" target=" COPD" id="0">
+      <data key="d2">64</data>
+      <data key="d3">0.21694915254237288</data>
+      <data key="d4">0.04706693478885377</data>
+    </edge>
+    <edge source="CHF" target=" Coagulopathy" id="0">
+      <data key="d2">28</data>
+      <data key="d3">0.09491525423728814</data>
+      <data key="d4">0.009008905486929043</data>
+    </edge>
+    <edge source="CHF" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">75</data>
+      <data key="d3">0.2542372881355932</data>
+      <data key="d4">0.06463659867854064</data>
+    </edge>
+    <edge source="CHF" target=" Deficiency anemia" id="0">
+      <data key="d2">60</data>
+      <data key="d3">0.2033898305084746</data>
+      <data key="d4">0.041367423154266024</data>
+    </edge>
+    <edge source="CHF" target=" Paralysis" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.01694915254237288</data>
+      <data key="d4">0.0002872737719046251</data>
+    </edge>
+    <edge source="CHF" target=" Metastatic cancer" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.02711864406779661</data>
+      <data key="d4">0.0007354208560758402</data>
+    </edge>
+    <edge source="CHF" target=" Weight loss" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.06440677966101695</data>
+      <data key="d4">0.0041482332663027865</data>
+    </edge>
+    <edge source="CHF" target=" Hypothyroidism" id="0">
+      <data key="d2">34</data>
+      <data key="d3">0.1152542372881356</data>
+      <data key="d4">0.013283539212869865</data>
+    </edge>
+    <edge source="CHF" target=" Depression" id="0">
+      <data key="d2">28</data>
+      <data key="d3">0.09491525423728814</data>
+      <data key="d4">0.009008905486929043</data>
+    </edge>
+    <edge source="CHF" target=" Lymphoma" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.030508474576271188</data>
+      <data key="d4">0.0009307670209709855</data>
+    </edge>
+    <edge source="CHF" target=" Alcohol abuse" id="0">
+      <data key="d2">20</data>
+      <data key="d3">0.06779661016949153</data>
+      <data key="d4">0.004596380350474002</data>
+    </edge>
+    <edge source="CHF" target=" Complicated diabetes" id="0">
+      <data key="d2">18</data>
+      <data key="d3">0.061016949152542375</data>
+      <data key="d4">0.003723068083883942</data>
+    </edge>
+    <edge source="CHF" target=" Psychoses" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.02711864406779661</data>
+      <data key="d4">0.0007354208560758402</data>
+    </edge>
+    <edge source="CHF" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">15</data>
+      <data key="d3">0.05084745762711865</data>
+      <data key="d4">0.0025854639471416265</data>
+    </edge>
+    <edge source="CHF" target=" Blood loss anemia" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.013559322033898305</data>
+      <data key="d4">0.00018385521401896005</data>
+    </edge>
+    <edge source="CHF" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.03389830508474576</data>
+      <data key="d4">0.0011490950876185005</data>
+    </edge>
+    <edge source="CHF" target=" Liver disease" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.023728813559322035</data>
+      <data key="d4">0.0005630565929330652</data>
+    </edge>
+    <edge source="CHF" target=" Obesity" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.020338983050847456</data>
+      <data key="d4">0.0004136742315426601</data>
+    </edge>
+    <edge source="CHF" target=" AID/HIV" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.003389830508474576</data>
+      <data key="d4">1.1490950876185003e-05</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Other neurological disorder" id="0">
+      <data key="d2">167</data>
+      <data key="d3">0.2378917378917379</data>
+      <data key="d4">0.056592478957151325</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Complicated diabetes" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.03133903133903134</data>
+      <data key="d4">0.0009821348852687886</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Deficiency anemia" id="0">
+      <data key="d2">108</data>
+      <data key="d3">0.15384615384615385</data>
+      <data key="d4">0.02366863905325444</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">371</data>
+      <data key="d3">0.5284900284900285</data>
+      <data key="d4">0.2793017102133911</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" COPD" id="0">
+      <data key="d2">91</data>
+      <data key="d3">0.12962962962962962</data>
+      <data key="d4">0.01680384087791495</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Alcohol abuse" id="0">
+      <data key="d2">60</data>
+      <data key="d3">0.08547008547008547</data>
+      <data key="d4">0.007305135510263716</data>
+    </edge>
+    <edge source=" Arrhythmia" target="CHF" id="0">
+      <data key="d2">177</data>
+      <data key="d3">0.25213675213675213</data>
+      <data key="d4">0.06357294177806998</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Valvular disease" id="0">
+      <data key="d2">103</data>
+      <data key="d3">0.1467236467236467</data>
+      <data key="d4">0.021527828507885486</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Complicated hypertension" id="0">
+      <data key="d2">83</data>
+      <data key="d3">0.11823361823361823</data>
+      <data key="d4">0.013979188480612982</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">139</data>
+      <data key="d3">0.198005698005698</data>
+      <data key="d4">0.03920625644272368</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Liver disease" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.024216524216524215</data>
+      <data key="d4">0.0005864400451295038</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">138</data>
+      <data key="d3">0.19658119658119658</data>
+      <data key="d4">0.03864416684929505</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Weight loss" id="0">
+      <data key="d2">43</data>
+      <data key="d3">0.06125356125356125</data>
+      <data key="d4">0.0037519987662437805</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Hypothyroidism" id="0">
+      <data key="d2">79</data>
+      <data key="d3">0.11253561253561253</data>
+      <data key="d4">0.012664264088765512</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Metastatic cancer" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.018518518518518517</data>
+      <data key="d4">0.0003429355281207133</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Coagulopathy" id="0">
+      <data key="d2">49</data>
+      <data key="d3">0.0698005698005698</data>
+      <data key="d4">0.004872119544484217</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Paralysis" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.022792022792022793</data>
+      <data key="d4">0.0005194763029520864</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Renal failure" id="0">
+      <data key="d2">88</data>
+      <data key="d3">0.12535612535612536</data>
+      <data key="d4">0.015714158164300617</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">38</data>
+      <data key="d3">0.05413105413105413</data>
+      <data key="d4">0.0029301710213391124</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Blood loss anemia" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.005698005698005698</data>
+      <data key="d4">3.24672689345054e-05</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.027065527065527065</data>
+      <data key="d4">0.0007325427553347781</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Depression" id="0">
+      <data key="d2">42</data>
+      <data key="d3">0.05982905982905983</data>
+      <data key="d4">0.0035795164000292207</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Drug abuse" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.017094017094017096</data>
+      <data key="d4">0.0002922054204105487</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.045584045584045586</data>
+      <data key="d4">0.0020779052118083457</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Psychoses" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.01282051282051282</data>
+      <data key="d4">0.00016436554898093358</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Lymphoma" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.009971509971509971</data>
+      <data key="d4">9.943101111192279e-05</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">18</data>
+      <data key="d3">0.02564102564102564</data>
+      <data key="d4">0.0006574621959237343</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" AID/HIV" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.002849002849002849</data>
+      <data key="d4">8.11681723362635e-06</data>
+    </edge>
+    <edge source=" Arrhythmia" target=" Obesity" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.008547008547008548</data>
+      <data key="d4">7.305135510263717e-05</data>
+    </edge>
+    <edge source=" Valvular disease" target="CHF" id="0">
+      <data key="d2">68</data>
+      <data key="d3">0.4358974358974359</data>
+      <data key="d4">0.19000657462195925</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Arrhythmia" id="0">
+      <data key="d2">103</data>
+      <data key="d3">0.6602564102564102</data>
+      <data key="d4">0.43593852728468113</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">79</data>
+      <data key="d3">0.5064102564102564</data>
+      <data key="d4">0.2564513477975016</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Complicated hypertension" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.14102564102564102</data>
+      <data key="d4">0.019888231426692965</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Renal failure" id="0">
+      <data key="d2">24</data>
+      <data key="d3">0.15384615384615385</data>
+      <data key="d4">0.02366863905325444</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.05128205128205128</data>
+      <data key="d4">0.0026298487836949372</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">34</data>
+      <data key="d3">0.21794871794871795</data>
+      <data key="d4">0.04750164365548981</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Drug abuse" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.01282051282051282</data>
+      <data key="d4">0.00016436554898093358</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">18</data>
+      <data key="d3">0.11538461538461539</data>
+      <data key="d4">0.013313609467455623</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Other neurological disorder" id="0">
+      <data key="d2">25</data>
+      <data key="d3">0.16025641025641027</data>
+      <data key="d4">0.02568211702827088</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Complicated diabetes" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.038461538461538464</data>
+      <data key="d4">0.0014792899408284025</data>
+    </edge>
+    <edge source=" Valvular disease" target=" AID/HIV" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.00641025641025641</data>
+      <data key="d4">4.1091387245233394e-05</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.20512820512820512</data>
+      <data key="d4">0.042077580539118996</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Liver disease" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.02564102564102564</data>
+      <data key="d4">0.0006574621959237343</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Coagulopathy" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.08333333333333333</data>
+      <data key="d4">0.006944444444444444</data>
+    </edge>
+    <edge source=" Valvular disease" target=" COPD" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.12179487179487179</data>
+      <data key="d4">0.014833990795529257</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Hypothyroidism" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.12179487179487179</data>
+      <data key="d4">0.014833990795529257</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Deficiency anemia" id="0">
+      <data key="d2">27</data>
+      <data key="d3">0.17307692307692307</data>
+      <data key="d4">0.029955621301775145</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.04487179487179487</data>
+      <data key="d4">0.0020134779750164366</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Weight loss" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.04487179487179487</data>
+      <data key="d4">0.0020134779750164366</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Metastatic cancer" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.019230769230769232</data>
+      <data key="d4">0.00036982248520710064</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Depression" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.0641025641025641</data>
+      <data key="d4">0.004109138724523339</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Alcohol abuse" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.02564102564102564</data>
+      <data key="d4">0.0006574621959237343</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Lymphoma" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.01282051282051282</data>
+      <data key="d4">0.00016436554898093358</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Blood loss anemia" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.01282051282051282</data>
+      <data key="d4">0.00016436554898093358</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Paralysis" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.019230769230769232</data>
+      <data key="d4">0.00036982248520710064</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.00641025641025641</data>
+      <data key="d4">4.1091387245233394e-05</data>
+    </edge>
+    <edge source=" Valvular disease" target=" Psychoses" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.00641025641025641</data>
+      <data key="d4">4.1091387245233394e-05</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Valvular disease" id="0">
+      <data key="d2">18</data>
+      <data key="d3">0.2222222222222222</data>
+      <data key="d4">0.04938271604938271</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Complicated hypertension" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.16049382716049382</data>
+      <data key="d4">0.025758268556622464</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Other neurological disorder" id="0">
+      <data key="d2">20</data>
+      <data key="d3">0.24691358024691357</data>
+      <data key="d4">0.06096631611034903</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Complicated diabetes" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.09876543209876543</data>
+      <data key="d4">0.009754610577655844</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Renal failure" id="0">
+      <data key="d2">15</data>
+      <data key="d3">0.18518518518518517</data>
+      <data key="d4">0.034293552812071325</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" AID/HIV" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.012345679012345678</data>
+      <data key="d4">0.00015241579027587256</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target="CHF" id="0">
+      <data key="d2">25</data>
+      <data key="d3">0.30864197530864196</data>
+      <data key="d4">0.09525986892242035</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" COPD" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.16049382716049382</data>
+      <data key="d4">0.025758268556622464</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Coagulopathy" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.1111111111111111</data>
+      <data key="d4">0.012345679012345678</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Deficiency anemia" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.2345679012345679</data>
+      <data key="d4">0.055022100289589995</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Arrhythmia" id="0">
+      <data key="d2">38</data>
+      <data key="d3">0.4691358024691358</data>
+      <data key="d4">0.22008840115835998</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.32098765432098764</data>
+      <data key="d4">0.10303307422648986</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">24</data>
+      <data key="d3">0.2962962962962963</data>
+      <data key="d4">0.0877914951989026</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">14</data>
+      <data key="d3">0.1728395061728395</data>
+      <data key="d4">0.029873494894071023</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Liver disease" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.037037037037037035</data>
+      <data key="d4">0.0013717421124828531</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Alcohol abuse" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.12345679012345678</data>
+      <data key="d4">0.015241579027587257</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Drug abuse" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.06172839506172839</data>
+      <data key="d4">0.0038103947568968143</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Weight loss" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.12345679012345678</data>
+      <data key="d4">0.015241579027587257</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Lymphoma" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.024691358024691357</data>
+      <data key="d4">0.0006096631611034902</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Depression" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.06172839506172839</data>
+      <data key="d4">0.0038103947568968143</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Metastatic cancer" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.024691358024691357</data>
+      <data key="d4">0.0006096631611034902</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.04938271604938271</data>
+      <data key="d4">0.002438652644413961</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Hypothyroidism" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.13580246913580246</data>
+      <data key="d4">0.01844231062338058</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.04938271604938271</data>
+      <data key="d4">0.002438652644413961</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Obesity" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.037037037037037035</data>
+      <data key="d4">0.0013717421124828531</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Psychoses" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.012345679012345678</data>
+      <data key="d4">0.00015241579027587256</data>
+    </edge>
+    <edge source=" Pulmonary circulation disorder" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.012345679012345678</data>
+      <data key="d4">0.00015241579027587256</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Valvular disease" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.10294117647058823</data>
+      <data key="d4">0.010596885813148788</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">36</data>
+      <data key="d3">0.5294117647058824</data>
+      <data key="d4">0.28027681660899656</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Arrhythmia" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.47058823529411764</data>
+      <data key="d4">0.22145328719723184</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Complicated hypertension" id="0">
+      <data key="d2">15</data>
+      <data key="d3">0.22058823529411764</data>
+      <data key="d4">0.048659169550173006</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Other neurological disorder" id="0">
+      <data key="d2">23</data>
+      <data key="d3">0.3382352941176471</data>
+      <data key="d4">0.11440311418685123</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" COPD" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.19117647058823528</data>
+      <data key="d4">0.03654844290657439</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Renal failure" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.17647058823529413</data>
+      <data key="d4">0.031141868512110732</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.23529411764705882</data>
+      <data key="d4">0.05536332179930796</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target="CHF" id="0">
+      <data key="d2">15</data>
+      <data key="d3">0.22058823529411764</data>
+      <data key="d4">0.048659169550173006</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Hypothyroidism" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.11764705882352941</data>
+      <data key="d4">0.01384083044982699</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Deficiency anemia" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.23529411764705882</data>
+      <data key="d4">0.05536332179930796</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Weight loss" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.10294117647058823</data>
+      <data key="d4">0.010596885813148788</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Alcohol abuse" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.07352941176470588</data>
+      <data key="d4">0.005406574394463668</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Depression" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.08823529411764706</data>
+      <data key="d4">0.007785467128027683</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Complicated diabetes" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.08823529411764706</data>
+      <data key="d4">0.007785467128027683</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">14</data>
+      <data key="d3">0.20588235294117646</data>
+      <data key="d4">0.04238754325259515</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Liver disease" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.04411764705882353</data>
+      <data key="d4">0.0019463667820069207</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.014705882352941176</data>
+      <data key="d4">0.00021626297577854672</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Metastatic cancer" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.04411764705882353</data>
+      <data key="d4">0.0019463667820069207</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Coagulopathy" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.07352941176470588</data>
+      <data key="d4">0.005406574394463668</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.029411764705882353</data>
+      <data key="d4">0.0008650519031141869</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Obesity" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.029411764705882353</data>
+      <data key="d4">0.0008650519031141869</data>
+    </edge>
+    <edge source=" Peripheral vascular disorder" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.058823529411764705</data>
+      <data key="d4">0.0034602076124567475</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Other neurological disorder" id="0">
+      <data key="d2">313</data>
+      <data key="d3">0.2743207712532866</data>
+      <data key="d4">0.07525188554099797</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Coagulopathy" id="0">
+      <data key="d2">52</data>
+      <data key="d3">0.04557405784399649</data>
+      <data key="d4">0.0020769947483679383</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Arrhythmia" id="0">
+      <data key="d2">371</data>
+      <data key="d3">0.32515337423312884</data>
+      <data key="d4">0.10572471677518913</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" COPD" id="0">
+      <data key="d2">123</data>
+      <data key="d3">0.10780017528483786</data>
+      <data key="d4">0.011620877791441768</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Alcohol abuse" id="0">
+      <data key="d2">135</data>
+      <data key="d3">0.11831726555652936</data>
+      <data key="d4">0.013998975328774288</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target="CHF" id="0">
+      <data key="d2">130</data>
+      <data key="d3">0.11393514460999124</data>
+      <data key="d4">0.012981217177299616</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Valvular disease" id="0">
+      <data key="d2">79</data>
+      <data key="d3">0.06923751095530237</data>
+      <data key="d4">0.004793832923285615</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Deficiency anemia" id="0">
+      <data key="d2">117</data>
+      <data key="d3">0.10254163014899212</data>
+      <data key="d4">0.01051478591361269</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">176</data>
+      <data key="d3">0.15425065731814197</data>
+      <data key="d4">0.023793265283078863</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Weight loss" id="0">
+      <data key="d2">57</data>
+      <data key="d3">0.04995617879053462</data>
+      <data key="d4">0.002495619799351861</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">236</data>
+      <data key="d3">0.20683610867659946</data>
+      <data key="d4">0.042781175852478065</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Hypothyroidism" id="0">
+      <data key="d2">111</data>
+      <data key="d3">0.09728308501314636</data>
+      <data key="d4">0.009463998629675063</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Depression" id="0">
+      <data key="d2">79</data>
+      <data key="d3">0.06923751095530237</data>
+      <data key="d4">0.004793832923285615</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Psychoses" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.011393514460999123</data>
+      <data key="d4">0.00012981217177299615</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.022787028921998246</data>
+      <data key="d4">0.0005192486870919846</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Renal failure" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.008764241893076249</data>
+      <data key="d4">7.681193596035275e-05</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Paralysis" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.019281332164767746</data>
+      <data key="d4">0.00037176977004810724</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Liver disease" id="0">
+      <data key="d2">23</data>
+      <data key="d3">0.020157756354075372</data>
+      <data key="d4">0.00040633514123026605</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.022787028921998246</data>
+      <data key="d4">0.0005192486870919846</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">36</data>
+      <data key="d3">0.03155127081507449</data>
+      <data key="d4">0.0009954826900461715</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Drug abuse" id="0">
+      <data key="d2">20</data>
+      <data key="d3">0.017528483786152498</data>
+      <data key="d4">0.000307247743841411</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Lymphoma" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.014022787028921999</data>
+      <data key="d4">0.00019663855605850305</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">43</data>
+      <data key="d3">0.03768624014022787</data>
+      <data key="d4">0.001420252695906922</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Obesity" id="0">
+      <data key="d2">23</data>
+      <data key="d3">0.020157756354075372</data>
+      <data key="d4">0.00040633514123026605</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Metastatic cancer" id="0">
+      <data key="d2">36</data>
+      <data key="d3">0.03155127081507449</data>
+      <data key="d4">0.0009954826900461715</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Blood loss anemia" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.006134969325153374</data>
+      <data key="d4">3.763784862057285e-05</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" AID/HIV" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.0043821209465381246</data>
+      <data key="d4">1.920298399008819e-05</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Complicated hypertension" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.006134969325153374</data>
+      <data key="d4">3.763784862057285e-05</data>
+    </edge>
+    <edge source=" Uncomplicated hypertension" target=" Complicated diabetes" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.018404907975460124</data>
+      <data key="d4">0.0003387406375851557</data>
+    </edge>
+    <edge source=" Complicated hypertension" target="CHF" id="0">
+      <data key="d2">54</data>
+      <data key="d3">0.3333333333333333</data>
+      <data key="d4">0.1111111111111111</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Valvular disease" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.13580246913580246</data>
+      <data key="d4">0.01844231062338058</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Renal failure" id="0">
+      <data key="d2">128</data>
+      <data key="d3">0.7901234567901234</data>
+      <data key="d4">0.624295076969974</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.04938271604938271</data>
+      <data key="d4">0.002438652644413961</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">48</data>
+      <data key="d3">0.2962962962962963</data>
+      <data key="d4">0.0877914951989026</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Drug abuse" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.030864197530864196</data>
+      <data key="d4">0.0009525986892242036</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.08024691358024691</data>
+      <data key="d4">0.006439567139155616</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Other neurological disorder" id="0">
+      <data key="d2">44</data>
+      <data key="d3">0.2716049382716049</data>
+      <data key="d4">0.07376924249352232</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Complicated diabetes" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.13580246913580246</data>
+      <data key="d4">0.01844231062338058</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" AID/HIV" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.030864197530864196</data>
+      <data key="d4">0.0009525986892242036</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Arrhythmia" id="0">
+      <data key="d2">83</data>
+      <data key="d3">0.5123456790123457</data>
+      <data key="d4">0.2624980948026216</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">53</data>
+      <data key="d3">0.3271604938271605</data>
+      <data key="d4">0.10703398872123153</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Liver disease" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.04938271604938271</data>
+      <data key="d4">0.002438652644413961</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Coagulopathy" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.10493827160493827</data>
+      <data key="d4">0.011012040847431792</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Deficiency anemia" id="0">
+      <data key="d2">49</data>
+      <data key="d3">0.30246913580246915</data>
+      <data key="d4">0.09148757811309252</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Psychoses" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.006172839506172839</data>
+      <data key="d4">3.810394756896814e-05</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Hypothyroidism" id="0">
+      <data key="d2">25</data>
+      <data key="d3">0.15432098765432098</data>
+      <data key="d4">0.023814967230605086</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Depression" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.06790123456790123</data>
+      <data key="d4">0.004610577655845145</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Paralysis" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.024691358024691357</data>
+      <data key="d4">0.0006096631611034902</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Metastatic cancer" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.037037037037037035</data>
+      <data key="d4">0.0013717421124828531</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.05555555555555555</data>
+      <data key="d4">0.0030864197530864196</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" COPD" id="0">
+      <data key="d2">28</data>
+      <data key="d3">0.1728395061728395</data>
+      <data key="d4">0.029873494894071023</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">15</data>
+      <data key="d3">0.09259259259259259</data>
+      <data key="d4">0.008573388203017831</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Weight loss" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.07407407407407407</data>
+      <data key="d4">0.0054869684499314125</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.043209876543209874</data>
+      <data key="d4">0.001867093430879439</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Lymphoma" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.018518518518518517</data>
+      <data key="d4">0.0003429355281207133</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Alcohol abuse" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.037037037037037035</data>
+      <data key="d4">0.0013717421124828531</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Blood loss anemia" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.018518518518518517</data>
+      <data key="d4">0.0003429355281207133</data>
+    </edge>
+    <edge source=" Complicated hypertension" target=" Obesity" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.012345679012345678</data>
+      <data key="d4">0.00015241579027587256</data>
+    </edge>
+    <edge source=" Paralysis" target="CHF" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.11904761904761904</data>
+      <data key="d4">0.014172335600907028</data>
+    </edge>
+    <edge source=" Paralysis" target=" Arrhythmia" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.38095238095238093</data>
+      <data key="d4">0.14512471655328796</data>
+    </edge>
+    <edge source=" Paralysis" target=" Metastatic cancer" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.047619047619047616</data>
+      <data key="d4">0.0022675736961451243</data>
+    </edge>
+    <edge source=" Paralysis" target=" Weight loss" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.09523809523809523</data>
+      <data key="d4">0.009070294784580497</data>
+    </edge>
+    <edge source=" Paralysis" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.5238095238095238</data>
+      <data key="d4">0.2743764172335601</data>
+    </edge>
+    <edge source=" Paralysis" target=" Deficiency anemia" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.11904761904761904</data>
+      <data key="d4">0.014172335600907028</data>
+    </edge>
+    <edge source=" Paralysis" target=" Lymphoma" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.023809523809523808</data>
+      <data key="d4">0.0005668934240362811</data>
+    </edge>
+    <edge source=" Paralysis" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.16666666666666666</data>
+      <data key="d4">0.027777777777777776</data>
+    </edge>
+    <edge source=" Paralysis" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.16666666666666666</data>
+      <data key="d4">0.027777777777777776</data>
+    </edge>
+    <edge source=" Paralysis" target=" Hypothyroidism" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.14285714285714285</data>
+      <data key="d4">0.02040816326530612</data>
+    </edge>
+    <edge source=" Paralysis" target=" Complicated hypertension" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.09523809523809523</data>
+      <data key="d4">0.009070294784580497</data>
+    </edge>
+    <edge source=" Paralysis" target=" Other neurological disorder" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.2619047619047619</data>
+      <data key="d4">0.06859410430839002</data>
+    </edge>
+    <edge source=" Paralysis" target=" Renal failure" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.14285714285714285</data>
+      <data key="d4">0.02040816326530612</data>
+    </edge>
+    <edge source=" Paralysis" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.07142857142857142</data>
+      <data key="d4">0.00510204081632653</data>
+    </edge>
+    <edge source=" Paralysis" target=" Depression" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.09523809523809523</data>
+      <data key="d4">0.009070294784580497</data>
+    </edge>
+    <edge source=" Paralysis" target=" Coagulopathy" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.047619047619047616</data>
+      <data key="d4">0.0022675736961451243</data>
+    </edge>
+    <edge source=" Paralysis" target=" Alcohol abuse" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.047619047619047616</data>
+      <data key="d4">0.0022675736961451243</data>
+    </edge>
+    <edge source=" Paralysis" target=" COPD" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.047619047619047616</data>
+      <data key="d4">0.0022675736961451243</data>
+    </edge>
+    <edge source=" Paralysis" target=" Blood loss anemia" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.023809523809523808</data>
+      <data key="d4">0.0005668934240362811</data>
+    </edge>
+    <edge source=" Paralysis" target=" Complicated diabetes" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.07142857142857142</data>
+      <data key="d4">0.00510204081632653</data>
+    </edge>
+    <edge source=" Paralysis" target=" AID/HIV" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.023809523809523808</data>
+      <data key="d4">0.0005668934240362811</data>
+    </edge>
+    <edge source=" Paralysis" target=" Valvular disease" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.07142857142857142</data>
+      <data key="d4">0.00510204081632653</data>
+    </edge>
+    <edge source=" Paralysis" target=" Drug abuse" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.023809523809523808</data>
+      <data key="d4">0.0005668934240362811</data>
+    </edge>
+    <edge source=" Paralysis" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.023809523809523808</data>
+      <data key="d4">0.0005668934240362811</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Arrhythmia" id="0">
+      <data key="d2">167</data>
+      <data key="d3">0.25535168195718655</data>
+      <data key="d4">0.06520448147836415</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Complicated diabetes" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.0290519877675841</data>
+      <data key="d4">0.0008440179932478561</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Deficiency anemia" id="0">
+      <data key="d2">93</data>
+      <data key="d3">0.14220183486238533</data>
+      <data key="d4">0.020221361838229108</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">313</data>
+      <data key="d3">0.4785932721712538</data>
+      <data key="d4">0.2290515201675878</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Coagulopathy" id="0">
+      <data key="d2">37</data>
+      <data key="d3">0.05657492354740061</data>
+      <data key="d4">0.003200721974394224</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Valvular disease" id="0">
+      <data key="d2">25</data>
+      <data key="d3">0.0382262996941896</data>
+      <data key="d4">0.00146124998831</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">20</data>
+      <data key="d3">0.03058103975535168</data>
+      <data key="d4">0.0009351999925184</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Complicated hypertension" id="0">
+      <data key="d2">44</data>
+      <data key="d3">0.0672782874617737</data>
+      <data key="d4">0.004526367963789055</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Renal failure" id="0">
+      <data key="d2">41</data>
+      <data key="d3">0.06269113149847094</data>
+      <data key="d4">0.003930177968558575</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" AID/HIV" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.010703363914373088</data>
+      <data key="d4">0.000114561999083504</data>
+    </edge>
+    <edge source=" Other neurological disorder" target="CHF" id="0">
+      <data key="d2">59</data>
+      <data key="d3">0.09021406727828746</data>
+      <data key="d4">0.008138577934891375</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" COPD" id="0">
+      <data key="d2">74</data>
+      <data key="d3">0.11314984709480122</data>
+      <data key="d4">0.012802887897576895</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Weight loss" id="0">
+      <data key="d2">57</data>
+      <data key="d3">0.0871559633027523</data>
+      <data key="d4">0.007596161939230705</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.01529051987767584</data>
+      <data key="d4">0.0002337999981296</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Hypothyroidism" id="0">
+      <data key="d2">53</data>
+      <data key="d3">0.08103975535168195</data>
+      <data key="d4">0.006567441947460464</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">101</data>
+      <data key="d3">0.154434250764526</data>
+      <data key="d4">0.023849937809200496</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Liver disease" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.03363914373088685</data>
+      <data key="d4">0.0011315919909472638</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Metastatic cancer" id="0">
+      <data key="d2">29</data>
+      <data key="d3">0.04434250764525994</data>
+      <data key="d4">0.0019662579842699363</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">116</data>
+      <data key="d3">0.17737003058103976</data>
+      <data key="d4">0.03146012774831898</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Alcohol abuse" id="0">
+      <data key="d2">98</data>
+      <data key="d3">0.14984709480122324</data>
+      <data key="d4">0.022454151820366784</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Drug abuse" id="0">
+      <data key="d2">29</data>
+      <data key="d3">0.04434250764525994</data>
+      <data key="d4">0.0019662579842699363</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Psychoses" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.01529051987767584</data>
+      <data key="d4">0.0002337999981296</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Obesity" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.016819571865443424</data>
+      <data key="d4">0.00028289799773681596</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Depression" id="0">
+      <data key="d2">45</data>
+      <data key="d3">0.06880733944954129</data>
+      <data key="d4">0.004734449962124401</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Paralysis" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.016819571865443424</data>
+      <data key="d4">0.00028289799773681596</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">38</data>
+      <data key="d3">0.0581039755351682</data>
+      <data key="d4">0.0033760719729914244</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">23</data>
+      <data key="d3">0.035168195718654434</data>
+      <data key="d4">0.0012368019901055842</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Blood loss anemia" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.009174311926605505</data>
+      <data key="d4">8.416799932665601e-05</data>
+    </edge>
+    <edge source=" Other neurological disorder" target=" Lymphoma" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.013761467889908258</data>
+      <data key="d4">0.00018937799848497603</data>
+    </edge>
+    <edge source=" COPD" target=" Arrhythmia" id="0">
+      <data key="d2">91</data>
+      <data key="d3">0.33579335793357934</data>
+      <data key="d4">0.11275717923230894</data>
+    </edge>
+    <edge source=" COPD" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">123</data>
+      <data key="d3">0.45387453874538747</data>
+      <data key="d4">0.20600209692133822</data>
+    </edge>
+    <edge source=" COPD" target=" Alcohol abuse" id="0">
+      <data key="d2">41</data>
+      <data key="d3">0.15129151291512916</data>
+      <data key="d4">0.022889121880148692</data>
+    </edge>
+    <edge source=" COPD" target="CHF" id="0">
+      <data key="d2">64</data>
+      <data key="d3">0.23616236162361623</data>
+      <data key="d4">0.05577266104764368</data>
+    </edge>
+    <edge source=" COPD" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.04797047970479705</data>
+      <data key="d4">0.0023011669231083457</data>
+    </edge>
+    <edge source=" COPD" target=" Other neurological disorder" id="0">
+      <data key="d2">74</data>
+      <data key="d3">0.2730627306273063</data>
+      <data key="d4">0.07456325485764084</data>
+    </edge>
+    <edge source=" COPD" target=" Coagulopathy" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.04428044280442804</data>
+      <data key="d4">0.001960757614956223</data>
+    </edge>
+    <edge source=" COPD" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">51</data>
+      <data key="d3">0.1881918819188192</data>
+      <data key="d4">0.03541618442014679</data>
+    </edge>
+    <edge source=" COPD" target=" Deficiency anemia" id="0">
+      <data key="d2">34</data>
+      <data key="d3">0.12546125461254612</data>
+      <data key="d4">0.015740526408954125</data>
+    </edge>
+    <edge source=" COPD" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.02214022140221402</data>
+      <data key="d4">0.0004901894037390558</data>
+    </edge>
+    <edge source=" COPD" target=" Valvular disease" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.07011070110701106</data>
+      <data key="d4">0.004915510409716642</data>
+    </edge>
+    <edge source=" COPD" target=" Hypothyroidism" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.07749077490774908</data>
+      <data key="d4">0.006004820195803435</data>
+    </edge>
+    <edge source=" COPD" target=" AID/HIV" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.007380073800738007</data>
+      <data key="d4">5.446548930433953e-05</data>
+    </edge>
+    <edge source=" COPD" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">54</data>
+      <data key="d3">0.1992619926199262</data>
+      <data key="d4">0.03970534170286352</data>
+    </edge>
+    <edge source=" COPD" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.06273062730627306</data>
+      <data key="d4">0.003935131602238531</data>
+    </edge>
+    <edge source=" COPD" target=" Drug abuse" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.03690036900369004</data>
+      <data key="d4">0.0013616372326084884</data>
+    </edge>
+    <edge source=" COPD" target=" Complicated hypertension" id="0">
+      <data key="d2">28</data>
+      <data key="d3">0.1033210332103321</data>
+      <data key="d4">0.01067523590365055</data>
+    </edge>
+    <edge source=" COPD" target=" Weight loss" id="0">
+      <data key="d2">14</data>
+      <data key="d3">0.05166051660516605</data>
+      <data key="d4">0.0026688089759126375</data>
+    </edge>
+    <edge source=" COPD" target=" Depression" id="0">
+      <data key="d2">30</data>
+      <data key="d3">0.11070110701107011</data>
+      <data key="d4">0.012254735093476396</data>
+    </edge>
+    <edge source=" COPD" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.04797047970479705</data>
+      <data key="d4">0.0023011669231083457</data>
+    </edge>
+    <edge source=" COPD" target=" Renal failure" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.08118081180811808</data>
+      <data key="d4">0.006590324205825083</data>
+    </edge>
+    <edge source=" COPD" target=" Obesity" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.04059040590405904</data>
+      <data key="d4">0.0016475810514562708</data>
+    </edge>
+    <edge source=" COPD" target=" Blood loss anemia" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.007380073800738007</data>
+      <data key="d4">5.446548930433953e-05</data>
+    </edge>
+    <edge source=" COPD" target=" Psychoses" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.007380073800738007</data>
+      <data key="d4">5.446548930433953e-05</data>
+    </edge>
+    <edge source=" COPD" target=" Paralysis" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.007380073800738007</data>
+      <data key="d4">5.446548930433953e-05</data>
+    </edge>
+    <edge source=" COPD" target=" Complicated diabetes" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.01845018450184502</data>
+      <data key="d4">0.0003404093081521221</data>
+    </edge>
+    <edge source=" COPD" target=" Metastatic cancer" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.06273062730627306</data>
+      <data key="d4">0.003935131602238531</data>
+    </edge>
+    <edge source=" COPD" target=" Lymphoma" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.014760147601476014</data>
+      <data key="d4">0.00021786195721735813</data>
+    </edge>
+    <edge source=" COPD" target=" Liver disease" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.025830258302583026</data>
+      <data key="d4">0.0006672022439781594</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target="CHF" id="0">
+      <data key="d2">75</data>
+      <data key="d3">0.1875</data>
+      <data key="d4">0.03515625</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Arrhythmia" id="0">
+      <data key="d2">139</data>
+      <data key="d3">0.3475</data>
+      <data key="d4">0.12075624999999998</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Deficiency anemia" id="0">
+      <data key="d2">68</data>
+      <data key="d3">0.17</data>
+      <data key="d4">0.028900000000000006</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Valvular disease" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.08</data>
+      <data key="d4">0.0064</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Liver disease" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.0475</data>
+      <data key="d4">0.00225625</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">74</data>
+      <data key="d3">0.185</data>
+      <data key="d4">0.034225</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">236</data>
+      <data key="d3">0.59</data>
+      <data key="d4">0.34809999999999997</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Complicated hypertension" id="0">
+      <data key="d2">53</data>
+      <data key="d3">0.1325</data>
+      <data key="d4">0.017556250000000002</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Other neurological disorder" id="0">
+      <data key="d2">101</data>
+      <data key="d3">0.2525</data>
+      <data key="d4">0.06375625</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Renal failure" id="0">
+      <data key="d2">58</data>
+      <data key="d3">0.145</data>
+      <data key="d4">0.021025</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" AID/HIV" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.0125</data>
+      <data key="d4">0.00015625000000000003</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Coagulopathy" id="0">
+      <data key="d2">28</data>
+      <data key="d3">0.07</data>
+      <data key="d4">0.004900000000000001</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Psychoses" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.0125</data>
+      <data key="d4">0.00015625000000000003</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Hypothyroidism" id="0">
+      <data key="d2">38</data>
+      <data key="d3">0.095</data>
+      <data key="d4">0.009025</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Alcohol abuse" id="0">
+      <data key="d2">34</data>
+      <data key="d3">0.085</data>
+      <data key="d4">0.007225000000000001</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">14</data>
+      <data key="d3">0.035</data>
+      <data key="d4">0.0012250000000000002</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Complicated diabetes" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.02</data>
+      <data key="d4">0.0004</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Metastatic cancer" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.0425</data>
+      <data key="d4">0.0018062500000000003</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" COPD" id="0">
+      <data key="d2">54</data>
+      <data key="d3">0.135</data>
+      <data key="d4">0.018225</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.0475</data>
+      <data key="d4">0.00225625</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Depression" id="0">
+      <data key="d2">25</data>
+      <data key="d3">0.0625</data>
+      <data key="d4">0.00390625</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Paralysis" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.0175</data>
+      <data key="d4">0.00030625000000000004</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Obesity" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.0325</data>
+      <data key="d4">0.0010562500000000001</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Weight loss" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.065</data>
+      <data key="d4">0.0042250000000000005</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Lymphoma" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.0225</data>
+      <data key="d4">0.00050625</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Drug abuse" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.0125</data>
+      <data key="d4">0.00015625000000000003</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.0225</data>
+      <data key="d4">0.00050625</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">14</data>
+      <data key="d3">0.035</data>
+      <data key="d4">0.0012250000000000002</data>
+    </edge>
+    <edge source=" Uncomplicated diabetes" target=" Blood loss anemia" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.0025</data>
+      <data key="d4">6.25e-06</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Arrhythmia" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.3548387096774194</data>
+      <data key="d4">0.12591050988553593</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Other neurological disorder" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.3064516129032258</data>
+      <data key="d4">0.09391259105098855</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Deficiency anemia" id="0">
+      <data key="d2">23</data>
+      <data key="d3">0.3709677419354839</data>
+      <data key="d4">0.13761706555671177</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Valvular disease" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.0967741935483871</data>
+      <data key="d4">0.009365244536940686</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.12903225806451613</data>
+      <data key="d4">0.016649323621227886</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Complicated hypertension" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.3548387096774194</data>
+      <data key="d4">0.12591050988553593</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Renal failure" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.3387096774193548</data>
+      <data key="d4">0.11472424557752339</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" AID/HIV" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.016129032258064516</data>
+      <data key="d4">0.0002601456815816857</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Lymphoma" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.016129032258064516</data>
+      <data key="d4">0.0002601456815816857</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Coagulopathy" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.06451612903225806</data>
+      <data key="d4">0.004162330905306971</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.25806451612903225</data>
+      <data key="d4">0.06659729448491154</data>
+    </edge>
+    <edge source=" Complicated diabetes" target="CHF" id="0">
+      <data key="d2">18</data>
+      <data key="d3">0.2903225806451613</data>
+      <data key="d4">0.08428720083246619</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.12903225806451613</data>
+      <data key="d4">0.016649323621227886</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Hypothyroidism" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.12903225806451613</data>
+      <data key="d4">0.016649323621227886</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Weight loss" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.08064516129032258</data>
+      <data key="d4">0.0065036420395421434</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" COPD" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.08064516129032258</data>
+      <data key="d4">0.0065036420395421434</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Depression" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.12903225806451613</data>
+      <data key="d4">0.016649323621227886</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.3387096774193548</data>
+      <data key="d4">0.11472424557752339</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.0967741935483871</data>
+      <data key="d4">0.009365244536940686</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Paralysis" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.04838709677419355</data>
+      <data key="d4">0.0023413111342351716</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Alcohol abuse" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.03225806451612903</data>
+      <data key="d4">0.0010405827263267429</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Obesity" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.016129032258064516</data>
+      <data key="d4">0.0002601456815816857</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Psychoses" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.016129032258064516</data>
+      <data key="d4">0.0002601456815816857</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Liver disease" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.016129032258064516</data>
+      <data key="d4">0.0002601456815816857</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Blood loss anemia" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.016129032258064516</data>
+      <data key="d4">0.0002601456815816857</data>
+    </edge>
+    <edge source=" Complicated diabetes" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.04838709677419355</data>
+      <data key="d4">0.0023413111342351716</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Other neurological disorder" id="0">
+      <data key="d2">53</data>
+      <data key="d3">0.2548076923076923</data>
+      <data key="d4">0.06492696005917159</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Arrhythmia" id="0">
+      <data key="d2">79</data>
+      <data key="d3">0.3798076923076923</data>
+      <data key="d4">0.14425388313609466</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">111</data>
+      <data key="d3">0.5336538461538461</data>
+      <data key="d4">0.2847864275147929</data>
+    </edge>
+    <edge source=" Hypothyroidism" target="CHF" id="0">
+      <data key="d2">34</data>
+      <data key="d3">0.16346153846153846</data>
+      <data key="d4">0.02671967455621302</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Valvular disease" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.09134615384615384</data>
+      <data key="d4">0.008344119822485205</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" COPD" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.10096153846153846</data>
+      <data key="d4">0.010193232248520711</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">38</data>
+      <data key="d3">0.18269230769230768</data>
+      <data key="d4">0.03337647928994082</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Renal failure" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.125</data>
+      <data key="d4">0.015625</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.15384615384615385</data>
+      <data key="d4">0.02366863905325444</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Deficiency anemia" id="0">
+      <data key="d2">35</data>
+      <data key="d3">0.16826923076923078</data>
+      <data key="d4">0.028314534023668642</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Complicated hypertension" id="0">
+      <data key="d2">25</data>
+      <data key="d3">0.1201923076923077</data>
+      <data key="d4">0.014446190828402367</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Complicated diabetes" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.038461538461538464</data>
+      <data key="d4">0.0014792899408284025</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Paralysis" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.028846153846153848</data>
+      <data key="d4">0.0008321005917159765</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Depression" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.10096153846153846</data>
+      <data key="d4">0.010193232248520711</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.038461538461538464</data>
+      <data key="d4">0.0014792899408284025</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Psychoses" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.019230769230769232</data>
+      <data key="d4">0.00036982248520710064</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Alcohol abuse" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.03365384615384615</data>
+      <data key="d4">0.0011325813609467455</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Liver disease" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.028846153846153848</data>
+      <data key="d4">0.0008321005917159765</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.038461538461538464</data>
+      <data key="d4">0.0014792899408284025</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Weight loss" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.04326923076923077</data>
+      <data key="d4">0.0018722263313609465</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Drug abuse" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.019230769230769232</data>
+      <data key="d4">0.00036982248520710064</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Coagulopathy" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.03365384615384615</data>
+      <data key="d4">0.0011325813609467455</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Blood loss anemia" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.009615384615384616</data>
+      <data key="d4">9.245562130177516e-05</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Metastatic cancer" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.04326923076923077</data>
+      <data key="d4">0.0018722263313609465</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.052884615384615384</data>
+      <data key="d4">0.002796782544378698</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Obesity" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.014423076923076924</data>
+      <data key="d4">0.00020802514792899412</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.019230769230769232</data>
+      <data key="d4">0.00036982248520710064</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" AID/HIV" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.009615384615384616</data>
+      <data key="d4">9.245562130177516e-05</data>
+    </edge>
+    <edge source=" Hypothyroidism" target=" Lymphoma" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.004807692307692308</data>
+      <data key="d4">2.311390532544379e-05</data>
+    </edge>
+    <edge source=" Renal failure" target="CHF" id="0">
+      <data key="d2">54</data>
+      <data key="d3">0.34615384615384615</data>
+      <data key="d4">0.11982248520710058</data>
+    </edge>
+    <edge source=" Renal failure" target=" Valvular disease" id="0">
+      <data key="d2">24</data>
+      <data key="d3">0.15384615384615385</data>
+      <data key="d4">0.02366863905325444</data>
+    </edge>
+    <edge source=" Renal failure" target=" Complicated hypertension" id="0">
+      <data key="d2">128</data>
+      <data key="d3">0.8205128205128205</data>
+      <data key="d4">0.6732412886259039</data>
+    </edge>
+    <edge source=" Renal failure" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.057692307692307696</data>
+      <data key="d4">0.003328402366863906</data>
+    </edge>
+    <edge source=" Renal failure" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">52</data>
+      <data key="d3">0.3333333333333333</data>
+      <data key="d4">0.1111111111111111</data>
+    </edge>
+    <edge source=" Renal failure" target=" Drug abuse" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.02564102564102564</data>
+      <data key="d4">0.0006574621959237343</data>
+    </edge>
+    <edge source=" Renal failure" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">15</data>
+      <data key="d3">0.09615384615384616</data>
+      <data key="d4">0.009245562130177515</data>
+    </edge>
+    <edge source=" Renal failure" target=" Other neurological disorder" id="0">
+      <data key="d2">41</data>
+      <data key="d3">0.26282051282051283</data>
+      <data key="d4">0.06907462195923735</data>
+    </edge>
+    <edge source=" Renal failure" target=" Complicated diabetes" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.1346153846153846</data>
+      <data key="d4">0.018121301775147928</data>
+    </edge>
+    <edge source=" Renal failure" target=" AID/HIV" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.03205128205128205</data>
+      <data key="d4">0.0010272846811308347</data>
+    </edge>
+    <edge source=" Renal failure" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">58</data>
+      <data key="d3">0.3717948717948718</data>
+      <data key="d4">0.13823142669296518</data>
+    </edge>
+    <edge source=" Renal failure" target=" Liver disease" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.0641025641025641</data>
+      <data key="d4">0.004109138724523339</data>
+    </edge>
+    <edge source=" Renal failure" target=" Coagulopathy" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.12179487179487179</data>
+      <data key="d4">0.014833990795529257</data>
+    </edge>
+    <edge source=" Renal failure" target=" Arrhythmia" id="0">
+      <data key="d2">88</data>
+      <data key="d3">0.5641025641025641</data>
+      <data key="d4">0.31821170282708744</data>
+    </edge>
+    <edge source=" Renal failure" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.0641025641025641</data>
+      <data key="d4">0.004109138724523339</data>
+    </edge>
+    <edge source=" Renal failure" target=" Hypothyroidism" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.16666666666666666</data>
+      <data key="d4">0.027777777777777776</data>
+    </edge>
+    <edge source=" Renal failure" target=" Deficiency anemia" id="0">
+      <data key="d2">53</data>
+      <data key="d3">0.33974358974358976</data>
+      <data key="d4">0.11542570677186063</data>
+    </edge>
+    <edge source=" Renal failure" target=" Psychoses" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.00641025641025641</data>
+      <data key="d4">4.1091387245233394e-05</data>
+    </edge>
+    <edge source=" Renal failure" target=" Depression" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.08333333333333333</data>
+      <data key="d4">0.006944444444444444</data>
+    </edge>
+    <edge source=" Renal failure" target=" Paralysis" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.038461538461538464</data>
+      <data key="d4">0.0014792899408284025</data>
+    </edge>
+    <edge source=" Renal failure" target=" Metastatic cancer" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.03205128205128205</data>
+      <data key="d4">0.0010272846811308347</data>
+    </edge>
+    <edge source=" Renal failure" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.05128205128205128</data>
+      <data key="d4">0.0026298487836949372</data>
+    </edge>
+    <edge source=" Renal failure" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.07692307692307693</data>
+      <data key="d4">0.00591715976331361</data>
+    </edge>
+    <edge source=" Renal failure" target=" COPD" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.14102564102564102</data>
+      <data key="d4">0.019888231426692965</data>
+    </edge>
+    <edge source=" Renal failure" target=" Weight loss" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.07692307692307693</data>
+      <data key="d4">0.00591715976331361</data>
+    </edge>
+    <edge source=" Renal failure" target=" Lymphoma" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.02564102564102564</data>
+      <data key="d4">0.0006574621959237343</data>
+    </edge>
+    <edge source=" Renal failure" target=" Blood loss anemia" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.019230769230769232</data>
+      <data key="d4">0.00036982248520710064</data>
+    </edge>
+    <edge source=" Renal failure" target=" Alcohol abuse" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.03205128205128205</data>
+      <data key="d4">0.0010272846811308347</data>
+    </edge>
+    <edge source=" Renal failure" target=" Obesity" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.019230769230769232</data>
+      <data key="d4">0.00036982248520710064</data>
+    </edge>
+    <edge source=" Liver disease" target=" Arrhythmia" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.22972972972972974</data>
+      <data key="d4">0.052775748721694674</data>
+    </edge>
+    <edge source=" Liver disease" target=" Valvular disease" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.05405405405405406</data>
+      <data key="d4">0.002921840759678598</data>
+    </edge>
+    <edge source=" Liver disease" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.25675675675675674</data>
+      <data key="d4">0.06592403214024835</data>
+    </edge>
+    <edge source=" Liver disease" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.35135135135135137</data>
+      <data key="d4">0.12344777209642076</data>
+    </edge>
+    <edge source=" Liver disease" target=" Complicated hypertension" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.10810810810810811</data>
+      <data key="d4">0.011687363038714392</data>
+    </edge>
+    <edge source=" Liver disease" target=" Other neurological disorder" id="0">
+      <data key="d2">22</data>
+      <data key="d3">0.2972972972972973</data>
+      <data key="d4">0.08838568298027759</data>
+    </edge>
+    <edge source=" Liver disease" target=" Renal failure" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.13513513513513514</data>
+      <data key="d4">0.018261504747991236</data>
+    </edge>
+    <edge source=" Liver disease" target=" AID/HIV" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.02702702702702703</data>
+      <data key="d4">0.0007304601899196495</data>
+    </edge>
+    <edge source=" Liver disease" target=" Coagulopathy" id="0">
+      <data key="d2">27</data>
+      <data key="d3">0.36486486486486486</data>
+      <data key="d4">0.1331263696128561</data>
+    </edge>
+    <edge source=" Liver disease" target=" Weight loss" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.08108108108108109</data>
+      <data key="d4">0.006574141709276845</data>
+    </edge>
+    <edge source=" Liver disease" target=" Alcohol abuse" id="0">
+      <data key="d2">41</data>
+      <data key="d3">0.5540540540540541</data>
+      <data key="d4">0.30697589481373266</data>
+    </edge>
+    <edge source=" Liver disease" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">23</data>
+      <data key="d3">0.3108108108108108</data>
+      <data key="d4">0.09660336011687362</data>
+    </edge>
+    <edge source=" Liver disease" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.04054054054054054</data>
+      <data key="d4">0.0016435354273192113</data>
+    </edge>
+    <edge source=" Liver disease" target=" Depression" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.13513513513513514</data>
+      <data key="d4">0.018261504747991236</data>
+    </edge>
+    <edge source=" Liver disease" target=" Hypothyroidism" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.08108108108108109</data>
+      <data key="d4">0.006574141709276845</data>
+    </edge>
+    <edge source=" Liver disease" target=" Obesity" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.05405405405405406</data>
+      <data key="d4">0.002921840759678598</data>
+    </edge>
+    <edge source=" Liver disease" target=" Deficiency anemia" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.13513513513513514</data>
+      <data key="d4">0.018261504747991236</data>
+    </edge>
+    <edge source=" Liver disease" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.04054054054054054</data>
+      <data key="d4">0.0016435354273192113</data>
+    </edge>
+    <edge source=" Liver disease" target=" COPD" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.0945945945945946</data>
+      <data key="d4">0.008948137326515705</data>
+    </edge>
+    <edge source=" Liver disease" target=" Drug abuse" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.05405405405405406</data>
+      <data key="d4">0.002921840759678598</data>
+    </edge>
+    <edge source=" Liver disease" target="CHF" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.0945945945945946</data>
+      <data key="d4">0.008948137326515705</data>
+    </edge>
+    <edge source=" Liver disease" target=" Blood loss anemia" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.013513513513513514</data>
+      <data key="d4">0.00018261504747991238</data>
+    </edge>
+    <edge source=" Liver disease" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.02702702702702703</data>
+      <data key="d4">0.0007304601899196495</data>
+    </edge>
+    <edge source=" Liver disease" target=" Metastatic cancer" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.013513513513513514</data>
+      <data key="d4">0.00018261504747991238</data>
+    </edge>
+    <edge source=" Liver disease" target=" Complicated diabetes" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.013513513513513514</data>
+      <data key="d4">0.00018261504747991238</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Valvular disease" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.045454545454545456</data>
+      <data key="d4">0.002066115702479339</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.045454545454545456</data>
+      <data key="d4">0.002066115702479339</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Complicated hypertension" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.22727272727272727</data>
+      <data key="d4">0.051652892561983466</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Other neurological disorder" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.3181818181818182</data>
+      <data key="d4">0.1012396694214876</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Complicated diabetes" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.045454545454545456</data>
+      <data key="d4">0.002066115702479339</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Renal failure" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.22727272727272727</data>
+      <data key="d4">0.051652892561983466</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.22727272727272727</data>
+      <data key="d4">0.051652892561983466</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Liver disease" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.09090909090909091</data>
+      <data key="d4">0.008264462809917356</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Coagulopathy" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.045454545454545456</data>
+      <data key="d4">0.002066115702479339</data>
+    </edge>
+    <edge source=" AID/HIV" target=" COPD" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.09090909090909091</data>
+      <data key="d4">0.008264462809917356</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.3181818181818182</data>
+      <data key="d4">0.1012396694214876</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Alcohol abuse" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.22727272727272727</data>
+      <data key="d4">0.051652892561983466</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Drug abuse" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.3181818181818182</data>
+      <data key="d4">0.1012396694214876</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.22727272727272727</data>
+      <data key="d4">0.051652892561983466</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Paralysis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.045454545454545456</data>
+      <data key="d4">0.002066115702479339</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Arrhythmia" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.09090909090909091</data>
+      <data key="d4">0.008264462809917356</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Metastatic cancer" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.045454545454545456</data>
+      <data key="d4">0.002066115702479339</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Weight loss" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.045454545454545456</data>
+      <data key="d4">0.002066115702479339</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Deficiency anemia" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.18181818181818182</data>
+      <data key="d4">0.03305785123966942</data>
+    </edge>
+    <edge source=" AID/HIV" target="CHF" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.045454545454545456</data>
+      <data key="d4">0.002066115702479339</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Hypothyroidism" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.09090909090909091</data>
+      <data key="d4">0.008264462809917356</data>
+    </edge>
+    <edge source=" AID/HIV" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.045454545454545456</data>
+      <data key="d4">0.002066115702479339</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Complicated diabetes" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.034482758620689655</data>
+      <data key="d4">0.0011890606420927466</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Coagulopathy" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.27586206896551724</data>
+      <data key="d4">0.07609988109393578</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.3448275862068966</data>
+      <data key="d4">0.11890606420927469</data>
+    </edge>
+    <edge source=" Lymphoma" target="CHF" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.3103448275862069</data>
+      <data key="d4">0.09631391200951249</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Paralysis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.034482758620689655</data>
+      <data key="d4">0.0011890606420927466</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.5517241379310345</data>
+      <data key="d4">0.30439952437574314</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Other neurological disorder" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.3103448275862069</data>
+      <data key="d4">0.09631391200951249</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.3103448275862069</data>
+      <data key="d4">0.09631391200951249</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Deficiency anemia" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.13793103448275862</data>
+      <data key="d4">0.019024970273483946</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Arrhythmia" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.2413793103448276</data>
+      <data key="d4">0.0582639714625446</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.06896551724137931</data>
+      <data key="d4">0.0047562425683709865</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Complicated hypertension" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.10344827586206896</data>
+      <data key="d4">0.01070154577883472</data>
+    </edge>
+    <edge source=" Lymphoma" target=" COPD" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.13793103448275862</data>
+      <data key="d4">0.019024970273483946</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Renal failure" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.13793103448275862</data>
+      <data key="d4">0.019024970273483946</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.10344827586206896</data>
+      <data key="d4">0.01070154577883472</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Valvular disease" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.06896551724137931</data>
+      <data key="d4">0.0047562425683709865</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Depression" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.06896551724137931</data>
+      <data key="d4">0.0047562425683709865</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Weight loss" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.06896551724137931</data>
+      <data key="d4">0.0047562425683709865</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Metastatic cancer" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.034482758620689655</data>
+      <data key="d4">0.0011890606420927466</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.034482758620689655</data>
+      <data key="d4">0.0011890606420927466</data>
+    </edge>
+    <edge source=" Lymphoma" target=" Hypothyroidism" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.034482758620689655</data>
+      <data key="d4">0.0011890606420927466</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Arrhythmia" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.17105263157894737</data>
+      <data key="d4">0.029259002770083104</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Other neurological disorder" id="0">
+      <data key="d2">29</data>
+      <data key="d3">0.3815789473684211</data>
+      <data key="d4">0.14560249307479226</data>
+    </edge>
+    <edge source=" Metastatic cancer" target="CHF" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.10526315789473684</data>
+      <data key="d4">0.011080332409972297</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Paralysis" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.02631578947368421</data>
+      <data key="d4">0.0006925207756232686</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Weight loss" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.09210526315789473</data>
+      <data key="d4">0.00848337950138504</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.42105263157894735</data>
+      <data key="d4">0.17728531855955676</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.2236842105263158</data>
+      <data key="d4">0.050034626038781164</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Depression" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.14473684210526316</data>
+      <data key="d4">0.02094875346260388</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Complicated hypertension" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.07894736842105263</data>
+      <data key="d4">0.006232686980609418</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Renal failure" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.06578947368421052</data>
+      <data key="d4">0.004328254847645429</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">36</data>
+      <data key="d3">0.47368421052631576</data>
+      <data key="d4">0.22437673130193903</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Coagulopathy" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.07894736842105263</data>
+      <data key="d4">0.006232686980609418</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Valvular disease" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.039473684210526314</data>
+      <data key="d4">0.0015581717451523544</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" COPD" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.2236842105263158</data>
+      <data key="d4">0.050034626038781164</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.09210526315789473</data>
+      <data key="d4">0.00848337950138504</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.02631578947368421</data>
+      <data key="d4">0.0006925207756232686</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Alcohol abuse" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.05263157894736842</data>
+      <data key="d4">0.0027700831024930744</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Hypothyroidism" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.11842105263157894</data>
+      <data key="d4">0.014023545706371189</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Deficiency anemia" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.14473684210526316</data>
+      <data key="d4">0.02094875346260388</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Obesity" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.039473684210526314</data>
+      <data key="d4">0.0015581717451523544</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.039473684210526314</data>
+      <data key="d4">0.0015581717451523544</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" AID/HIV" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.013157894736842105</data>
+      <data key="d4">0.00017313019390581715</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Drug abuse" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.02631578947368421</data>
+      <data key="d4">0.0006925207756232686</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.02631578947368421</data>
+      <data key="d4">0.0006925207756232686</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Lymphoma" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.013157894736842105</data>
+      <data key="d4">0.00017313019390581715</data>
+    </edge>
+    <edge source=" Metastatic cancer" target=" Liver disease" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.013157894736842105</data>
+      <data key="d4">0.00017313019390581715</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Metastatic cancer" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.3333333333333333</data>
+      <data key="d4">0.1111111111111111</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Arrhythmia" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.19791666666666666</data>
+      <data key="d4">0.03917100694444444</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" COPD" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.17708333333333334</data>
+      <data key="d4">0.03135850694444445</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.19791666666666666</data>
+      <data key="d4">0.03917100694444444</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Complicated hypertension" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.09375</data>
+      <data key="d4">0.0087890625</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Paralysis" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.03125</data>
+      <data key="d4">0.0009765625</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Other neurological disorder" id="0">
+      <data key="d2">38</data>
+      <data key="d3">0.3958333333333333</data>
+      <data key="d4">0.15668402777777776</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Renal failure" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.08333333333333333</data>
+      <data key="d4">0.006944444444444444</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">43</data>
+      <data key="d3">0.4479166666666667</data>
+      <data key="d4">0.2006293402777778</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Coagulopathy" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.08333333333333333</data>
+      <data key="d4">0.006944444444444444</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.16666666666666666</data>
+      <data key="d4">0.027777777777777776</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Deficiency anemia" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.09375</data>
+      <data key="d4">0.0087890625</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Drug abuse" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.020833333333333332</data>
+      <data key="d4">0.00043402777777777775</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Weight loss" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.041666666666666664</data>
+      <data key="d4">0.001736111111111111</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target="CHF" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.10416666666666667</data>
+      <data key="d4">0.010850694444444446</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.041666666666666664</data>
+      <data key="d4">0.001736111111111111</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Alcohol abuse" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.03125</data>
+      <data key="d4">0.0009765625</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Lymphoma" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.03125</data>
+      <data key="d4">0.0009765625</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Obesity" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.041666666666666664</data>
+      <data key="d4">0.001736111111111111</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Depression" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.052083333333333336</data>
+      <data key="d4">0.0027126736111111114</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Valvular disease" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.010416666666666666</data>
+      <data key="d4">0.00010850694444444444</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.020833333333333332</data>
+      <data key="d4">0.00043402777777777775</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.03125</data>
+      <data key="d4">0.0009765625</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Liver disease" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.020833333333333332</data>
+      <data key="d4">0.00043402777777777775</data>
+    </edge>
+    <edge source=" Solid tumor (no metastasis)" target=" Hypothyroidism" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.041666666666666664</data>
+      <data key="d4">0.001736111111111111</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target="CHF" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.24</data>
+      <data key="d4">0.0576</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Valvular disease" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.16</data>
+      <data key="d4">0.0256</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Complicated hypertension" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.16</data>
+      <data key="d4">0.0256</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Renal failure" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.18</data>
+      <data key="d4">0.0324</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.18</data>
+      <data key="d4">0.0324</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Drug abuse" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.04</data>
+      <data key="d4">0.0016</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Other neurological disorder" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.2</data>
+      <data key="d4">0.04000000000000001</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.52</data>
+      <data key="d4">0.27040000000000003</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" COPD" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.12</data>
+      <data key="d4">0.0144</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Hypothyroidism" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.16</data>
+      <data key="d4">0.0256</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.18</data>
+      <data key="d4">0.0324</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Weight loss" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.04</data>
+      <data key="d4">0.0016</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Deficiency anemia" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.26</data>
+      <data key="d4">0.06760000000000001</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Alcohol abuse" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.08</data>
+      <data key="d4">0.0064</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Arrhythmia" id="0">
+      <data key="d2">18</data>
+      <data key="d3">0.36</data>
+      <data key="d4">0.1296</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.02</data>
+      <data key="d4">0.0004</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Depression" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.14</data>
+      <data key="d4">0.019600000000000003</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Coagulopathy" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.04</data>
+      <data key="d4">0.0016</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Metastatic cancer" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.04</data>
+      <data key="d4">0.0016</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.06</data>
+      <data key="d4">0.0036</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Lymphoma" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.02</data>
+      <data key="d4">0.0004</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Psychoses" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.02</data>
+      <data key="d4">0.0004</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Complicated diabetes" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.06</data>
+      <data key="d4">0.0036</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Paralysis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.02</data>
+      <data key="d4">0.0004</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" AID/HIV" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.02</data>
+      <data key="d4">0.0004</data>
+    </edge>
+    <edge source=" Rheumatoid arthritis" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.02</data>
+      <data key="d4">0.0004</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">52</data>
+      <data key="d3">0.33548387096774196</data>
+      <data key="d4">0.11254942767950053</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Other neurological disorder" id="0">
+      <data key="d2">37</data>
+      <data key="d3">0.23870967741935484</data>
+      <data key="d4">0.05698231009365245</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Alcohol abuse" id="0">
+      <data key="d2">46</data>
+      <data key="d3">0.2967741935483871</data>
+      <data key="d4">0.08807492195629552</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Depression" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.08387096774193549</data>
+      <data key="d4">0.007034339229968783</data>
+    </edge>
+    <edge source=" Coagulopathy" target="CHF" id="0">
+      <data key="d2">28</data>
+      <data key="d3">0.18064516129032257</data>
+      <data key="d4">0.032632674297606655</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.05806451612903226</data>
+      <data key="d4">0.0033714880332986474</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" COPD" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.07741935483870968</data>
+      <data key="d4">0.00599375650364204</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Complicated hypertension" id="0">
+      <data key="d2">17</data>
+      <data key="d3">0.10967741935483871</data>
+      <data key="d4">0.01202913631633715</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">28</data>
+      <data key="d3">0.18064516129032257</data>
+      <data key="d4">0.032632674297606655</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Renal failure" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.12258064516129032</data>
+      <data key="d4">0.015026014568158167</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Liver disease" id="0">
+      <data key="d2">27</data>
+      <data key="d3">0.17419354838709677</data>
+      <data key="d4">0.030343392299687827</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" AID/HIV" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.0064516129032258064</data>
+      <data key="d4">4.162330905306972e-05</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Arrhythmia" id="0">
+      <data key="d2">49</data>
+      <data key="d3">0.3161290322580645</data>
+      <data key="d4">0.09993756503642037</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Valvular disease" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.08387096774193549</data>
+      <data key="d4">0.007034339229968783</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">56</data>
+      <data key="d3">0.36129032258064514</data>
+      <data key="d4">0.13053069719042662</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Drug abuse" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.04516129032258064</data>
+      <data key="d4">0.002039542143600416</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Psychoses" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.012903225806451613</data>
+      <data key="d4">0.00016649323621227888</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Complicated diabetes" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.025806451612903226</data>
+      <data key="d4">0.0006659729448491155</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Lymphoma" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.05161290322580645</data>
+      <data key="d4">0.002663891779396462</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Deficiency anemia" id="0">
+      <data key="d2">31</data>
+      <data key="d3">0.2</data>
+      <data key="d4">0.04000000000000001</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.05161290322580645</data>
+      <data key="d4">0.002663891779396462</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Paralysis" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.012903225806451613</data>
+      <data key="d4">0.00016649323621227888</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Metastatic cancer" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.03870967741935484</data>
+      <data key="d4">0.00149843912591051</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Obesity" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.025806451612903226</data>
+      <data key="d4">0.0006659729448491155</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Weight loss" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.07741935483870968</data>
+      <data key="d4">0.00599375650364204</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Hypothyroidism" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.04516129032258064</data>
+      <data key="d4">0.002039542143600416</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Blood loss anemia" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.012903225806451613</data>
+      <data key="d4">0.00016649323621227888</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.012903225806451613</data>
+      <data key="d4">0.00016649323621227888</data>
+    </edge>
+    <edge source=" Coagulopathy" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.03225806451612903</data>
+      <data key="d4">0.0010405827263267429</data>
+    </edge>
+    <edge source=" Obesity" target=" Other neurological disorder" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.28205128205128205</data>
+      <data key="d4">0.07955292570677186</data>
+    </edge>
+    <edge source=" Obesity" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">23</data>
+      <data key="d3">0.5897435897435898</data>
+      <data key="d4">0.3477975016436555</data>
+    </edge>
+    <edge source=" Obesity" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.3333333333333333</data>
+      <data key="d4">0.1111111111111111</data>
+    </edge>
+    <edge source=" Obesity" target=" COPD" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.28205128205128205</data>
+      <data key="d4">0.07955292570677186</data>
+    </edge>
+    <edge source=" Obesity" target=" Alcohol abuse" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.20512820512820512</data>
+      <data key="d4">0.042077580539118996</data>
+    </edge>
+    <edge source=" Obesity" target=" Depression" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.15384615384615385</data>
+      <data key="d4">0.02366863905325444</data>
+    </edge>
+    <edge source=" Obesity" target=" Liver disease" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.10256410256410256</data>
+      <data key="d4">0.010519395134779749</data>
+    </edge>
+    <edge source=" Obesity" target=" Coagulopathy" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.10256410256410256</data>
+      <data key="d4">0.010519395134779749</data>
+    </edge>
+    <edge source=" Obesity" target=" Metastatic cancer" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.07692307692307693</data>
+      <data key="d4">0.00591715976331361</data>
+    </edge>
+    <edge source=" Obesity" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.10256410256410256</data>
+      <data key="d4">0.010519395134779749</data>
+    </edge>
+    <edge source=" Obesity" target=" Weight loss" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.05128205128205128</data>
+      <data key="d4">0.0026298487836949372</data>
+    </edge>
+    <edge source=" Obesity" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.20512820512820512</data>
+      <data key="d4">0.042077580539118996</data>
+    </edge>
+    <edge source=" Obesity" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.05128205128205128</data>
+      <data key="d4">0.0026298487836949372</data>
+    </edge>
+    <edge source=" Obesity" target=" Deficiency anemia" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.07692307692307693</data>
+      <data key="d4">0.00591715976331361</data>
+    </edge>
+    <edge source=" Obesity" target=" Arrhythmia" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.15384615384615385</data>
+      <data key="d4">0.02366863905325444</data>
+    </edge>
+    <edge source=" Obesity" target=" Hypothyroidism" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.07692307692307693</data>
+      <data key="d4">0.00591715976331361</data>
+    </edge>
+    <edge source=" Obesity" target="CHF" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.15384615384615385</data>
+      <data key="d4">0.02366863905325444</data>
+    </edge>
+    <edge source=" Obesity" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.07692307692307693</data>
+      <data key="d4">0.00591715976331361</data>
+    </edge>
+    <edge source=" Obesity" target=" Complicated diabetes" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.02564102564102564</data>
+      <data key="d4">0.0006574621959237343</data>
+    </edge>
+    <edge source=" Obesity" target=" Renal failure" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.07692307692307693</data>
+      <data key="d4">0.00591715976331361</data>
+    </edge>
+    <edge source=" Obesity" target=" Drug abuse" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.05128205128205128</data>
+      <data key="d4">0.0026298487836949372</data>
+    </edge>
+    <edge source=" Obesity" target=" Complicated hypertension" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.05128205128205128</data>
+      <data key="d4">0.0026298487836949372</data>
+    </edge>
+    <edge source=" Weight loss" target=" Other neurological disorder" id="0">
+      <data key="d2">57</data>
+      <data key="d3">0.43846153846153846</data>
+      <data key="d4">0.19224852071005916</data>
+    </edge>
+    <edge source=" Weight loss" target=" Arrhythmia" id="0">
+      <data key="d2">43</data>
+      <data key="d3">0.33076923076923076</data>
+      <data key="d4">0.10940828402366863</data>
+    </edge>
+    <edge source=" Weight loss" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">57</data>
+      <data key="d3">0.43846153846153846</data>
+      <data key="d4">0.19224852071005916</data>
+    </edge>
+    <edge source=" Weight loss" target="CHF" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.14615384615384616</data>
+      <data key="d4">0.02136094674556213</data>
+    </edge>
+    <edge source=" Weight loss" target=" Paralysis" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.03076923076923077</data>
+      <data key="d4">0.0009467455621301776</data>
+    </edge>
+    <edge source=" Weight loss" target=" Metastatic cancer" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.05384615384615385</data>
+      <data key="d4">0.0028994082840236688</data>
+    </edge>
+    <edge source=" Weight loss" target=" Liver disease" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.046153846153846156</data>
+      <data key="d4">0.0021301775147928997</data>
+    </edge>
+    <edge source=" Weight loss" target=" Alcohol abuse" id="0">
+      <data key="d2">18</data>
+      <data key="d3">0.13846153846153847</data>
+      <data key="d4">0.019171597633136098</data>
+    </edge>
+    <edge source=" Weight loss" target=" Deficiency anemia" id="0">
+      <data key="d2">36</data>
+      <data key="d3">0.27692307692307694</data>
+      <data key="d4">0.07668639053254439</data>
+    </edge>
+    <edge source=" Weight loss" target=" Complicated diabetes" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.038461538461538464</data>
+      <data key="d4">0.0014792899408284025</data>
+    </edge>
+    <edge source=" Weight loss" target=" Valvular disease" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.05384615384615385</data>
+      <data key="d4">0.0028994082840236688</data>
+    </edge>
+    <edge source=" Weight loss" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.2</data>
+      <data key="d4">0.04000000000000001</data>
+    </edge>
+    <edge source=" Weight loss" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">52</data>
+      <data key="d3">0.4</data>
+      <data key="d4">0.16000000000000003</data>
+    </edge>
+    <edge source=" Weight loss" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.07692307692307693</data>
+      <data key="d4">0.00591715976331361</data>
+    </edge>
+    <edge source=" Weight loss" target=" COPD" id="0">
+      <data key="d2">14</data>
+      <data key="d3">0.1076923076923077</data>
+      <data key="d4">0.011597633136094675</data>
+    </edge>
+    <edge source=" Weight loss" target=" Blood loss anemia" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.03076923076923077</data>
+      <data key="d4">0.0009467455621301776</data>
+    </edge>
+    <edge source=" Weight loss" target=" Psychoses" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.03076923076923077</data>
+      <data key="d4">0.0009467455621301776</data>
+    </edge>
+    <edge source=" Weight loss" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.03076923076923077</data>
+      <data key="d4">0.0009467455621301776</data>
+    </edge>
+    <edge source=" Weight loss" target=" Hypothyroidism" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.06923076923076923</data>
+      <data key="d4">0.004792899408284024</data>
+    </edge>
+    <edge source=" Weight loss" target=" Depression" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.05384615384615385</data>
+      <data key="d4">0.0028994082840236688</data>
+    </edge>
+    <edge source=" Weight loss" target=" Complicated hypertension" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.09230769230769231</data>
+      <data key="d4">0.008520710059171599</data>
+    </edge>
+    <edge source=" Weight loss" target=" Renal failure" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.09230769230769231</data>
+      <data key="d4">0.008520710059171599</data>
+    </edge>
+    <edge source=" Weight loss" target=" Coagulopathy" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.09230769230769231</data>
+      <data key="d4">0.008520710059171599</data>
+    </edge>
+    <edge source=" Weight loss" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.05384615384615385</data>
+      <data key="d4">0.0028994082840236688</data>
+    </edge>
+    <edge source=" Weight loss" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.015384615384615385</data>
+      <data key="d4">0.0002366863905325444</data>
+    </edge>
+    <edge source=" Weight loss" target=" Drug abuse" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.038461538461538464</data>
+      <data key="d4">0.0014792899408284025</data>
+    </edge>
+    <edge source=" Weight loss" target=" Obesity" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.015384615384615385</data>
+      <data key="d4">0.0002366863905325444</data>
+    </edge>
+    <edge source=" Weight loss" target=" Lymphoma" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.015384615384615385</data>
+      <data key="d4">0.0002366863905325444</data>
+    </edge>
+    <edge source=" Weight loss" target=" AID/HIV" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.007692307692307693</data>
+      <data key="d4">5.91715976331361e-05</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target="CHF" id="0">
+      <data key="d2">87</data>
+      <data key="d3">0.19863013698630136</data>
+      <data key="d4">0.03945393131919684</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Valvular disease" id="0">
+      <data key="d2">34</data>
+      <data key="d3">0.0776255707762557</data>
+      <data key="d4">0.006025729238339483</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Complicated hypertension" id="0">
+      <data key="d2">48</data>
+      <data key="d3">0.1095890410958904</data>
+      <data key="d4">0.012009757928316756</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Renal failure" id="0">
+      <data key="d2">52</data>
+      <data key="d3">0.1187214611872146</data>
+      <data key="d4">0.014094785346427304</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.02054794520547945</data>
+      <data key="d4">0.00042221805216738595</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Drug abuse" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.04794520547945205</data>
+      <data key="d4">0.002298742728466879</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">176</data>
+      <data key="d3">0.4018264840182648</data>
+      <data key="d4">0.16146452325848082</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Alcohol abuse" id="0">
+      <data key="d2">89</data>
+      <data key="d3">0.20319634703196346</data>
+      <data key="d4">0.041288755447134125</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Arrhythmia" id="0">
+      <data key="d2">138</data>
+      <data key="d3">0.3150684931506849</data>
+      <data key="d4">0.09926815537624319</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">74</data>
+      <data key="d3">0.1689497716894977</data>
+      <data key="d4">0.0285440253539334</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Liver disease" id="0">
+      <data key="d2">26</data>
+      <data key="d3">0.0593607305936073</data>
+      <data key="d4">0.003523696336606826</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" COPD" id="0">
+      <data key="d2">51</data>
+      <data key="d3">0.11643835616438356</data>
+      <data key="d4">0.013557890786263838</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Deficiency anemia" id="0">
+      <data key="d2">90</data>
+      <data key="d3">0.2054794520547945</data>
+      <data key="d4">0.042221805216738593</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Other neurological disorder" id="0">
+      <data key="d2">116</data>
+      <data key="d3">0.2648401826484018</data>
+      <data key="d4">0.07014032234523883</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Coagulopathy" id="0">
+      <data key="d2">56</data>
+      <data key="d3">0.1278538812785388</data>
+      <data key="d4">0.016346614957986696</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Complicated diabetes" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.0365296803652968</data>
+      <data key="d4">0.0013344175475907506</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Lymphoma" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.0228310502283105</data>
+      <data key="d4">0.000521256854527637</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Hypothyroidism" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.0730593607305936</data>
+      <data key="d4">0.005337670190363002</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Paralysis" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.01598173515981735</data>
+      <data key="d4">0.0002554158587185421</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">24</data>
+      <data key="d3">0.0547945205479452</data>
+      <data key="d4">0.003002439482079189</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" AID/HIV" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.01598173515981735</data>
+      <data key="d4">0.0002554158587185421</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.0365296803652968</data>
+      <data key="d4">0.0013344175475907506</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Weight loss" id="0">
+      <data key="d2">52</data>
+      <data key="d3">0.1187214611872146</data>
+      <data key="d4">0.014094785346427304</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.0365296803652968</data>
+      <data key="d4">0.0013344175475907506</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Depression" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.0730593607305936</data>
+      <data key="d4">0.005337670190363002</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Metastatic cancer" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.01598173515981735</data>
+      <data key="d4">0.0002554158587185421</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Psychoses" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.01598173515981735</data>
+      <data key="d4">0.0002554158587185421</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Blood loss anemia" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.00684931506849315</data>
+      <data key="d4">4.691311690748733e-05</data>
+    </edge>
+    <edge source=" Fluid and electrolyte disorders" target=" Obesity" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.0182648401826484</data>
+      <data key="d4">0.00033360438689768765</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Arrhythmia" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.23529411764705882</data>
+      <data key="d4">0.05536332179930796</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.4117647058823529</data>
+      <data key="d4">0.1695501730103806</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Other neurological disorder" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.35294117647058826</data>
+      <data key="d4">0.12456747404844293</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" COPD" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.11764705882352941</data>
+      <data key="d4">0.01384083044982699</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Weight loss" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.23529411764705882</data>
+      <data key="d4">0.05536332179930796</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Psychoses" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.058823529411764705</data>
+      <data key="d4">0.0034602076124567475</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Paralysis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.058823529411764705</data>
+      <data key="d4">0.0034602076124567475</data>
+    </edge>
+    <edge source=" Blood loss anemia" target="CHF" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.23529411764705882</data>
+      <data key="d4">0.05536332179930796</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Depression" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.058823529411764705</data>
+      <data key="d4">0.0034602076124567475</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Hypothyroidism" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.11764705882352941</data>
+      <data key="d4">0.01384083044982699</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Valvular disease" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.11764705882352941</data>
+      <data key="d4">0.01384083044982699</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Complicated hypertension" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.17647058823529413</data>
+      <data key="d4">0.031141868512110732</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.058823529411764705</data>
+      <data key="d4">0.0034602076124567475</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Renal failure" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.17647058823529413</data>
+      <data key="d4">0.031141868512110732</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Coagulopathy" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.11764705882352941</data>
+      <data key="d4">0.01384083044982699</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.17647058823529413</data>
+      <data key="d4">0.031141868512110732</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Deficiency anemia" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.058823529411764705</data>
+      <data key="d4">0.0034602076124567475</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Alcohol abuse" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.17647058823529413</data>
+      <data key="d4">0.031141868512110732</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Liver disease" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.058823529411764705</data>
+      <data key="d4">0.0034602076124567475</data>
+    </edge>
+    <edge source=" Blood loss anemia" target=" Complicated diabetes" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.058823529411764705</data>
+      <data key="d4">0.0034602076124567475</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Arrhythmia" id="0">
+      <data key="d2">108</data>
+      <data key="d3">0.37894736842105264</data>
+      <data key="d4">0.143601108033241</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Other neurological disorder" id="0">
+      <data key="d2">93</data>
+      <data key="d3">0.3263157894736842</data>
+      <data key="d4">0.1064819944598338</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Complicated diabetes" id="0">
+      <data key="d2">23</data>
+      <data key="d3">0.08070175438596491</data>
+      <data key="d4">0.006512773160972607</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">117</data>
+      <data key="d3">0.4105263157894737</data>
+      <data key="d4">0.16853185595567868</data>
+    </edge>
+    <edge source=" Deficiency anemia" target="CHF" id="0">
+      <data key="d2">60</data>
+      <data key="d3">0.21052631578947367</data>
+      <data key="d4">0.04432132963988919</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">68</data>
+      <data key="d3">0.23859649122807017</data>
+      <data key="d4">0.05692828562634657</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" COPD" id="0">
+      <data key="d2">34</data>
+      <data key="d3">0.11929824561403508</data>
+      <data key="d4">0.014232071406586642</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">90</data>
+      <data key="d3">0.3157894736842105</data>
+      <data key="d4">0.09972299168975068</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Alcohol abuse" id="0">
+      <data key="d2">29</data>
+      <data key="d3">0.10175438596491228</data>
+      <data key="d4">0.010353955063096337</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">19</data>
+      <data key="d3">0.06666666666666667</data>
+      <data key="d4">0.0044444444444444444</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Hypothyroidism" id="0">
+      <data key="d2">35</data>
+      <data key="d3">0.12280701754385964</data>
+      <data key="d4">0.01508156355801785</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Renal failure" id="0">
+      <data key="d2">53</data>
+      <data key="d3">0.18596491228070175</data>
+      <data key="d4">0.0345829485995691</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Complicated hypertension" id="0">
+      <data key="d2">49</data>
+      <data key="d3">0.17192982456140352</data>
+      <data key="d4">0.02955986457371499</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Psychoses" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.017543859649122806</data>
+      <data key="d4">0.0003077870113881194</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Paralysis" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.017543859649122806</data>
+      <data key="d4">0.0003077870113881194</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Weight loss" id="0">
+      <data key="d2">36</data>
+      <data key="d3">0.12631578947368421</data>
+      <data key="d4">0.015955678670360112</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Valvular disease" id="0">
+      <data key="d2">27</data>
+      <data key="d3">0.09473684210526316</data>
+      <data key="d4">0.008975069252077562</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Coagulopathy" id="0">
+      <data key="d2">31</data>
+      <data key="d3">0.10877192982456141</data>
+      <data key="d4">0.011831332717759312</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.031578947368421054</data>
+      <data key="d4">0.000997229916897507</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Depression" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.07368421052631578</data>
+      <data key="d4">0.0054293628808864255</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Drug abuse" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.03508771929824561</data>
+      <data key="d4">0.0012311480455524776</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Lymphoma" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.014035087719298246</data>
+      <data key="d4">0.00019698368728839644</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">16</data>
+      <data key="d3">0.056140350877192984</data>
+      <data key="d4">0.003151738996614343</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Liver disease" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.03508771929824561</data>
+      <data key="d4">0.0012311480455524776</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.0456140350877193</data>
+      <data key="d4">0.0020806401969836875</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Metastatic cancer" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.03859649122807018</data>
+      <data key="d4">0.0014896891351184982</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Blood loss anemia" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.0035087719298245615</data>
+      <data key="d4">1.2311480455524777e-05</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" AID/HIV" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.014035087719298246</data>
+      <data key="d4">0.00019698368728839644</data>
+    </edge>
+    <edge source=" Deficiency anemia" target=" Obesity" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.010526315789473684</data>
+      <data key="d4">0.00011080332409972299</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Drug abuse" id="0">
+      <data key="d2">72</data>
+      <data key="d3">0.15384615384615385</data>
+      <data key="d4">0.02366863905325444</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Arrhythmia" id="0">
+      <data key="d2">60</data>
+      <data key="d3">0.1282051282051282</data>
+      <data key="d4">0.016436554898093356</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">135</data>
+      <data key="d3">0.28846153846153844</data>
+      <data key="d4">0.08321005917159761</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" COPD" id="0">
+      <data key="d2">41</data>
+      <data key="d3">0.0876068376068376</data>
+      <data key="d4">0.007674957995470815</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Coagulopathy" id="0">
+      <data key="d2">46</data>
+      <data key="d3">0.09829059829059829</data>
+      <data key="d4">0.009661041712323763</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Depression" id="0">
+      <data key="d2">48</data>
+      <data key="d3">0.10256410256410256</data>
+      <data key="d4">0.010519395134779749</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">89</data>
+      <data key="d3">0.19017094017094016</data>
+      <data key="d4">0.036164986485499304</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Deficiency anemia" id="0">
+      <data key="d2">29</data>
+      <data key="d3">0.06196581196581197</data>
+      <data key="d4">0.0038397618525823655</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Other neurological disorder" id="0">
+      <data key="d2">98</data>
+      <data key="d3">0.2094017094017094</data>
+      <data key="d4">0.043849075900357956</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Liver disease" id="0">
+      <data key="d2">41</data>
+      <data key="d3">0.0876068376068376</data>
+      <data key="d4">0.007674957995470815</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Weight loss" id="0">
+      <data key="d2">18</data>
+      <data key="d3">0.038461538461538464</data>
+      <data key="d4">0.0014792899408284025</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">34</data>
+      <data key="d3">0.07264957264957266</data>
+      <data key="d4">0.005277960406165535</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" AID/HIV" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.010683760683760684</data>
+      <data key="d4">0.00011414274234787056</data>
+    </edge>
+    <edge source=" Alcohol abuse" target="CHF" id="0">
+      <data key="d2">20</data>
+      <data key="d3">0.042735042735042736</data>
+      <data key="d4">0.001826283877565929</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.021367521367521368</data>
+      <data key="d4">0.00045657096939148223</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Psychoses" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.010683760683760684</data>
+      <data key="d4">0.00011414274234787056</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Paralysis" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.004273504273504274</data>
+      <data key="d4">1.8262838775659293e-05</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Obesity" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.017094017094017096</data>
+      <data key="d4">0.0002922054204105487</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Hypothyroidism" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.014957264957264958</data>
+      <data key="d4">0.0002237197750018263</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.010683760683760684</data>
+      <data key="d4">0.00011414274234787056</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Metastatic cancer" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.008547008547008548</data>
+      <data key="d4">7.305135510263717e-05</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.00641025641025641</data>
+      <data key="d4">4.1091387245233394e-05</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.008547008547008548</data>
+      <data key="d4">7.305135510263717e-05</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Valvular disease" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.008547008547008548</data>
+      <data key="d4">7.305135510263717e-05</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Complicated hypertension" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.01282051282051282</data>
+      <data key="d4">0.00016436554898093358</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Blood loss anemia" id="0">
+      <data key="d2">3</data>
+      <data key="d3">0.00641025641025641</data>
+      <data key="d4">4.1091387245233394e-05</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Complicated diabetes" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.004273504273504274</data>
+      <data key="d4">1.8262838775659293e-05</data>
+    </edge>
+    <edge source=" Alcohol abuse" target=" Renal failure" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.010683760683760684</data>
+      <data key="d4">0.00011414274234787056</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Alcohol abuse" id="0">
+      <data key="d2">72</data>
+      <data key="d3">0.5373134328358209</data>
+      <data key="d4">0.2887057251058142</data>
+    </edge>
+    <edge source=" Drug abuse" target="CHF" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.03731343283582089</data>
+      <data key="d4">0.0013922922699933168</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Valvular disease" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.014925373134328358</data>
+      <data key="d4">0.0002227667631989307</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Complicated hypertension" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.03731343283582089</data>
+      <data key="d4">0.0013922922699933168</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Renal failure" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.029850746268656716</data>
+      <data key="d4">0.0008910670527957228</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.014925373134328358</data>
+      <data key="d4">0.0002227667631989307</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.15671641791044777</data>
+      <data key="d4">0.024560035642682113</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Depression" id="0">
+      <data key="d2">14</data>
+      <data key="d3">0.1044776119402985</data>
+      <data key="d4">0.010915571396747604</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Coagulopathy" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.05223880597014925</data>
+      <data key="d4">0.002728892849186901</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Other neurological disorder" id="0">
+      <data key="d2">29</data>
+      <data key="d3">0.21641791044776118</data>
+      <data key="d4">0.046836711962575175</data>
+    </edge>
+    <edge source=" Drug abuse" target=" COPD" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.07462686567164178</data>
+      <data key="d4">0.005569169079973267</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Arrhythmia" id="0">
+      <data key="d2">12</data>
+      <data key="d3">0.08955223880597014</data>
+      <data key="d4">0.008019603475161506</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">20</data>
+      <data key="d3">0.14925373134328357</data>
+      <data key="d4">0.02227667631989307</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.03731343283582089</data>
+      <data key="d4">0.0013922922699933168</data>
+    </edge>
+    <edge source=" Drug abuse" target=" AID/HIV" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.05223880597014925</data>
+      <data key="d4">0.002728892849186901</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.014925373134328358</data>
+      <data key="d4">0.0002227667631989307</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Deficiency anemia" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.07462686567164178</data>
+      <data key="d4">0.005569169079973267</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.03731343283582089</data>
+      <data key="d4">0.0013922922699933168</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Hypothyroidism" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.029850746268656716</data>
+      <data key="d4">0.0008910670527957228</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Weight loss" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.03731343283582089</data>
+      <data key="d4">0.0013922922699933168</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Liver disease" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.029850746268656716</data>
+      <data key="d4">0.0008910670527957228</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Psychoses" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.007462686567164179</data>
+      <data key="d4">5.5691690799732676e-05</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Metastatic cancer" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.014925373134328358</data>
+      <data key="d4">0.0002227667631989307</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Obesity" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.014925373134328358</data>
+      <data key="d4">0.0002227667631989307</data>
+    </edge>
+    <edge source=" Drug abuse" target=" Paralysis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.007462686567164179</data>
+      <data key="d4">5.5691690799732676e-05</data>
+    </edge>
+    <edge source=" Psychoses" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.3939393939393939</data>
+      <data key="d4">0.155188246097337</data>
+    </edge>
+    <edge source=" Psychoses" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.15151515151515152</data>
+      <data key="d4">0.022956841138659322</data>
+    </edge>
+    <edge source=" Psychoses" target=" Coagulopathy" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.06060606060606061</data>
+      <data key="d4">0.0036730945821854917</data>
+    </edge>
+    <edge source=" Psychoses" target=" Complicated hypertension" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.030303030303030304</data>
+      <data key="d4">0.0009182736455463729</data>
+    </edge>
+    <edge source=" Psychoses" target=" Other neurological disorder" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.30303030303030304</data>
+      <data key="d4">0.09182736455463729</data>
+    </edge>
+    <edge source=" Psychoses" target=" Renal failure" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.030303030303030304</data>
+      <data key="d4">0.0009182736455463729</data>
+    </edge>
+    <edge source=" Psychoses" target=" Deficiency anemia" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.15151515151515152</data>
+      <data key="d4">0.022956841138659322</data>
+    </edge>
+    <edge source=" Psychoses" target=" Alcohol abuse" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.15151515151515152</data>
+      <data key="d4">0.022956841138659322</data>
+    </edge>
+    <edge source=" Psychoses" target="CHF" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.24242424242424243</data>
+      <data key="d4">0.05876951331496787</data>
+    </edge>
+    <edge source=" Psychoses" target=" Arrhythmia" id="0">
+      <data key="d2">9</data>
+      <data key="d3">0.2727272727272727</data>
+      <data key="d4">0.07438016528925619</data>
+    </edge>
+    <edge source=" Psychoses" target=" Hypothyroidism" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.12121212121212122</data>
+      <data key="d4">0.014692378328741967</data>
+    </edge>
+    <edge source=" Psychoses" target=" COPD" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.06060606060606061</data>
+      <data key="d4">0.0036730945821854917</data>
+    </edge>
+    <edge source=" Psychoses" target=" Weight loss" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.12121212121212122</data>
+      <data key="d4">0.014692378328741967</data>
+    </edge>
+    <edge source=" Psychoses" target=" Blood loss anemia" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.030303030303030304</data>
+      <data key="d4">0.0009182736455463729</data>
+    </edge>
+    <edge source=" Psychoses" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.21212121212121213</data>
+      <data key="d4">0.044995408631772274</data>
+    </edge>
+    <edge source=" Psychoses" target=" Drug abuse" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.030303030303030304</data>
+      <data key="d4">0.0009182736455463729</data>
+    </edge>
+    <edge source=" Psychoses" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.030303030303030304</data>
+      <data key="d4">0.0009182736455463729</data>
+    </edge>
+    <edge source=" Psychoses" target=" Valvular disease" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.030303030303030304</data>
+      <data key="d4">0.0009182736455463729</data>
+    </edge>
+    <edge source=" Psychoses" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.030303030303030304</data>
+      <data key="d4">0.0009182736455463729</data>
+    </edge>
+    <edge source=" Psychoses" target=" Complicated diabetes" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.030303030303030304</data>
+      <data key="d4">0.0009182736455463729</data>
+    </edge>
+    <edge source=" Psychoses" target=" Depression" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.030303030303030304</data>
+      <data key="d4">0.0009182736455463729</data>
+    </edge>
+    <edge source=" Depression" target=" Coagulopathy" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.07514450867052024</data>
+      <data key="d4">0.005646697183333891</data>
+    </edge>
+    <edge source=" Depression" target=" Alcohol abuse" id="0">
+      <data key="d2">48</data>
+      <data key="d3">0.2774566473988439</data>
+      <data key="d4">0.07698219118580639</data>
+    </edge>
+    <edge source=" Depression" target=" Drug abuse" id="0">
+      <data key="d2">14</data>
+      <data key="d3">0.08092485549132948</data>
+      <data key="d4">0.006548832236292559</data>
+    </edge>
+    <edge source=" Depression" target=" Uncomplicated hypertension" id="0">
+      <data key="d2">79</data>
+      <data key="d3">0.45664739884393063</data>
+      <data key="d4">0.20852684687092785</data>
+    </edge>
+    <edge source=" Depression" target="CHF" id="0">
+      <data key="d2">28</data>
+      <data key="d3">0.16184971098265896</data>
+      <data key="d4">0.026195328945170238</data>
+    </edge>
+    <edge source=" Depression" target=" Other neurological disorder" id="0">
+      <data key="d2">45</data>
+      <data key="d3">0.26011560693641617</data>
+      <data key="d4">0.06766012897190016</data>
+    </edge>
+    <edge source=" Depression" target=" Complicated hypertension" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.06358381502890173</data>
+      <data key="d4">0.004042901533629589</data>
+    </edge>
+    <edge source=" Depression" target=" Uncomplicated diabetes" id="0">
+      <data key="d2">25</data>
+      <data key="d3">0.14450867052023122</data>
+      <data key="d4">0.020882755855524744</data>
+    </edge>
+    <edge source=" Depression" target=" Renal failure" id="0">
+      <data key="d2">13</data>
+      <data key="d3">0.07514450867052024</data>
+      <data key="d4">0.005646697183333891</data>
+    </edge>
+    <edge source=" Depression" target=" Arrhythmia" id="0">
+      <data key="d2">42</data>
+      <data key="d3">0.24277456647398843</data>
+      <data key="d4">0.05893949012663303</data>
+    </edge>
+    <edge source=" Depression" target=" Metastatic cancer" id="0">
+      <data key="d2">11</data>
+      <data key="d3">0.06358381502890173</data>
+      <data key="d4">0.004042901533629589</data>
+    </edge>
+    <edge source=" Depression" target=" Liver disease" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.057803468208092484</data>
+      <data key="d4">0.0033412409368839585</data>
+    </edge>
+    <edge source=" Depression" target=" Paralysis" id="0">
+      <data key="d2">4</data>
+      <data key="d3">0.023121387283236993</data>
+      <data key="d4">0.0005345985499014334</data>
+    </edge>
+    <edge source=" Depression" target=" Deficiency anemia" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.12138728323699421</data>
+      <data key="d4">0.014734872531658257</data>
+    </edge>
+    <edge source=" Depression" target=" COPD" id="0">
+      <data key="d2">30</data>
+      <data key="d3">0.17341040462427745</data>
+      <data key="d4">0.030071168431955626</data>
+    </edge>
+    <edge source=" Depression" target=" Hypothyroidism" id="0">
+      <data key="d2">21</data>
+      <data key="d3">0.12138728323699421</data>
+      <data key="d4">0.014734872531658257</data>
+    </edge>
+    <edge source=" Depression" target=" Obesity" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.03468208092485549</data>
+      <data key="d4">0.0012028467372782248</data>
+    </edge>
+    <edge source=" Depression" target=" Fluid and electrolyte disorders" id="0">
+      <data key="d2">32</data>
+      <data key="d3">0.18497109826589594</data>
+      <data key="d4">0.034214307193691736</data>
+    </edge>
+    <edge source=" Depression" target=" Weight loss" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.04046242774566474</data>
+      <data key="d4">0.0016372080590731398</data>
+    </edge>
+    <edge source=" Depression" target=" Complicated diabetes" id="0">
+      <data key="d2">8</data>
+      <data key="d3">0.046242774566473986</data>
+      <data key="d4">0.0021383941996057335</data>
+    </edge>
+    <edge source=" Depression" target=" Blood loss anemia" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.005780346820809248</data>
+      <data key="d4">3.3412409368839586e-05</data>
+    </edge>
+    <edge source=" Depression" target=" Valvular disease" id="0">
+      <data key="d2">10</data>
+      <data key="d3">0.057803468208092484</data>
+      <data key="d4">0.0033412409368839585</data>
+    </edge>
+    <edge source=" Depression" target=" Peripheral vascular disorder" id="0">
+      <data key="d2">6</data>
+      <data key="d3">0.03468208092485549</data>
+      <data key="d4">0.0012028467372782248</data>
+    </edge>
+    <edge source=" Depression" target=" Pulmonary circulation disorder" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.028901734104046242</data>
+      <data key="d4">0.0008353102342209896</data>
+    </edge>
+    <edge source=" Depression" target=" Lymphoma" id="0">
+      <data key="d2">2</data>
+      <data key="d3">0.011560693641618497</data>
+      <data key="d4">0.00013364963747535834</data>
+    </edge>
+    <edge source=" Depression" target=" Rheumatoid arthritis" id="0">
+      <data key="d2">7</data>
+      <data key="d3">0.04046242774566474</data>
+      <data key="d4">0.0016372080590731398</data>
+    </edge>
+    <edge source=" Depression" target=" Solid tumor (no metastasis)" id="0">
+      <data key="d2">5</data>
+      <data key="d3">0.028901734104046242</data>
+      <data key="d4">0.0008353102342209896</data>
+    </edge>
+    <edge source=" Depression" target=" Psychoses" id="0">
+      <data key="d2">1</data>
+      <data key="d3">0.005780346820809248</data>
+      <data key="d4">3.3412409368839586e-05</data>
+    </edge>
+  </graph>
+</graphml>
