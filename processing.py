@@ -17,6 +17,13 @@ SELECT admissions.SUBJECT_ID, admissions.HADM_ID, d_items.LABEL, chartevents.CHA
 FROM (admissions INNER JOIN diagnoses_icd ON admissions.HADM_ID = diagnoses_icd.HADM_ID) INNER JOIN (chartevents INNER JOIN d_items ON chartevents.ITEMID = d_items.ITEMID) ON diagnoses_icd.HADM_ID = chartevents.HADM_ID
 WHERE (((LOWER(d_items.LABEL) Like "%parin%") Or (LOWER(d_items.LABEL) Like "%oban%")) AND ((diagnoses_icd.ICD9_CODE)="3484" Or (diagnoses_icd.ICD9_CODE)="14496" Or (diagnoses_icd.ICD9_CODE) Between "80000" And "80199" Or (diagnoses_icd.ICD9_CODE) Between "80310" And "80499" Or (diagnoses_icd.ICD9_CODE) Between "85100" And "85419" Or (diagnoses_icd.ICD9_CODE)="V8001"));
 """
+QUERY = """
+SELECT admissions.SUBJECT_ID, admissions.HADM_ID, admissions.ADMITTIME, admissions.DISCHTIME, admissions.DEATHTIME, admissions.DIAGNOSIS, diagnoses_icd.ICD9_CODE, chartevents.ICUSTAY_ID, chartevents.CHARTTIME, chartevents.STORETIME, d_items.LABEL, chartevents.VALUE, chartevents.VALUE, chartevents.VALUENUM, chartevents.VALUEUOM, d_items.CATEGORY, d_items.PARAM_TYPE
+FROM ((diagnoses_icd INNER JOIN admissions ON diagnoses_icd.HADM_ID = admissions.HADM_ID) INNER JOIN d_icd_diagnoses ON diagnoses_icd.ICD9_CODE = d_icd_diagnoses.ICD9_CODE) INNER JOIN (chartevents INNER JOIN d_items ON chartevents.ITEMID = d_items.ITEMID) ON admissions.HADM_ID = chartevents.HADM_ID
+WHERE (((diagnoses_icd.ICD9_CODE)="3484" Or (diagnoses_icd.ICD9_CODE)="14496" Or (diagnoses_icd.ICD9_CODE) Between "80000" And "80199" Or (diagnoses_icd.ICD9_CODE) Between "80310" And "80499" Or (diagnoses_icd.ICD9_CODE) Between "85100" And "85419" Or (diagnoses_icd.ICD9_CODE)="V8001") AND ((d_items.LABEL) Like "%surg%"));
+"""
+
+
 #%% Execution 
 
 df_init = pd.read_sql(sql=QUERY, con=CONN)
@@ -33,7 +40,7 @@ from icd_to_comorbidities import getComorbGroups
 
 
 #%%
-DF_PATH = "data/tbi_admit_icd.xlsx"
+DF_PATH = "data/tbi_admit_icd_v2.xlsx"
 ROOT_NAME = os.path.splitext(DF_PATH)[0]
 df_init: DataFrame = pd.read_excel(DF_PATH)
 
@@ -73,7 +80,7 @@ df_raw_info = pd.read_excel(F"{ROOT_NAME}_age_elix.xlsx")
 num_subjs = len(df_raw_info) # Each row is a unique patient 
 
 #%%
-df1 = df_raw_info[["age", "GENDER"]]
+df1 = df_raw_info[["SUBJECT_ID", "age", "GENDER"]]
 df1["alive_logical"] = df_raw_info["DOD"].isnull() # NaN counts as null, if Nan then is considered alive
 df1["alive"] = df1["alive_logical"].apply(lambda x: "Alive" if x else "Expired") # Label for coding category (ggplot2 doesn't consider logical as categorical)
 df1["num_comorbs"] = df_raw_info[col_origin].sum(axis=1)
