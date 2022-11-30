@@ -12,22 +12,23 @@ SELECT admissions.SUBJECT_ID, admissions.HADM_ID, admissions.DIAGNOSIS, diagnose
 FROM (admissions INNER JOIN diagnoses_icd ON admissions.HADM_ID = diagnoses_icd.HADM_ID) INNER JOIN d_icd_diagnoses ON diagnoses_icd.ICD9_CODE = d_icd_diagnoses.ICD9_CODE
 WHERE (((diagnoses_icd.ICD9_CODE)="3484" Or (diagnoses_icd.ICD9_CODE)="14496" Or (diagnoses_icd.ICD9_CODE) Between "80000" And "80199" Or (diagnoses_icd.ICD9_CODE) Between "80310" And "80499" Or (diagnoses_icd.ICD9_CODE) Between "85100" And "85419" Or (diagnoses_icd.ICD9_CODE)="V8001"));
 """
-QUERY = """
-SELECT admissions.SUBJECT_ID, admissions.HADM_ID, d_items.LABEL, chartevents.CHARTTIME, chartevents.ITEMID, chartevents.VALUE, chartevents.VALUENUM, chartevents.VALUEUOM, d_items.UNITNAME, d_items.CATEGORY
-FROM (admissions INNER JOIN diagnoses_icd ON admissions.HADM_ID = diagnoses_icd.HADM_ID) INNER JOIN (chartevents INNER JOIN d_items ON chartevents.ITEMID = d_items.ITEMID) ON diagnoses_icd.HADM_ID = chartevents.HADM_ID
-WHERE (((LOWER(d_items.LABEL) Like "%parin%") Or (LOWER(d_items.LABEL) Like "%oban%")) AND ((diagnoses_icd.ICD9_CODE)="3484" Or (diagnoses_icd.ICD9_CODE)="14496" Or (diagnoses_icd.ICD9_CODE) Between "80000" And "80199" Or (diagnoses_icd.ICD9_CODE) Between "80310" And "80499" Or (diagnoses_icd.ICD9_CODE) Between "85100" And "85419" Or (diagnoses_icd.ICD9_CODE)="V8001"));
-"""
+
 QUERY = """
 SELECT admissions.SUBJECT_ID, admissions.HADM_ID, admissions.ADMITTIME, admissions.DISCHTIME, admissions.DEATHTIME, admissions.DIAGNOSIS, diagnoses_icd.ICD9_CODE, chartevents.ICUSTAY_ID, chartevents.CHARTTIME, chartevents.STORETIME, d_items.LABEL, chartevents.VALUE, chartevents.VALUE, chartevents.VALUENUM, chartevents.VALUEUOM, d_items.CATEGORY, d_items.PARAM_TYPE
 FROM ((diagnoses_icd INNER JOIN admissions ON diagnoses_icd.HADM_ID = admissions.HADM_ID) INNER JOIN d_icd_diagnoses ON diagnoses_icd.ICD9_CODE = d_icd_diagnoses.ICD9_CODE) INNER JOIN (chartevents INNER JOIN d_items ON chartevents.ITEMID = d_items.ITEMID) ON admissions.HADM_ID = chartevents.HADM_ID
-WHERE (((diagnoses_icd.ICD9_CODE)="3484" Or (diagnoses_icd.ICD9_CODE)="14496" Or (diagnoses_icd.ICD9_CODE) Between "80000" And "80199" Or (diagnoses_icd.ICD9_CODE) Between "80310" And "80499" Or (diagnoses_icd.ICD9_CODE) Between "85100" And "85419" Or (diagnoses_icd.ICD9_CODE)="V8001") AND ((d_items.LABEL) Like "%surg%"));
-"""
+WHERE (((diagnoses_icd.ICD9_CODE) Between "80000" And "80199" Or (diagnoses_icd.ICD9_CODE) Between "80300" And "80499" Or (diagnoses_icd.ICD9_CODE) Between "8500" And "8509" Or (diagnoses_icd.ICD9_CODE) Between "85000" And "85419" Or (diagnoses_icd.ICD9_CODE) Between "9501" And "9503" Or (diagnoses_icd.ICD9_CODE)="95901") AND (LOWER(d_items.LABEL) = "surgery" Or LOWER(d_items.LABEL) = "Surgery"));
+""" # tbi v2, chartevents for surgery 
+QUERY = """
+SELECT admissions.SUBJECT_ID, admissions.HADM_ID, admissions.ADMITTIME, admissions.DISCHTIME, admissions.DEATHTIME, admissions.DIAGNOSIS, diagnoses_icd.ICD9_CODE, chartevents.ICUSTAY_ID, chartevents.CHARTTIME, chartevents.STORETIME, d_items.LABEL, chartevents.VALUE, chartevents.VALUE, chartevents.VALUENUM, chartevents.VALUEUOM, d_items.CATEGORY, d_items.PARAM_TYPE
+FROM ((diagnoses_icd INNER JOIN admissions ON diagnoses_icd.HADM_ID = admissions.HADM_ID) INNER JOIN d_icd_diagnoses ON diagnoses_icd.ICD9_CODE = d_icd_diagnoses.ICD9_CODE) INNER JOIN (chartevents INNER JOIN d_items ON chartevents.ITEMID = d_items.ITEMID) ON admissions.HADM_ID = chartevents.HADM_ID
+WHERE (((diagnoses_icd.ICD9_CODE) Between "80000" And "80199" Or (diagnoses_icd.ICD9_CODE) Between "80300" And "80499" Or (diagnoses_icd.ICD9_CODE) Between "8500" And "8509" Or (diagnoses_icd.ICD9_CODE) Between "85000" And "85419" Or (diagnoses_icd.ICD9_CODE) Between "9501" And "9503" Or (diagnoses_icd.ICD9_CODE)="95901") AND (LOWER(d_items.LABEL) Like "%gcs%"));
+""" # tbi v2, chartevents for GCS
 
 
 #%% Execution 
 
 df_init = pd.read_sql(sql=QUERY, con=CONN)
-df_init.to_excel("data/chartevents_test.xlsx", index=False) # Exclude index column
+df_init.to_excel(F"data/tbi2_admit_chevents.xlsx", index=False) # Exclude index column
 
 #%% DF Processing
 import os
@@ -40,7 +41,7 @@ from icd_to_comorbidities import getComorbGroups
 
 
 #%%
-DF_PATH = "data/tbi_admit_icd_v2.xlsx"
+DF_PATH = "data/tbi2_admit_icd.xlsx"
 ROOT_NAME = os.path.splitext(DF_PATH)[0]
 df_init: DataFrame = pd.read_excel(DF_PATH)
 

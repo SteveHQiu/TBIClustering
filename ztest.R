@@ -8,7 +8,7 @@ library(patchwork) # For adding plots together
 
 #%% LPA for LCA results 
 
-df_orig <- read_excel("data/tbi_admit_icd_age_elix.xlsx")
+df_orig <- read_excel("data/tbi_admit_icd_v2_age_elix.xlsx")
 df <- df_orig %>% dplyr::select(congestive_heart_failure, cardiac_arrhythmia, valvular_disease,
                          pulmonary_circulation_disorder, peripheral_vascular_disorder,
                          hypertension_uncomplicated, hypertension_complicated, paralysis,
@@ -38,7 +38,7 @@ model <- cbind(congestive_heart_failure, cardiac_arrhythmia, valvular_disease,
 ) ~ 1
 
 
-n_clust <- 8
+n_clust <- 7
 bics <- c()
 aics <- c()
 clusts <- c()
