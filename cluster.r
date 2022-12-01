@@ -25,7 +25,9 @@ library(inflection) # For finding knee point
 library(comprehenr) # For python comprehensions
 #%%
 #%% Definitions 
-df_orig <- read_excel("data/tbi_admit_icd_age_elix.xlsx")
+DF_PATH <- "data/tbi2_admit_icd_age_elix.xlsx"
+df_orig <- read_excel(DF_PATH)
+DF_ROOTNAME <- tools::file_path_sans_ext(DF_PATH)
 col_labels <- c("congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease",
              "pulmonary_circulation_disorder", "peripheral_vascular_disorder",
              "hypertension_uncomplicated", "hypertension_complicated", "paralysis",
@@ -55,10 +57,10 @@ fig_labels <- fig_labels[!fig_labels %in% c("Peptic ulcer disease")] # Specific 
 # fig_labels <- append(fig_labels, "Age", 0) # Add age if needed 
 
 
-genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", lpa_mode = "EII", scale100 = TRUE) {
+genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", lpa_mode = "EII", scale100 = TRUE, annot = FALSE) {
 
   if (!is.null(col_symbols)) {
-    df <- df_orig %>% select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
+    df <- df_orig %>% dplyr::select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
   } else {
     df <- df_orig
   }
@@ -69,7 +71,8 @@ genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", l
     df <- df * 1 # Turns TRUE/FALSE into 1/0
     # Manifest values needs to be an integer starting from 1 and not 0 https://stackoverflow.com/questions/52008147/polca-alert-values-that-are-not-positive-integers
     df <- df + 1 # Adds 1 to every value
-    model <- rlang::inject(cbind(!!!col_symbols) ~ 1) # Define model, can probably just refer to col.names instead of re-using symbols since col.names will already be filtered
+    new_col_symbols <- lapply(colnames(df), as.name)
+    model <- rlang::inject(cbind(!!!new_col_symbols) ~ 1) # Define model, can probably just refer to col.names instead of re-using symbols since col.names will already be filtered
     cluster <- poLCA(model, data=df, nclass=n_clusts, na.rm=TRUE, maxiter=10000)
     df_results <- data.frame(cluster$probs) # Outputs probability of each input group for all clusters (1=False, 2=True)
     df_means <- df_results[,seq(2, ncol(df_results), 2)] # Get every second column starting at col 2
@@ -77,11 +80,10 @@ genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", l
 
     df_annot <- cluster$predclass
   } else if (mode == "lpa") {
-    cluster = Mclust(df, G=n_clusts, modelNames=c(lpa_mode))
+    cluster <- Mclust(df, G=n_clusts, modelNames=c(lpa_mode))
     model_means <- cluster$parameters$mean
 
-    df_annot <- data.frame() #FIXME
-
+    df_annot <- cluster$classification 
   } else {
     print("Invalid mode given")
     return() # Exit function early
@@ -91,8 +93,15 @@ genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", l
   }
   # model_means <- model_means + 50 # Add 50 to all values as base
 
+  if (annot) {
+    df_annotated <- cbind(df_orig, df_annot)
+    write_xlsx(df_annotated, sprintf("%s_annotated.xlsx", DF_ROOTNAME))
+  }
+
+  clust_counts <- table(df_annot) # Tabulate cluster counts
+
   # Outputs df where every column is an endotype, each row is a factor used in endotyping 
-  return(list(model_means, cluster, df_annot)) # Need to use list() to make array since c() coerces elements into same type
+  return(list(model_means, cluster, clust_counts)) # Need to use list() to make array since c() coerces elements into same type
 }
 
 
@@ -132,7 +141,7 @@ analyzeClusts <- function(meta_means, n_mclusts = NULL, lpa_mode = "EEI") {
   }
 }
 
-visRadialPlots <- function(model_means, fig_labels, save_path = "Clusters.png") {
+visRadialPlots <- function(model_means, fig_labels, clust_counts = NULL, save_path = "Clusters.png") {
   # Basically visualizing row values for every column, each column having own radial plot
   # model_means should be a df with factors in rows with columns representing groupings
 
@@ -158,19 +167,22 @@ visRadialPlots <- function(model_means, fig_labels, save_path = "Clusters.png") 
   
   df_clust <- data.frame(model_means)
   for (clust_name in colnames(df_clust)) {
-    clust_num = match(clust_name, clust_names)
-    plot_color = clust_colors[clust_num]
-    plot_color_desat = clust_colors_desat[clust_num]
+    clust_num <- match(clust_name, clust_names)
+    plot_color <- clust_colors[clust_num]
+    plot_color_desat <- clust_colors_desat[clust_num]
+
     rgraph <- ggplot(df_means, aes_string(x = "id", y = clust_name, fill = clust_name)) + # Note that id is a factor. If x is numeric, there is some space between the first bar
+      ggtitle(clust_name) +
       geom_bar(stat = "identity") + 
       ylim(-100, 150) +
       scale_fill_gradient(low = plot_color_desat, high = plot_color, limits = c(0, 100),
                           name = "Probability (%)") +
-      theme_minimal() + # Remove grid and titles
+      theme_minimal() + # Remove background
       guides(fill = guide_colorbar(title.position = "top", direction = "vertical")) +
       theme(
-        axis.text = element_blank(),
-        axis.title = element_blank(),
+        axis.text.x = element_blank(), # Clear x-axis ticks
+        axis.text.y = element_blank(), # Clear y-axis ticks
+        axis.title = element_blank(), # Clear possible titles
         legend.position = "right",
         legend.box.just = "center",
         # legend.key.width = unit(2.5, "cm"), # To scale colorbar size
@@ -181,20 +193,68 @@ visRadialPlots <- function(model_means, fig_labels, save_path = "Clusters.png") 
       ) +
       coord_polar(start = 0, clip = "off") + # This addition makes graph use polar coordinates, clip = "off" to prevent label clipping
       geom_text(data = df_means, aes(label = labels, hjust = hjust), size = 3, angle = df_means$angles)
+    if (!is.null(clust_counts)) {
+      clust_count <- clust_counts[[clust_num]]
+      rgraph <- rgraph + ggtitle(sprintf("%s (%s patients)", clust_name, clust_count)) # Overwrite title
+    }
+
     if (clust_num == 1) {
       start_graph <- rgraph # If first cluster, initiate figure
     }
     else {
       start_graph <- start_graph + rgraph # Otherwise, add to main figure
     }
+
   }
   
   final_graph <- start_graph + plot_layout(guides = "auto") # guides = "collect" to collect duplicate legends
   ggsave(save_path, final_graph, width = 17, height = 17)
 }
 
-explModelsLCA <- function(df_orig, col_symbols) {
-  df <- df_orig %>% select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
+visPerformance <- function(indices, measures, label, smoothing = FALSE) {
+  fig_title <- sprintf("%s vs no. of clusters", label)
+  
+
+  plot(indices, measures, main=fig_title, ylab=label, xlab="No. of clusters", type="o")
+  if (smoothing) {
+    lo <- loess(measures~indices)
+    smoothed <- predict(lo) # Smoothed output
+    lines(indices, smoothed, type="o", col="blue")
+  }
+  print(sprintf("Inflection for %s series", label))
+  calculateInflection(indices, measures)
+  deltas <- analyzeDeltas(indices, measures, series_label=label)
+  print(sprintf("Inflection for %s deltas", label))
+  calculateInflection(indices[-1], deltas) # Remove first item from indices
+}
+
+analyzeDeltas <- function(indices, series, series_label) {
+  deltas <- to_vec(for(i in seq_along(series)) series[i] - series[i-1]) # Calculate change in value per change in index
+  fig_title <- sprintf("Change in %s with increase in number of clusters", series_label)
+  y_label <- sprintf("Change in %s from previous number of clusters", series_label)
+  indices <- indices[-1] # Remove first item
+  plot(indices, deltas, main=fig_title, ylab=y_label, xlab="No. of clusters", type="o",)
+  return(deltas)
+}
+
+calculateInflection <- function(indices, series, smoothing = FALSE) {
+  # Different ways of finding inflection point, some require inputting the convexity (obtained via check_curve)
+  if (smoothing) {
+      lo <- loess(series~indices)
+      series <- predict(lo) # Smoothed output
+  }
+
+  curve_report <- check_curve(indices, series)
+  
+  print(sprintf("UIK: %s", uik(indices, series)))
+  print(sprintf("d2UIK: %s", d2uik(indices, series)))
+  print(ese(indices, series, curve_report$index))
+  print(ede(indices, series, curve_report$index))
+}
+
+
+explModelsLCA <- function(df_orig, col_symbols, upper_bound) {
+  df <- df_orig %>% dplyr::select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
   df <- df * 1 # Turns TRUE/FALSE into 1/0
   # Manifest values needs to be an integer starting from 1 and not 0 https://stackoverflow.com/questions/52008147/polca-alert-values-that-are-not-positive-integers
   df <- df + 1 # Adds 1 to every value
@@ -203,68 +263,41 @@ explModelsLCA <- function(df_orig, col_symbols) {
   
   ## Cluster visualization
   
-  cluster <- poLCA(model, data = df, nclass = 7, na.rm = TRUE, maxiter=10000)
-  
-  ind <- c(3:15)
+  indices <- c(2:upper_bound)
+
   bics <- c()
   aics <- c()
-  for (i in ind) {
+  clusters <- list()
+
+  for (i in indices) {
     cluster <-poLCA(model, data=df, nclass=i, maxiter=10000)
     bics <- c(bics, cluster$bic)
     aics <- c(aics, cluster$aic)
+    clusters <- append(clusters, cluster)
   }
-  plot(cbind(ind, aics), type="l")
-  plot(cbind(ind, bics), type="l")
   
-  a <- aics
-  c <- to_vec(for(i in seq_along(a)) a[i] - a[i-1])
-  plot(seq_along(c), c, type = "l")
-  check_curve(seq_along(c), c)
-  # Different ways of finding inflection point, some require inputting the convexity (obtained via check_curve)
-  uik(seq_along(c), c)
-  d2uik(seq_along(c), c)
-  ese(seq_along(c), c, 0)
-  ede(seq_along(c), c, 0)
+  return(list(indices, bics, aics, clusters))
 }
 
-explModelsLPA <- function(df_orig, col_symbols) {
+explModelsLPA <- function(df_orig, col_symbols, upper_bound) {
   #%% Model generation 
-  df <- df_orig %>% select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
+  df <- df_orig %>% dplyr::select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
   # Models:
   # "VII": spherical, unequal volume - Tends not to work well with normalized range and some clusters will only be composed of age characteristics
   # "EII": spherical, equal volume - Better with normalized age range
 
-  model = Mclust(df, G = 2:15, modelNames = c("EII"),) # Default is G = 1:9, need to set this manually, can also specify certain type of model (E.g., EII, VII)
+  model = Mclust(df, G = 2:upper_bound, modelNames = c("EII")) # Default is G = 1:9, need to set this manually, can also specify certain type of model (E.g., EII, VII)
   # model = Mclust(df, G = 5:30, modelNames = c("VII")) # Default is G = 1:9, need to set this manually, can also specify certain type of model (E.g., EII, VII)
   # model = Mclust(df, G = 5:30) # General clustering to try every type of model
   # model = mclustICL(df, G = 5:30) # Based on ICL rather than BIC
-  model$BIC
-  plot(model$BIC)
-  model$parameters$mean
-  #%%
-  #%% Model selection
-  # Finding inflection point when giving a range of range values
-  a <- c(model$BIC)
-  c <- to_vec(for(i in seq_along(a)) a[i] - a[i-1])
-  plot(seq_along(c), c, type = "l")
-  check_curve(seq_along(c), c)
-  # Different ways of finding inflection point, some require inputting the convexity (obtained via check_curve)
-  uik(seq_along(c), c)
-  d2uik(seq_along(c), c)
-  ese(seq_along(c), c, 0)
-  ede(seq_along(c), c, 0)
 
-  # Use smoothing to get knee point 
+  indices <- c(2:upper_bound)
+  bics <- model$BIC
+  aics <- NULL
+  clusters <- model
 
-  lo <- loess(c~seq_along(c))
-  smoothed <- predict(lo)
-  plot(seq_along(c), c, type = "o", col = "blue", xlab = "No. of components", ylab = "BIC")
-  lines(seq_along(c), smoothed, type = "o", col = "red")
+  return(list(indices, bics, aics, clusters))
 
-  uik(seq_along(c), smoothed)
-  d2uik(seq_along(c), smoothed)
-  ese(seq_along(c), smoothed, 0)
-  ede(seq_along(c), smoothed, 0)
 
 }
 
@@ -280,7 +313,7 @@ anlzSurvival <- function(df_orig, df_annot, col_symbols) {
     # p_val <- 1 - pchisq(2*(ll_proposed - ll_null), df=(length(model$coefficients)-1))
     # print(sprintf("P-value: %s", p_val))
   }
-  df <- df_orig %>% select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
+  df <- df_orig %>% dplyr::select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
 
   df$survival <- with(df_orig, ifelse(is.na(DOD), TRUE, FALSE))
   col_symbols <- append(col_symbols, as.name("survival")) # Add new survival variable
@@ -312,32 +345,65 @@ anlzSurvival <- function(df_orig, df_annot, col_symbols) {
 #%% Misc displays/analyses
 
 # Exploration
-explModelsLCA(df_orig=df_orig, col_symbols=col_symbols)
-explModelsLPA(df_orig=df_orig, col_symbols=col_symbols)
+if (0) {
+  for (i in 1:7) {
+    expl_results <- explModelsLCA(df_orig=df_orig, col_symbols=col_symbols, upper_bound=15)
+    visPerformance(expl_results[[1]], expl_results[[2]], "BIC")
+    visPerformance(expl_results[[1]], expl_results[[3]], "AIC")
+
+  }
+}
+
+if (0) {
+expl_results <- explModelsLPA(df_orig=df_orig, col_symbols=col_symbols, upper_bound=15)
+visPerformance(expl_results[[1]], expl_results[[2]], "BIC")
+}
 
 
 # Regression analysis for survival
-results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=7, mode="lca")
+if (0) {
+results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=7, mode="lpa")
 model_means <- results[[1]] # Need double brackets for list
-df_annot <- results[[3]]
 anlzSurvival(df_orig=df_orig, df_annot=df_annot, col_symbols=col_symbols)
+
+}
 
 
 
 #%%
 #%% Single cluster
-results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=7, mode="lca")
+if (1) {
+results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=5, mode="lca", annot=TRUE)
 model_means <- results[[1]] # Need double brackets for list
-visRadialPlots(model_means=model_means, fig_labels=fig_labels)
+clust_counts <- results[[3]]
+visRadialPlots(model_means=model_means, fig_labels=fig_labels, clust_counts=clust_counts, save_path="figures/LCA_5.png")
+}
 
 #%%
 #%% LPA on LCA results 
-
-results <- genMultClusts(n_clust=7, n_cycles=5)
+if (0) {
+results <- genMultClusts(n_clust=5, n_cycles=30)
 model_means <- results[[1]] # Need double brackets for list
 analyzeClusts(meta_means=model_means) # Preview
-meta_results <- analyzeClusts(meta_means=model_means, n_mclusts=7, lpa_mode="VEI")
+
+
+}
+
+if (0) {
+meta_results <- analyzeClusts(meta_means=model_means, n_mclusts=13, lpa_mode="VEI")
 meta_means <- meta_results[[1]]
-visRadialPlots(model_means=meta_means, fig_labels=fig_labels)
+meta_counts <- meta_results[[3]]
+visRadialPlots(model_means=meta_means, fig_labels=fig_labels, clust_counts=meta_counts)
+
+}
+
+#%%
+#%% Export all figures
+if (0) {
+plots.dir.path <- list.files(tempdir(), pattern="rs-graphics", full.names = TRUE)
+plots.png.paths <- list.files(plots.dir.path, pattern=".png", full.names = TRUE)
+file.copy(from=plots.png.paths, to="figures/performance")
+
+}
 
 #%%
