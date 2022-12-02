@@ -302,23 +302,14 @@ explModelsLPA <- function(df_orig, col_symbols, upper_bound) {
 }
 
 # Bar graph for 
-anlzSurvival <- function(df_orig, df_annot, col_symbols) {
+regressionSurvival <- function(df_orig, df_annot, col_symbols) {
 
-  genReport <- function(model) {
-    print(summary(model))
-    # ll_null <- model$null.deviance/-2
-    # ll_proposed <- model$deviance/-2
-    # r2 <- (ll_null - ll_proposed)/ll_null
-    # print(sprintf("R2: %s", r2))
-    # p_val <- 1 - pchisq(2*(ll_proposed - ll_null), df=(length(model$coefficients)-1))
-    # print(sprintf("P-value: %s", p_val))
-  }
   df <- df_orig %>% dplyr::select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
 
   df$survival <- with(df_orig, ifelse(is.na(DOD), TRUE, FALSE))
   col_symbols <- append(col_symbols, as.name("survival")) # Add new survival variable
 
-  lg_model <- lm(survival ~ ., data=df)
+  lg_model <- lm(survival ~ ., data=df) # lm() rather than glm() since lm() easier to pass on to ANOVA 
   print("Regression using only comorbidities")
   print(summary(lg_model))
 
@@ -339,7 +330,10 @@ anlzSurvival <- function(df_orig, df_annot, col_symbols) {
 
 }
   
+chisqSurvival <- function(path_df_annotated) {
+  read_excel(path_df_annotated)
 
+}
 
 #%%
 #%% Misc displays/analyses
@@ -364,7 +358,7 @@ visPerformance(expl_results[[1]], expl_results[[2]], "BIC")
 if (0) {
 results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=7, mode="lpa")
 model_means <- results[[1]] # Need double brackets for list
-anlzSurvival(df_orig=df_orig, df_annot=df_annot, col_symbols=col_symbols)
+regressionSurvival(df_orig=df_orig, df_annot=df_annot, col_symbols=col_symbols)
 
 }
 
@@ -407,3 +401,34 @@ file.copy(from=plots.png.paths, to="figures/performance")
 }
 
 #%%
+
+path_df_annotated <- "data/tbi2_admit_icd_age_elix_annotated_v1.xlsx"
+
+df_orig <- read_excel(path_df_annotated)
+df_orig$survival <- with(df_orig, ifelse(is.na(DOD), "Alive", "Expired"))
+df <- df_orig %>% dplyr::select("survival", "df_annot")
+cross_tab <- table(df$df_annot, df$survival)
+pairwise.prop.test(cross_tab, p.adjust.method="holm")
+# pairwise.prop.test(cross_tab, p.adjust.method="bonferroni") # More conservative method
+
+
+endotypes <- factor(df$df_annot)
+clust_colors <- rainbow(length(attributes(endotypes)$levels)) # Base colors
+bar_colors <- append(lighten(clust_colors, 0.2), lighten(clust_colors, 0.75))
+
+
+# basic visual
+df_counts <- as.data.frame.matrix(t(cross_tab)) # Coerce into same shape (can't use data.frame())
+df_percent <- apply(df_counts, 2, function(x){x*100/sum(x,na.rm=T)}) # Normalize
+barplot(df_percent) # Basic graphic
+
+# ggplot visual
+df_counts_series <- data.frame(cross_tab)
+colnames(df_counts_series) <- c("Endotype", "Survival", "Count")
+df_percent <- df_counts_series %>% group_by(Endotype) %>%
+  mutate(Percent=100*Count/sum(Count))
+ggplot(df_percent, aes(fill=Survival, y=Percent, x=Endotype)) + 
+  geom_bar(position="stack", stat="identity", fill=bar_colors)
+
+# Age
+aggregate(df_orig$age, list(df_orig$df_annot), FUN=mean)
