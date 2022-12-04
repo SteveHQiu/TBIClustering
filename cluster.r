@@ -366,7 +366,7 @@ regressionSurvival(df_orig=df_orig, df_annot=df_annot, col_symbols=col_symbols)
 
 #%%
 #%% Single cluster
-if (1) {
+if (0) {
 results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=5, mode="lca", annot=TRUE)
 model_means <- results[[1]] # Need double brackets for list
 clust_counts <- results[[3]]
@@ -401,8 +401,8 @@ file.copy(from=plots.png.paths, to="figures/performance")
 }
 
 #%%
-
-path_df_annotated <- "data/tbi2_admit_icd_age_elix_annotated_v1.xlsx"
+if (1) {
+path_df_annotated <- "data/tbi2_admit_icd_age_elix_annotated.xlsx"
 
 df_orig <- read_excel(path_df_annotated)
 df_orig$survival <- with(df_orig, ifelse(is.na(DOD), "Alive", "Expired"))
@@ -432,3 +432,6 @@ ggplot(df_percent, aes(fill=Survival, y=Percent, x=Endotype)) +
 
 # Age
 aggregate(df_orig$age, list(df_orig$df_annot), FUN=mean)
+  
+}
+
