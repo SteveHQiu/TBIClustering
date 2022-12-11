@@ -20,6 +20,7 @@ df_gcs_events = pd.read_excel(F"data/tbi2_admit_chevents_gcs.xlsx")
 #%% Functions
 def deriveAdmitData(df_base: DataFrame,
                     col_id = "SUBJECT_ID",
+                    col_sex = "GENDER",
                     col_seq = "SEQ_NUM",
                     col_icd = "ICD9_CODE",
                     col_admittime = "ADMITTIME",
@@ -29,7 +30,7 @@ def deriveAdmitData(df_base: DataFrame,
                     ):
     
     df_icd: DataFrame = df_base.sort_values([col_id, col_seq]) \
-        .groupby([col_id])[col_icd] \
+        .groupby([col_id, col_sex])[col_icd] \
         .apply(lambda x: x.to_json(orient="records")) \
         .reset_index(name = "comorb") # Gather ICD9 codes for each subject and store them in list
         # to_json() method: https://pandas.pydata.org/pandas-docs/stable/reference/api/pandas.Series.to_json.html
@@ -240,15 +241,10 @@ df_labelled.fillna({"nsx_any": False, "nsx_ventriculostomy": False, # Need dict 
                         "nsx_crani": False, "nsx_icp": False}, inplace=True) # Fill NAs after merge
 
 #%%
-
 df_labelled.to_excel(F"{ROOT_NAME}_dates_nsx_gcs_elix.xlsx")
-
-
-
 
 #%% Visualization 
 
-df_final_labels = pd.read_excel("data/tbi2_admit_templabels.xlsx")
 def visStackedProp(df: DataFrame, primary_ind: str, secondary_ind: str):
     df_grped = DataFrame(df.groupby([primary_ind])[secondary_ind].value_counts(normalize=True))
     df_grped.columns = ["Proportion"]
@@ -258,6 +254,7 @@ def visStackedProp(df: DataFrame, primary_ind: str, secondary_ind: str):
 
     df_grped.unstack().plot(kind="bar", stacked=True)
 
+df_final_labels = pd.read_excel("data/tbi2_admit_templabels.xlsx")
 visStackedProp(df_final_labels, "df_annot", "gcs_init_cat")
 visStackedProp(df_final_labels, "df_annot", "age_cat")
 
