@@ -16,16 +16,18 @@ ROOT_NAME = os.path.splitext(DF_PATH)[0]
 df_init: DataFrame = pd.read_excel(DF_PATH)
 df_nsx_proc = pd.read_excel(F"data/tbi2_admit_proced.xlsx")
 df_gcs_events = pd.read_excel(F"data/tbi2_admit_chevents_gcs.xlsx")
-
+#%%
 COL_AGE = "Age (years)"
 COL_LOS = "Length of stay (days)"
 COL_AGE_NORM = "Age (normalized to max age in group)"
 COL_AGE_CAT = "Age category"
 AGE_LABELS = ["1. Young", "2. Middle-aged", "3. Old"]
-COL_SURV = "In-hospital mortality"
+COL_SURV = "Survival to discharge"
 COL_GCS = "First recorded total GCS score"
 COL_GCS_CAT = "TBI severity by initial GCS"
 GCS_LABELS = ["3. Severe", "2. Moderate", "1. Mild"]
+COL_GCS_CAT2 = "TBI severity by initial GCS (Sev + Mod vs Mild)"
+GCS_LABELS2 = ["2. Severe and Moderate", "1. Mild"]
 COL_ICPMON = "ICP monitoring"
 COL_VENTRIC = "Ventriculostomy"
 COL_CRANI = "Craniotomy or craniectomy"
@@ -238,6 +240,11 @@ def deriveGCS(df_gcs_events: DataFrame,
                                         right=True,
                                         bins=[2, 8, 13, 15], # Left bound is exclusive
                                         labels=GCS_LABELS
+                                        )
+    df_gcs_annot[COL_GCS_CAT2] = pd.cut(df_gcs_annot[COL_GCS],
+                                        right=True,
+                                        bins=[2, 13, 15], # Left bound is exclusive
+                                        labels=GCS_LABELS2
                                         )
     return df_gcs_annot
 

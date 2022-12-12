@@ -25,7 +25,7 @@ library(inflection) # For finding knee point
 library(comprehenr) # For python comprehensions
 #%%
 #%% Definitions 
-DF_PATH <- "data/tbi2_admit_icd_age_elix.xlsx"
+DF_PATH <- "data/tbi2_admit_icd_dates_nsx_gcs_elix.xlsx"
 df_orig <- read_excel(DF_PATH)
 DF_ROOTNAME <- tools::file_path_sans_ext(DF_PATH)
 col_labels <- c("congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease",
@@ -94,6 +94,8 @@ genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", l
   # model_means <- model_means + 50 # Add 50 to all values as base
 
   if (annot) {
+    df_annot <- data.frame(df_annot)
+    colnames(df_annot) <- "Endotype"
     df_annotated <- cbind(df_orig, df_annot)
     write_xlsx(df_annotated, sprintf("%s_annotated.xlsx", DF_ROOTNAME))
   }
@@ -101,7 +103,7 @@ genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", l
   clust_counts <- table(df_annot) # Tabulate cluster counts
 
   # Outputs df where every column is an endotype, each row is a factor used in endotyping 
-  return(list(model_means, cluster, clust_counts)) # Need to use list() to make array since c() coerces elements into same type
+  return(list(model_means, cluster, clust_counts, df_annot)) # Need to use list() to make array since c() coerces elements into same type
 }
 
 
@@ -145,8 +147,9 @@ visRadialPlots <- function(model_means, fig_labels, clust_counts = NULL, save_pa
   # Basically visualizing row values for every column, each column having own radial plot
   # model_means should be a df with factors in rows with columns representing groupings
 
-  colnames(model_means) <- paste("Endotype_", seq(1, ncol(model_means)), sep="")
-  clust_names <- c(colnames(model_means))
+  col_labels <- paste("Endotype_", seq(1, ncol(model_means)), sep="")
+  endotype_labels <- paste("Endotype ", seq(1, ncol(model_means)), sep="") # Separate list for labels without spaces 
+  colnames(model_means) <- col_labels
   clust_colors <- rainbow(length(colnames(model_means)))
   clust_colors_desat <- lighten(clust_colors, 0.75)
   clust_seq <- seq_len(length(clust_colors))
@@ -165,14 +168,14 @@ visRadialPlots <- function(model_means, fig_labels, clust_counts = NULL, save_pa
   
   
   
-  df_clust <- data.frame(model_means)
-  for (clust_name in colnames(df_clust)) {
-    clust_num <- match(clust_name, clust_names)
+  for (clust_name in col_labels) {
+    clust_num <- match(clust_name, col_labels)
+    clust_title <- endotype_labels[clust_num]
     plot_color <- clust_colors[clust_num]
     plot_color_desat <- clust_colors_desat[clust_num]
 
     rgraph <- ggplot(df_means, aes_string(x = "id", y = clust_name, fill = clust_name)) + # Note that id is a factor. If x is numeric, there is some space between the first bar
-      ggtitle(clust_name) +
+      ggtitle(clust_title) +
       geom_bar(stat = "identity") + 
       ylim(-100, 150) +
       scale_fill_gradient(low = plot_color_desat, high = plot_color, limits = c(0, 100),
@@ -195,7 +198,7 @@ visRadialPlots <- function(model_means, fig_labels, clust_counts = NULL, save_pa
       geom_text(data = df_means, aes(label = labels, hjust = hjust), size = 3, angle = df_means$angles)
     if (!is.null(clust_counts)) {
       clust_count <- clust_counts[[clust_num]]
-      rgraph <- rgraph + ggtitle(sprintf("%s (%s patients)", clust_name, clust_count)) # Overwrite title
+      rgraph <- rgraph + ggtitle(sprintf("%s (%s patients)", clust_title, clust_count)) # Overwrite title if clust_counts available
     }
 
     if (clust_num == 1) {
@@ -301,25 +304,25 @@ explModelsLPA <- function(df_orig, col_symbols, upper_bound) {
 
 }
 
-# Bar graph for 
+
 regressionSurvival <- function(df_orig, df_annot, col_symbols) {
 
   df <- df_orig %>% dplyr::select(!!!col_symbols) # !!! is a spice operator to inject/unpack symbols for vector of symbols
 
-  df$survival <- with(df_orig, ifelse(is.na(DOD), TRUE, FALSE))
-  col_symbols <- append(col_symbols, as.name("survival")) # Add new survival variable
+  df$`Survival to discharge` <- with(df_orig, ifelse(is.na(DOD), TRUE, FALSE))
+  col_symbols <- append(col_symbols, as.name("Survival to discharge")) # Add new survival variable
 
-  lg_model <- lm(survival ~ ., data=df) # lm() rather than glm() since lm() easier to pass on to ANOVA 
+  lg_model <- lm(`Survival to discharge` ~ ., data=df) # lm() rather than glm() since lm() easier to pass on to ANOVA 
   print("Regression using only comorbidities")
   print(summary(lg_model))
 
   df$endotype <- as.factor(df_annot)
   col_symbols <- append(col_symbols, as.name("endotype")) # Add new endotype variable
-  lg_model2 <- lm(survival ~ ., data=df)
+  lg_model2 <- lm(`Survival to discharge` ~ ., data=df)
   print("Regression with endotypes")
   print(summary(lg_model2))
 
-  lg_model3 <- lm(survival ~ endotype, data=df) # Use only endotype
+  lg_model3 <- lm(`Survival to discharge` ~ endotype, data=df) # Use only endotype
   print("Regression with endotypes")
   print(summary(lg_model3))
 
@@ -355,9 +358,10 @@ visPerformance(expl_results[[1]], expl_results[[2]], "BIC")
 
 
 # Regression analysis for survival
-if (0) {
+if (1) {
 results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=7, mode="lpa")
 model_means <- results[[1]] # Need double brackets for list
+df_annot <- results[[4]]
 regressionSurvival(df_orig=df_orig, df_annot=df_annot, col_symbols=col_symbols)
 
 }
@@ -365,7 +369,7 @@ regressionSurvival(df_orig=df_orig, df_annot=df_annot, col_symbols=col_symbols)
 
 
 #%%
-#%% Single cluster
+#%% Single cluster (main analysis)
 if (0) {
 results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=5, mode="lca", annot=TRUE)
 model_means <- results[[1]] # Need double brackets for list
@@ -401,13 +405,14 @@ file.copy(from=plots.png.paths, to="figures/performance")
 }
 
 #%%
-if (1) {
-path_df_annotated <- "data/tbi2_admit_icd_age_elix_annotated.xlsx"
+#%% Survival analysis 
+if (0) {
+path_df_annotated <- "data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated.xlsx"
 
 df_orig <- read_excel(path_df_annotated)
-df_orig$survival <- with(df_orig, ifelse(is.na(DOD), "Alive", "Expired"))
-df <- df_orig %>% dplyr::select("survival", "df_annot")
-cross_tab <- table(df$df_annot, df$survival)
+df_orig$`Survival to discharge` <- with(df_orig, ifelse(is.na(DOD), "Alive", "Expired"))
+df <- df_orig %>% dplyr::select("Survival to discharge", "df_annot")
+cross_tab <- table(df$df_annot, df$`Survival to discharge`)
 pairwise.prop.test(cross_tab, p.adjust.method="holm")
 # pairwise.prop.test(cross_tab, p.adjust.method="bonferroni") # More conservative method
 
@@ -435,3 +440,4 @@ aggregate(df_orig$age, list(df_orig$df_annot), FUN=mean)
   
 }
 
+#%%
