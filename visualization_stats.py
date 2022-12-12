@@ -11,10 +11,12 @@ from statsmodels.stats.proportion import proportions_chisquare_allpairs
 from statsmodels.stats.multicomp import MultiComparison
 from statsmodels.compat.python import lzip
 
+from processing import COL_AGE, COL_LOS, COL_AGE_NORM, COL_AGE_CAT, COL_SURV, COL_GCS, COL_GCS_CAT, COL_ICPMON, COL_VENTRIC, COL_CRANI, COL_NSX_ANY
+
 
 #%%
 df_labels = pd.read_excel("data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v2 (manual2).xlsx")
-df_labels["los_days"] = df_labels["los_days"].mask(df_labels["los_days"].sub(df_labels["los_days"].mean()).div(df_labels["los_days"].std()).abs().gt(3))
+df_labels[COL_LOS] = df_labels[COL_LOS].mask(df_labels[COL_LOS].sub(df_labels[COL_LOS].mean()).div(df_labels[COL_LOS].std()).abs().gt(3))
 # Remove outliers from LOS, 95 values removed at SD of 2, 33 at 3
 #%%
 def visStackedProp(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
@@ -26,56 +28,70 @@ def visStackedProp(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
 
     df_grped.unstack().plot(kind="bar", stacked=True)
 
-visStackedProp(df_labels, "df_annot", "gcs_init_cat")
-visStackedProp(df_labels, "df_annot", "age_cat")
+visStackedProp(df_labels, "df_annot", COL_GCS_CAT)
+visStackedProp(df_labels, "df_annot", COL_AGE_CAT)
 
 #%%
+def _desatColors(colors, percent):
+    # Colors should be in np format of RGBA with range of 0-1
+    vector_diff = 1 - colors # Subtract color from pure white
+    return colors + vector_diff * percent # Add difference vector scaled by percent
+    
+
 def visGrpedDichotomous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str,
                     col_outcome: str):
     df_grped = DataFrame(df_labels.groupby([col_prim_grp, col_sec_grp])[col_outcome].value_counts(normalize=True))
     df_grped.columns = ["Proportion"]
     df_grped = df_grped.reset_index()
-
-    fig, axes = plt.subplots(ncols=5)
+    clust_labels = df_grped[col_prim_grp].unique()
+    
+    colors_norm = plt.colormaps['gist_rainbow'](np.linspace(0.08, 0.89, len(clust_labels)))
+    colors_desat = _desatColors(colors_norm, 0.75)
+    
+    fig, axes = plt.subplots(ncols=len(clust_labels))
     fig.set_size_inches(15, 7)
 
-    for i in df_grped[col_prim_grp].unique():
-        df_clust = df_grped[df_grped[col_prim_grp] == i]
+    for ind, label in enumerate(clust_labels):
+        clust_color = [colors_norm[ind], colors_desat[ind]]
+        df_clust = df_grped[df_grped[col_prim_grp] == label]
         df_clust = df_clust.set_index([col_sec_grp, col_outcome]).Proportion
 
-        df_clust.unstack().plot(kind="bar", stacked=True, ax=axes[i-1])
+        df_clust.unstack().plot(kind="bar", stacked=True, ax=axes[label-1], color=clust_color)
+
 
 def visGrpedContinuous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str,
                     col_outcome: str):
     df_grped = DataFrame(df_labels.groupby([col_prim_grp, col_sec_grp])[col_outcome].mean())
     df_grped = df_grped.reset_index()
+    clust_labels = df_grped[col_prim_grp].unique()
+    
+    colors_norm = plt.colormaps['gist_rainbow'](np.linspace(0.08, 0.89, len(clust_labels)))
 
     fig, axes = plt.subplots(ncols=5)
     fig.set_size_inches(15, 7)
 
-    for i in df_grped[col_prim_grp].unique():
-        df_clust = df_grped[df_grped[col_prim_grp] == i]
+    for ind, label in enumerate(clust_labels):
+        df_clust = df_grped[df_grped[col_prim_grp] == label]
         df_clust = df_clust[[col_sec_grp, col_outcome]] # Filter out only second grouping and outcome
         df_clust = df_clust.set_index([col_sec_grp]) # Set index to second grouping for labels to work
 
-        df_clust.plot(kind="bar", ylim=(0, max(df_grped[col_outcome])), ax=axes[i-1])
-
+        df_clust.plot(kind="bar", ylim=(0, max(df_grped[col_outcome])), ax=axes[label-1], color=colors_norm[ind])
 
 #%% Survival
-visGrpedDichotomous(df_labels, "df_annot", "gcs_init_cat", "survival")
-visGrpedDichotomous(df_labels, "df_annot", "age_cat", "survival")
-visGrpedDichotomous(df_labels, "df_annot", "GENDER", "survival")
+visGrpedDichotomous(df_labels, "df_annot", COL_GCS_CAT, COL_SURV)
+visGrpedDichotomous(df_labels, "df_annot", COL_AGE_CAT, COL_SURV)
+visGrpedDichotomous(df_labels, "df_annot", "GENDER", COL_SURV)
 
 #%% Surg
-visGrpedDichotomous(df_labels, "df_annot", "age_cat", "nsx_any")
-visGrpedDichotomous(df_labels, "df_annot", "gcs_init_cat", "nsx_any")
-visGrpedDichotomous(df_labels, "df_annot", "GENDER", "nsx_any")
+visGrpedDichotomous(df_labels, "df_annot", COL_AGE_CAT, COL_NSX_ANY)
+visGrpedDichotomous(df_labels, "df_annot", COL_GCS_CAT, COL_NSX_ANY)
+visGrpedDichotomous(df_labels, "df_annot", "GENDER", COL_NSX_ANY)
 
 
 #%% LOS
-visGrpedContinuous(df_labels, "df_annot", "gcs_init_cat", "los_days")
-visGrpedContinuous(df_labels, "df_annot", "age_cat", "los_days")
-visGrpedContinuous(df_labels, "df_annot", "GENDER", "los_days")
+visGrpedContinuous(df_labels, "df_annot", COL_GCS_CAT, COL_LOS)
+visGrpedContinuous(df_labels, "df_annot", COL_AGE_CAT, COL_LOS)
+visGrpedContinuous(df_labels, "df_annot", "GENDER", COL_LOS)
 
 #%% Stats test
 
@@ -145,23 +161,23 @@ def compareGrpedContinuous(df_labels: DataFrame, col_groups: str, col_strata: st
             
             print(tbl)
 #%% Survival
-compareGrpedDichotomous(df_labels, "df_annot", "gcs_init_cat", "survival")
-compareGrpedDichotomous(df_labels, "df_annot", "age_cat", "survival")
-compareGrpedDichotomous(df_labels, "df_annot", "GENDER", "survival")
+compareGrpedDichotomous(df_labels, "df_annot", COL_GCS_CAT, COL_SURV)
+compareGrpedDichotomous(df_labels, "df_annot", COL_AGE_CAT, COL_SURV)
+compareGrpedDichotomous(df_labels, "df_annot", "GENDER", COL_SURV)
 
 #%% NSX intervention 
-compareGrpedDichotomous(df_labels, "df_annot", "gcs_init_cat", "nsx_any")
-compareGrpedDichotomous(df_labels, "df_annot", "age_cat", "nsx_any")
-compareGrpedDichotomous(df_labels, "df_annot", "GENDER", "nsx_any")
+compareGrpedDichotomous(df_labels, "df_annot", COL_GCS_CAT, COL_NSX_ANY)
+compareGrpedDichotomous(df_labels, "df_annot", COL_AGE_CAT, COL_NSX_ANY)
+compareGrpedDichotomous(df_labels, "df_annot", "GENDER", COL_NSX_ANY)
 
 #%% LOS
-compareGrpedContinuous(df_labels, "df_annot", "gcs_init_cat", "los_days")
-compareGrpedContinuous(df_labels, "df_annot", "age_cat", "los_days")
-compareGrpedContinuous(df_labels, "df_annot", "GENDER", "los_days")
+compareGrpedContinuous(df_labels, "df_annot", COL_GCS_CAT, COL_LOS)
+compareGrpedContinuous(df_labels, "df_annot", COL_AGE_CAT, COL_LOS)
+compareGrpedContinuous(df_labels, "df_annot", "GENDER", COL_LOS)
 
 
 
 #%% Age analysis with clusters
 df3 = pd.read_excel(F"data/tbi2_admit_icd_age_elix_annotated.xlsx")
 num_clusts = len(df3["df_annot"].value_counts())
-df3.groupby(["df_annot"])["age"].plot(kind="kde", xticks=list(range(100)[::5]), xlim=(0, 100),legend=True) # Preview
+df3.groupby(["df_annot"])[COL_AGE].plot(kind="kde", xticks=list(range(100)[::5]), xlim=(0, 100),legend=True) # Preview

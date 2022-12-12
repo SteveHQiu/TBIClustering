@@ -11,12 +11,27 @@ from matplotlib.axes import Axes
 #%% Constants/Data
 DF_PATH = "data/tbi2_admit_icd.xlsx"
 ROOT_NAME = os.path.splitext(DF_PATH)[0]
+# TBI_v2 = (2713 - 2629) extra admissions
 
 df_init: DataFrame = pd.read_excel(DF_PATH)
 df_nsx_proc = pd.read_excel(F"data/tbi2_admit_proced.xlsx")
 df_gcs_events = pd.read_excel(F"data/tbi2_admit_chevents_gcs.xlsx")
 
-# TBI_v2 = (2713 - 2629) extra admissions
+COL_AGE = "Age (years)"
+COL_LOS = "Length of stay (days)"
+COL_AGE_NORM = "Age (normalized to max age in group)"
+COL_AGE_CAT = "Age category"
+AGE_LABELS = ["1. Young", "2. Middle-aged", "3. Old"]
+COL_SURV = "In-hospital mortality"
+COL_GCS = "First recorded total GCS score"
+COL_GCS_CAT = "TBI severity by initial GCS"
+GCS_LABELS = ["3. Severe", "2. Moderate", "1. Mild"]
+COL_ICPMON = "ICP monitoring"
+COL_VENTRIC = "Ventriculostomy"
+COL_CRANI = "Craniotomy or craniectomy"
+COL_NSX_ANY = "Any neurosurgical intervention"
+
+
 #%% Functions
 def deriveAdmitData(df_base: DataFrame,
                     col_id = "SUBJECT_ID",
@@ -54,17 +69,17 @@ def deriveAdmitData(df_base: DataFrame,
     df_grped_data[col_dischtime] = pd.to_datetime(df_grped_data[col_dischtime]).dt.date
 
     # Demographics
-    df_grped_data["los_days"] = df_grped_data.apply(lambda row: (row[col_dischtime] - row[col_admittime]).days, axis=1) # Need .apply() method by bypass overflow addition error as the dates are scrambled and some are 300+ years in the future
-    df_grped_data["age"] = df_grped_data.apply(lambda row: (row[col_admittime] - row[col_birth]).days/365, axis=1) # Need .apply() method by bypass overflow addition error as the dates are scrambled and some are 300+ years in the future
-    df_grped_data["age"] = df_grped_data.apply(lambda row: row["age"] if row["age"] < 90 else 90, axis=1) # Merge all ages above 90 to 90 since MIMIC-III shifts all ages above 89 to 300
-    df_grped_data["age_normalized"] = df_grped_data["age"]/df_grped_data["age"].max() # Normalize by max value 
-    df_grped_data["age_cat"] = pd.cut(df_grped_data["age"],
+    df_grped_data[COL_LOS] = df_grped_data.apply(lambda row: (row[col_dischtime] - row[col_admittime]).days, axis=1) # Need .apply() method by bypass overflow addition error as the dates are scrambled and some are 300+ years in the future
+    df_grped_data[COL_AGE] = df_grped_data.apply(lambda row: (row[col_admittime] - row[col_birth]).days/365, axis=1) # Need .apply() method by bypass overflow addition error as the dates are scrambled and some are 300+ years in the future
+    df_grped_data[COL_AGE] = df_grped_data.apply(lambda row: row[COL_AGE] if row[COL_AGE] < 90 else 90, axis=1) # Merge all ages above 90 to 90 since MIMIC-III shifts all ages above 89 to 300
+    df_grped_data[COL_AGE_NORM] = df_grped_data[COL_AGE]/df_grped_data[COL_AGE].max() # Normalize by max value 
+    df_grped_data[COL_AGE_CAT] = pd.cut(df_grped_data[COL_AGE],
                                         right=True,
                                         bins=[0, 40, 70, 100], # Left bound is exclusive
-                                        labels=["young", "mild-aged", "old"]
+                                        labels=AGE_LABELS
                                         )
-    df_grped_data["survival"] = df_grped_data[col_death].isnull() # NaN counts as null, if Nan then is considered alive
-    df_grped_data["survival"] = df_grped_data["survival"].apply(lambda x: "Alive" if x else "Expired") # Label for coding category (ggplot2 doesn't consider logical as categorical)
+    df_grped_data[COL_SURV] = df_grped_data[col_death].isnull() # NaN counts as null, if Nan then is considered alive
+    df_grped_data[COL_SURV] = df_grped_data[COL_SURV].apply(lambda x: "Alive" if x else "Expired") # Label for coding category (ggplot2 doesn't consider logical as categorical)
 
     return df_grped_data
 
@@ -136,15 +151,15 @@ def deriveNsxProcedures(df_nsx_proc: DataFrame,
                         ):
     df_nsx_proc.drop_duplicates(subset=rem_dupl_subset, inplace=True)
     
-    df_nsx_proc["nsx_icp"] = df_nsx_proc[col_icd].isin([110]) # 180 vs 945
-    df_nsx_proc["nsx_ventriculostomy"] = df_nsx_proc[col_icd].isin([221, 222]) # Only 2 patients
-    df_nsx_proc["nsx_crani"] = df_nsx_proc[col_icd].isin([123, 124, 125, 131, 139]) # 508 vs 617
+    df_nsx_proc[COL_ICPMON] = df_nsx_proc[col_icd].isin([110]) # 180 vs 945
+    df_nsx_proc[COL_VENTRIC] = df_nsx_proc[col_icd].isin([221, 222]) # Only 2 patients
+    df_nsx_proc[COL_CRANI] = df_nsx_proc[col_icd].isin([123, 124, 125, 131, 139]) # 508 vs 617
 
-    df_icp = df_nsx_proc.groupby([col_id])["nsx_icp"].any()
-    df_ventr = df_nsx_proc.groupby([col_id])["nsx_ventriculostomy"].any()
-    df_crani = df_nsx_proc.groupby([col_id])["nsx_crani"].any()
+    df_icp = df_nsx_proc.groupby([col_id])[COL_ICPMON].any()
+    df_ventr = df_nsx_proc.groupby([col_id])[COL_VENTRIC].any()
+    df_crani = df_nsx_proc.groupby([col_id])[COL_CRANI].any()
     df_nsx_annot = pd.concat([df_icp, df_ventr, df_crani], axis=1)
-    df_nsx_annot["nsx_any"] = True
+    df_nsx_annot[COL_NSX_ANY] = True
     
     return df_nsx_annot
 
@@ -155,16 +170,16 @@ def deriveGCS(df_gcs_events: DataFrame,
               col_value = "VALUENUM",
               ):
     
-    df_gcs_events["CHARTTIME"] = pd.to_datetime(df_gcs_events["CHARTTIME"])
-    df_gcs_events.groupby(["SUBJECT_ID"])["LABEL"].value_counts() # Report of number of each type of GCS measurement
-    df_gcs_events.groupby(["SUBJECT_ID"])["CHARTTIME"].value_counts() # Report of number of time points
+    df_gcs_events[col_charttime] = pd.to_datetime(df_gcs_events[col_charttime])
+    df_gcs_events.groupby([col_id])[col_label].value_counts() # Report of number of each type of GCS measurement
+    df_gcs_events.groupby([col_id])[col_charttime].value_counts() # Report of number of time points
 
-    df_gcs_time = df_gcs_events.groupby(["SUBJECT_ID", "LABEL"])["CHARTTIME"].min().reset_index() # reset_index() to flatten multi-index from groupby() and get SUBJECT_ID and LABEL included
+    df_gcs_time = df_gcs_events.groupby([col_id, col_label])[col_charttime].min().reset_index() # reset_index() to flatten multi-index from groupby() and get SUBJECT_ID and LABEL included
     df_gcs_time.isna().any(axis=1).sum() # Check for any NaN values (should be none)
 
-    df_gcs_values = df_gcs_time.merge(df_gcs_events[["SUBJECT_ID", "LABEL", "CHARTTIME", "VALUENUM"]],
-                        on=["SUBJECT_ID", "LABEL", "CHARTTIME"], how="left") # Get values from original chartevents
-    df_gcs_values = df_gcs_values.drop_duplicates(subset=["SUBJECT_ID", "LABEL", "CHARTTIME"]) # Merge results in some duplication, should remove these
+    df_gcs_values = df_gcs_time.merge(df_gcs_events[[col_id, col_label, col_charttime, col_value]],
+                        on=[col_id, col_label, col_charttime], how="left") # Get values from original chartevents
+    df_gcs_values = df_gcs_values.drop_duplicates(subset=[col_id, col_label, col_charttime]) # Merge results in some duplication, should remove these
     # Duplication of 42 patients without GCS due to left join, 5 more patients with VALUENUM == NaN
     # 4785 rows × 1 columns - total counts, df_gcs_time
     # 4827 rows × 46 columns
@@ -173,38 +188,38 @@ def deriveGCS(df_gcs_events: DataFrame,
     matches_warnings = []
     matches_errors = []
     df_gcs_annot = DataFrame()
-    for subj_id in df_gcs_values["SUBJECT_ID"].unique():
-        df_match = df_gcs_values[df_gcs_values["SUBJECT_ID"] == subj_id]
+    for subj_id in df_gcs_values[col_id].unique():
+        df_match = df_gcs_values[df_gcs_values[col_id] == subj_id]
         
         gcs_components = {"GCS - Motor Response",
                         "GCS - Verbal Response",
                         "GCS - Eye Opening"}
-        yes_gcs_total = "GCS Total" in set(df_match["LABEL"])
-        yes_gcs_comps = gcs_components.issubset(set(df_match["LABEL"])) # Subset check, not equivalence if there are more than 3 
+        yes_gcs_total = "GCS Total" in set(df_match[col_label])
+        yes_gcs_comps = gcs_components.issubset(set(df_match[col_label])) # Subset check, not equivalence if there are more than 3 
         
         if yes_gcs_total and yes_gcs_comps: # Both
-            total_match = df_match[df_match["LABEL"] == "GCS Total"]
-            comps_match = df_match[df_match["LABEL"].isin(gcs_components)]
-            if total_match["CHARTTIME"].min() < comps_match["CHARTTIME"].min():
+            total_match = df_match[df_match[col_label] == "GCS Total"]
+            comps_match = df_match[df_match[col_label].isin(gcs_components)]
+            if total_match[col_charttime].min() < comps_match[col_charttime].min():
                 assert len(total_match) == 1 # Only single entry
-                gcs_total = total_match["VALUENUM"].sum()
-            elif len(comps_match["CHARTTIME"].unique()) > 1: # If components is earlier but staggered, use total
+                gcs_total = total_match[col_value].sum()
+            elif len(comps_match[col_charttime].unique()) > 1: # If components is earlier but staggered, use total
                 assert len(total_match) == 1 # Only single entry
-                gcs_total = total_match["VALUENUM"].sum()
+                gcs_total = total_match[col_value].sum()
             else: # Assume components is earlier and intact
                 assert len(comps_match) == 3 # Only 3 components
-                gcs_total = comps_match["VALUENUM"].sum()
+                gcs_total = comps_match[col_value].sum()
                 
             
         elif yes_gcs_total and not yes_gcs_comps: # Only total
             assert len(df_match) == 1 # Only single entry
-            gcs_total = df_match["VALUENUM"].sum()
+            gcs_total = df_match[col_value].sum()
         
         elif not yes_gcs_total and yes_gcs_comps: # Only components
             assert len(df_match) == 3 # Only 3 components
-            gcs_total = df_match["VALUENUM"].sum()
+            gcs_total = df_match[col_value].sum()
             
-            if len(df_match["CHARTTIME"].unique()) > 1: # If more than 1 times recorded
+            if len(df_match[col_charttime].unique()) > 1: # If more than 1 times recorded
                 matches_warnings.append(df_match) # Flag
 
         else: # No GCS, no motor
@@ -215,17 +230,16 @@ def deriveGCS(df_gcs_events: DataFrame,
             gcs_total = np.nan
 
         
-        new_entry = DataFrame({"SUBJECT_ID": [subj_id], "gcs_init_total": [gcs_total]})
+        new_entry = DataFrame({col_id: [subj_id], COL_GCS: [gcs_total]})
         df_gcs_annot = pd.concat([df_gcs_annot, new_entry])
         # Not every patient has GCS (2587 of 2629, 42 pt without GCS)
 
-    df_gcs_annot["gcs_init_cat"] = pd.cut(df_gcs_annot["gcs_init_total"],
+    df_gcs_annot[COL_GCS_CAT] = pd.cut(df_gcs_annot[COL_GCS],
                                         right=True,
                                         bins=[2, 8, 13, 15], # Left bound is exclusive
-                                        labels=["severe", "moderate", "mild"]
+                                        labels=GCS_LABELS
                                         )
     return df_gcs_annot
-
 
 #%%
 df_grped_data = deriveAdmitData(df_init)
@@ -237,57 +251,15 @@ df_labelled = df_grped_data.merge(df_nsx_annot, on="SUBJECT_ID", how="left") \
     .merge(df_gcs_annot, on="SUBJECT_ID", how="left") \
     .merge(df_elix_annot, on="SUBJECT_ID", how="left")
     
-df_labelled.fillna({"nsx_any": False, "nsx_ventriculostomy": False, # Need dict to specify multiple columns (can't use slice since read-only)
-                        "nsx_crani": False, "nsx_icp": False}, inplace=True) # Fill NAs after merge
+df_labelled.fillna({COL_NSX_ANY: False, COL_VENTRIC: False, # Need dict to specify multiple columns (can't use slice since read-only)
+                        COL_CRANI: False, COL_ICPMON: False}, inplace=True) # Fill NAs after merge
 
 #%%
 df_labelled.to_excel(F"{ROOT_NAME}_dates_nsx_gcs_elix.xlsx")
 
-#%% Visualization 
 
-def visStackedProp(df: DataFrame, primary_ind: str, secondary_ind: str):
-    df_grped = DataFrame(df.groupby([primary_ind])[secondary_ind].value_counts(normalize=True))
-    df_grped.columns = ["Proportion"]
-    df_grped = df_grped.reset_index()
-    df_grped.columns = [primary_ind, secondary_ind, "Proportion"]
-    df_grped = df_grped.set_index([primary_ind, secondary_ind]).Proportion
 
-    df_grped.unstack().plot(kind="bar", stacked=True)
 
-df_final_labels = pd.read_excel("data/tbi2_admit_templabels.xlsx")
-visStackedProp(df_final_labels, "df_annot", "gcs_init_cat")
-visStackedProp(df_final_labels, "df_annot", "age_cat")
-
-#%%
-df_type_gcs_surv = DataFrame(df_final_labels.groupby(["df_annot","gcs_init_cat"])["survival"].value_counts(normalize=True))
-df_type_gcs_surv.columns = ["Proportion"]
-df_type_gcs_surv = df_type_gcs_surv.reset_index()
-
-fig, axes = plt.subplots(ncols=5)
-fig.set_size_inches(15, 7)
-
-for i in df_type_gcs_surv["df_annot"].unique():
-    df_clust = df_type_gcs_surv[df_type_gcs_surv["df_annot"] == i]
-    df_clust = df_clust.set_index(["gcs_init_cat", "survival"]).Proportion
-
-    df_clust.unstack().plot(kind="bar", stacked=True, ax=axes[i-1])
-    
-fig
-#%%
-df_type_gcs_surv = DataFrame(df_final_labels.groupby(["df_annot","age_cat"])["survival"].value_counts(normalize=True))
-df_type_gcs_surv.columns = ["Proportion"]
-df_type_gcs_surv = df_type_gcs_surv.reset_index()
-
-fig, axes = plt.subplots(ncols=5)
-fig.set_size_inches(15, 7)
-
-for i in df_type_gcs_surv["df_annot"].unique():
-    df_clust = df_type_gcs_surv[df_type_gcs_surv["df_annot"] == i]
-    df_clust = df_clust.set_index(["age_cat", "survival"]).Proportion
-
-    df_clust.unstack().plot(kind="bar", stacked=True, ax=axes[i-1])
-    
-fig
 
 #%% Check frequency of GCS reports across patients
 df_temp1 = DataFrame(df_gcs_events.groupby(["SUBJECT_ID"])["CHARTTIME"].value_counts())
@@ -305,7 +277,7 @@ df_raw_info = pd.read_excel(F"{ROOT_NAME}_age_elix.xlsx")
 num_subjs = len(df_raw_info) # Each row is a unique patient 
 
 #%%
-df1 = df_raw_info[["SUBJECT_ID", "age", "GENDER"]]
+df1 = df_raw_info[["SUBJECT_ID", COL_AGE, "GENDER"]]
 df1["alive_logical"] = df_raw_info["DOD"].isnull() # NaN counts as null, if Nan then is considered alive
 df1["alive"] = df1["alive_logical"].apply(lambda x: "Alive" if x else "Expired") # Label for coding category (ggplot2 doesn't consider logical as categorical)
 df1["num_comorbs"] = df_raw_info[col_origin].sum(axis=1)
@@ -325,11 +297,3 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 10)
 ax.bar(df2.index, df2["comorb_prop"])
 ax.set_xticklabels(df2.index, rotation=45, ha="right") # df2.index re-writes previous labels
-
-
-#%% Age analysis with clusters
-df3 = pd.read_excel(F"data/tbi2_admit_icd_age_elix_annotated.xlsx")
-
-#%%
-num_clusts = len(df3["df_annot"].value_counts())
-df3.groupby(["df_annot"])["age"].plot(kind="kde", xticks=list(range(100)[::5]), xlim=(0, 100),legend=True) # Preview
