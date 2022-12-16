@@ -103,30 +103,41 @@ genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", l
   clust_counts <- table(df_annot) # Tabulate cluster counts
 
   # Outputs df where every column is an endotype, each row is a factor used in endotyping 
-  return(list(model_means, cluster, clust_counts, df_annot)) # Need to use list() to make array since c() coerces elements into same type
+  return(list(model_means=model_means, cluster=cluster,
+  clust_counts=clust_counts, df_annot=df_annot)) # Need to use list() to make array since c() coerces elements into same type
 }
 
 
 genMultClusts <- function(n_clusts, n_cycles, mode = "lca") {
   # Note: this has only been verified for LCA mode for first round of clustering
   meta_means <- data.frame()
-  bics <- list()
-  aics <- list()
+  all_means <- list()
+  bics <- c()
+  aics <- c()
   clusts <- list()
+  annotations <- list()
+  clust_counts <- list()
   
   for (i in 1:n_cycles) {
     results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=n_clusts, mode=mode)
     model_means <- results[[1]] # Need double brackets for list indexing
     model_means_t <- data.frame(t(model_means)) # Transpose to have clusters as case listings and clusters as columns
     cluster <- results[[2]]
+    df_annot <- results[[4]]
     
     meta_means <- rbind(meta_means, model_means_t)
+    all_means[[i]] <- model_means # Store via index to separate each df into its own
     bics <- c(bics, cluster$bic)
     aics <- c(aics, cluster$aic)
-    clusts <- c(clusts, cluster)    
+    clusts[[i]] <- cluster # Store via index to separate each cluster to avoid merging
+    annotations[[i]] <- df_annot # Store via index to separate each df into its own
+    clust_counts[[i]] <- table(df_annot) 
+    
   }
   
-  return(list(meta_means, bics, aics, clusts))
+  return(list(meta_means=meta_means, all_means=all_means,
+   bics=bics, aics=aics, clusts=clusts, annotations=annotations,
+   clust_counts=clust_counts))
   
 }
 
@@ -143,7 +154,8 @@ analyzeClusts <- function(meta_means, n_mclusts = NULL, lpa_mode = "EEI") {
   }
 }
 
-visRadialPlots <- function(model_means, fig_labels, clust_counts = NULL, save_path = "Clusters.png") {
+visRadialPlots <- function(model_means, fig_labels, clust_counts = NULL, clust_model = NULL,
+                           save_path = NULL) {
   # Basically visualizing row values for every column, each column having own radial plot
   # model_means should be a df with factors in rows with columns representing groupings
 
@@ -210,8 +222,30 @@ visRadialPlots <- function(model_means, fig_labels, clust_counts = NULL, save_pa
 
   }
   
-  final_graph <- start_graph + plot_layout(guides = "auto") # guides = "collect" to collect duplicate legends
-  ggsave(save_path, final_graph, width = 17, height = 17)
+  if (!is.null(clust_model)) {
+    if (!is.null(clust_model$aic)) {
+      clust_aic <- clust_model$aic # From poLCA model
+    }
+    else {
+      clust_aic <- 2*clust_model$df - 2*clust_model$loglik # Assume LPA MClust model, manually calculate
+    }
+    fig_title <- sprintf("Endotype comorbidity profile (BIC: %s | AIC: %s)", clust_model$bic, clust_aic)
+  }
+  else {
+    fig_title <- "Endotype comorbidity profile"
+  }
+  
+  final_graph <- start_graph +
+    plot_annotation(title=fig_title,
+                    theme=theme(plot.title=element_text(size=18, hjust=0.5))) + # Add title, center it
+    plot_layout(guides = "auto") # guides = "collect" to collect duplicate legends
+
+  if (!is.null(save_path)) {
+    ggsave(save_path, final_graph, width = 17, height = 17)
+  }
+  else {
+    print(final_graph) # Explicitly render it
+  }
 }
 
 visPerformance <- function(indices, measures, label, smoothing = FALSE) {
@@ -229,6 +263,36 @@ visPerformance <- function(indices, measures, label, smoothing = FALSE) {
   deltas <- analyzeDeltas(indices, measures, series_label=label)
   print(sprintf("Inflection for %s deltas", label))
   calculateInflection(indices[-1], deltas) # Remove first item from indices
+}
+
+visSurvival <- function(df_annotated, save_path=NULL) {
+  # Note that df_annotated can be imported directly from xlsx containing exported annotations
+  df <- df_annotated %>% dplyr::select("Survival to discharge", "Endotype")
+  cross_tab <- table(df$Endotype, df$`Survival to discharge`)
+  pairwise.prop.test(cross_tab, p.adjust.method="holm")
+  # pairwise.prop.test(cross_tab, p.adjust.method="bonferroni") # More conservative method
+  
+  
+  endotypes <- factor(df$Endotype)
+  clust_colors <- rainbow(length(attributes(endotypes)$levels)) # Base colors
+  bar_colors <- append(lighten(clust_colors, 0.2), lighten(clust_colors, 0.75))
+  
+  
+  # ggplot visual
+  df_counts_series <- data.frame(cross_tab)
+  colnames(df_counts_series) <- c("Endotype", "Survival", "Count")
+  df_percent <- df_counts_series %>% group_by(Endotype) %>%
+    mutate(Percent=100*Count/sum(Count))
+  surv_plot <- ggplot(df_percent, aes(fill=Survival, y=Percent, x=Endotype)) + 
+    geom_bar(position="stack", stat="identity", fill=bar_colors)
+  
+  if (!is.null(save_path)) {
+    ggsave(save_path, surv_plot)
+  }
+  else {
+    print(surv_plot) # Explicitly render it
+  }
+  
 }
 
 analyzeDeltas <- function(indices, series, series_label) {
@@ -279,7 +343,7 @@ explModelsLCA <- function(df_orig, col_symbols, upper_bound) {
     clusters <- append(clusters, cluster)
   }
   
-  return(list(indices, bics, aics, clusters))
+  return(list(indices=indices, bics=bics, aics=aics, clusters=clusters))
 }
 
 explModelsLPA <- function(df_orig, col_symbols, upper_bound) {
@@ -333,8 +397,10 @@ regressionSurvival <- function(df_orig, df_annot, col_symbols) {
 
 }
   
-chisqSurvival <- function(path_df_annotated) {
-  read_excel(path_df_annotated)
+chisqSurvival <- function(df_annotated) {
+  df <- df_annotated %>% dplyr::select("Survival to discharge", "Endotype")
+  cross_tab <- table(df$Endotype, df$`Survival to discharge`)
+  pairwise.prop.test(cross_tab, p.adjust.method="holm")
 
 }
 
@@ -358,7 +424,7 @@ visPerformance(expl_results[[1]], expl_results[[2]], "BIC")
 
 
 # Regression analysis for survival
-if (1) {
+if (0) {
 results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=7, mode="lpa")
 model_means <- results[[1]] # Need double brackets for list
 df_annot <- results[[4]]
@@ -372,27 +438,103 @@ regressionSurvival(df_orig=df_orig, df_annot=df_annot, col_symbols=col_symbols)
 #%% Single cluster (main analysis)
 if (0) {
 results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=5, mode="lca", annot=TRUE)
-model_means <- results[[1]] # Need double brackets for list
-clust_counts <- results[[3]]
-visRadialPlots(model_means=model_means, fig_labels=fig_labels, clust_counts=clust_counts, save_path="figures/LCA_5.png")
+model_means <- results[["model_means"]] # Need double brackets for list
+clust_model <- results[["cluster"]]
+clust_counts <- results[["clust_counts"]]
+visRadialPlots(model_means=model_means, fig_labels=fig_labels, clust_counts=clust_counts,
+               clust_model=clust_model, save_path="figures/LCA_5.png")
 }
 
 #%%
 #%% LPA on LCA results 
 if (0) {
-results <- genMultClusts(n_clust=5, n_cycles=30)
-model_means <- results[[1]] # Need double brackets for list
+results <- genMultClusts(n_clust=5, n_cycles=30, mode="lca")
+model_means <- results[["model_means"]] # Need double brackets for list
 analyzeClusts(meta_means=model_means) # Preview
 
 
 }
 
-if (0) {
+if (0) { # Visualize after getting n_mclusts from preview
 meta_results <- analyzeClusts(meta_means=model_means, n_mclusts=13, lpa_mode="VEI")
-meta_means <- meta_results[[1]]
-meta_counts <- meta_results[[3]]
+meta_means <- meta_results[["model_means"]]
+meta_counts <- meta_results[["clust_counts"]]
 visRadialPlots(model_means=meta_means, fig_labels=fig_labels, clust_counts=meta_counts)
 
+}
+
+#%%
+#%% Visualizing lowest AIC/BIC clusters (i.e., finding best performing clusters)
+if (1) {
+  results <- genMultClusts(n_clust=5, n_cycles=30, mode="lca")
+  
+  if (0) { # Activate for rounding
+  bics <- round(results[["bics"]], digits=3) # Round to 3 decimals since some clusters are very similar 
+  aics <- round(results[["aics"]], digits=3)
+  }
+  else { # Activate for rounding
+  bics <- results[["bics"]]
+  aics <- results[["aics"]]
+  }
+  r_bics <- round(results[["bics"]], digits=3)
+  r_aics <- round(results[["aics"]], digits=3)
+  
+  
+  
+  lowest_aics <- which(bics == min(bics)) # Match all results with same rounded AIC if rounding active, otherwise will only visualize the best cluster 
+  for (i in lowest_aics) {
+    model_means <- results[["all_means"]][[i]] # Need double brackets as all of these are lists
+    clust_model <- results[["clusts"]][[i]]
+    clust_counts <- results[["clust_counts"]][[i]]
+
+    visRadialPlots(model_means=model_means, fig_labels=fig_labels,
+                   clust_counts=clust_counts, clust_model=clust_model, save_path="figures/LCA_5v5.png")
+
+    df_annot <- results[["annotations"]][[i]]
+    df_annot <- data.frame(df_annot)
+    colnames(df_annot) <- "Endotype"
+    df_annotated <- cbind(df_orig, df_annot)
+    write_xlsx(df_annotated, sprintf("%s_annotated.xlsx", DF_ROOTNAME))
+    visSurvival(df_annotated, save_path="figures/LCA_5v5_survival.png")
+    print(chisqSurvival(df_annotated))
+  }
+  
+}
+
+if (1) { # Exploring only chi-squared outcome
+  lowest_aics <- which(r_aics == 31273.835) # Second local minima
+  lowest_aics <- which(r_aics == min(r_aics)) # Largest local minima
+  for (i in lowest_aics) {
+    print(sprintf("======== %s ========", i))
+    model_means <- results[["all_means"]][[i]] # Need double brackets as all of these are lists
+    clust_model <- results[["clusts"]][[i]]
+    clust_counts <- results[["clust_counts"]][[i]]
+
+    df_annot <- results[["annotations"]][[i]]
+    df_annot <- data.frame(df_annot)
+    colnames(df_annot) <- "Endotype"
+    df_annotated <- cbind(df_orig, df_annot)
+    print(chisqSurvival(df_annotated))
+  }
+  print(table(r_aics))
+}
+
+if (1) { # Visualize specific plots
+  i = 1
+  model_means <- results[["all_means"]][[i]] # Need double brackets as all of these are lists
+  clust_model <- results[["clusts"]][[i]]
+  clust_counts <- results[["clust_counts"]][[i]]
+  
+  visRadialPlots(model_means=model_means, fig_labels=fig_labels,
+                 clust_counts=clust_counts, clust_model=clust_model, save_path="figures/LCA_5v5.png")
+  
+  df_annot <- results[["annotations"]][[i]]
+  df_annot <- data.frame(df_annot)
+  colnames(df_annot) <- "Endotype"
+  df_annotated <- cbind(df_orig, df_annot)
+  write_xlsx(df_annotated, sprintf("%s_annotated.xlsx", DF_ROOTNAME))
+  visSurvival(df_annotated, save_path="figures/LCA_5v5_survival.png")
+  print(chisqSurvival(df_annotated))
 }
 
 #%%
@@ -400,7 +542,7 @@ visRadialPlots(model_means=meta_means, fig_labels=fig_labels, clust_counts=meta_
 if (0) {
 plots.dir.path <- list.files(tempdir(), pattern="rs-graphics", full.names = TRUE)
 plots.png.paths <- list.files(plots.dir.path, pattern=".png", full.names = TRUE)
-file.copy(from=plots.png.paths, to="figures/performance")
+file.copy(from=plots.png.paths, to="figures/ztest_LCA_stability")
 
 }
 
@@ -410,34 +552,14 @@ if (0) {
 path_df_annotated <- "data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated.xlsx"
 
 df_orig <- read_excel(path_df_annotated)
-df_orig$`Survival to discharge` <- with(df_orig, ifelse(is.na(DOD), "Alive", "Expired"))
-df <- df_orig %>% dplyr::select("Survival to discharge", "df_annot")
-cross_tab <- table(df$df_annot, df$`Survival to discharge`)
-pairwise.prop.test(cross_tab, p.adjust.method="holm")
-# pairwise.prop.test(cross_tab, p.adjust.method="bonferroni") # More conservative method
 
-
-endotypes <- factor(df$df_annot)
-clust_colors <- rainbow(length(attributes(endotypes)$levels)) # Base colors
-bar_colors <- append(lighten(clust_colors, 0.2), lighten(clust_colors, 0.75))
-
-
-# basic visual
-df_counts <- as.data.frame.matrix(t(cross_tab)) # Coerce into same shape (can't use data.frame())
-df_percent <- apply(df_counts, 2, function(x){x*100/sum(x,na.rm=T)}) # Normalize
-barplot(df_percent) # Basic graphic
-
-# ggplot visual
-df_counts_series <- data.frame(cross_tab)
-colnames(df_counts_series) <- c("Endotype", "Survival", "Count")
-df_percent <- df_counts_series %>% group_by(Endotype) %>%
-  mutate(Percent=100*Count/sum(Count))
-ggplot(df_percent, aes(fill=Survival, y=Percent, x=Endotype)) + 
-  geom_bar(position="stack", stat="identity", fill=bar_colors)
-
-# Age
-aggregate(df_orig$age, list(df_orig$df_annot), FUN=mean)
   
 }
 
-#%%
+#%% 
+#%% Misc
+# Age tabulation 
+if (0) {
+aggregate(df_orig$age, list(df_orig$Endotype), FUN=mean)
+  
+}

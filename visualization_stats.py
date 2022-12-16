@@ -11,6 +11,9 @@ from statsmodels.stats.proportion import proportions_chisquare_allpairs
 from statsmodels.stats.multicomp import MultiComparison
 from statsmodels.compat.python import lzip
 
+import warnings
+warnings.simplefilter(action='ignore', category=FutureWarning)
+
 #%% Copied from processing (avoid importing)
 COL_AGE = "Age (years)"
 COL_LOS = "Length of stay (days)"
@@ -29,7 +32,7 @@ COL_CRANI = "Craniotomy or craniectomy"
 COL_NSX_ANY = "Any neurosurgical intervention"
 
 #%%
-df_labels = pd.read_excel("data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated.xlsx")
+df_labels = pd.read_excel("data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4.xlsx")
 df_labels[COL_LOS] = df_labels[COL_LOS].mask(df_labels[COL_LOS].sub(df_labels[COL_LOS].mean()).div(df_labels[COL_LOS].std()).abs().gt(3))
 # Remove outliers from LOS, 95 values removed at SD of 2, 33 at 3
 #%%
@@ -44,6 +47,7 @@ def visStackedProp(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
     ax.set_ylabel("Proportion")
 
 visStackedProp(df_labels, "Endotype", COL_GCS_CAT)
+visStackedProp(df_labels, "Endotype", COL_GCS_CAT2)
 visStackedProp(df_labels, "Endotype", COL_AGE_CAT)
 
 #%%
@@ -101,17 +105,20 @@ def visGrpedContinuous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str
 
 #%% Survival
 visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_SURV)
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_SURV)
 visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_SURV)
 visGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_SURV)
 
 #%% Surg
-visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_NSX_ANY)
 visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_NSX_ANY)
+visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_NSX_ANY)
 visGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_NSX_ANY)
 
 
 #%% LOS
 visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_LOS)
+visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT2, COL_LOS)
 visGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_LOS)
 visGrpedContinuous(df_labels, "Endotype", "GENDER", COL_LOS)
 
@@ -179,21 +186,26 @@ def compareGrpedContinuous(df_labels: DataFrame, col_groups: str, col_strata: st
             # print(df_clust[fst])
                     
             comp_results = MultiComparison(df_clust[col_outcome], df_clust[col_groups])
-            tbl, a1, a2 = comp_results.allpairtest(stats.ttest_ind, method="h")
+            # tbl, a1, a2 = comp_results.allpairtest(stats.ttest_ind, method="h")
+            tbl, a1, a2 = comp_results.allpairtest(stats.ranksums, method="h")
+            # tbl, a1, a2 = comp_results.allpairtest(stats.wilcoxon, method="h")
             
             print(tbl)
 #%% Survival
 compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_SURV)
+compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_SURV)
 compareGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_SURV)
 compareGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_SURV)
 
 #%% NSX intervention 
 compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_NSX_ANY)
 compareGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_NSX_ANY)
 compareGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_NSX_ANY)
 
 #%% LOS
 compareGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_LOS)
+compareGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT2, COL_LOS)
 compareGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_LOS)
 compareGrpedContinuous(df_labels, "Endotype", "GENDER", COL_LOS)
 
@@ -203,3 +215,7 @@ compareGrpedContinuous(df_labels, "Endotype", "GENDER", COL_LOS)
 df3 = pd.read_excel(F"data/tbi2_admit_icd_age_elix_annotated.xlsx")
 num_clusts = len(df3["Endotype"].value_counts())
 df3.groupby(["Endotype"])[COL_AGE].plot(kind="kde", xticks=list(range(100)[::5]), xlim=(0, 100),legend=True) # Preview
+
+#%%
+from scipy.stats import shapiro # Normality test
+df_labels.groupby(["Endotype", COL_GCS_CAT])["Length of stay (days)"].apply(shapiro)
