@@ -7,3 +7,4 @@ figures/*
 archive/
 archive/*
 manual_versioning/
+__pycache__/

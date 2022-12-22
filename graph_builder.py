@@ -168,8 +168,8 @@ class GraphBuilder:
                     self.graph.add_edge(node_s, node_t, width=count, prob=probability) # "width" attribute affects pyvis rendering, pyvis doesn't support edge opacity
         self.graph_root_name = self.df_root_name + f"_t{thresh}" # Add threshold information 
 
-    def buildGraphLogistic(self, df_path,
-                           multidi: bool = True):
+    def buildGraphLogistic(self, df_path, cols_logistical, col_sub = None, 
+                           subset = None, multidi: bool = True):
         """
         Takes df with rows representing observations and columns representing factors with 
         each cell having 0 or 1 indicator presence of factor
@@ -185,18 +185,25 @@ class GraphBuilder:
             self.graph = nx.Graph() # Instantiate regular graph
 
         self.df_root_name = os.path.splitext(df_path)[0] # Store root name
+        self.graph_root_name = self.df_root_name + f"_logi"
         df = importData(df_path)
+        
+        if col_sub and subset: # If both arguments are given for subset, then filter by subset
+            self.graph_root_name = self.df_root_name + f"_logi_{col_sub}_{subset}"
+            df = df[df[col_sub] == subset]
 
-        columns = list(df.columns)
-        nodes = {column: df[column].sum() for column in columns if df[column].sum() > 0} # Dict comprehension to get sums of each column
+        # Calculations
+
+        nodes = {column: df[column].sum() for column in cols_logistical if df[column].sum() > 0} # Dict comprehension to get sums of each column
         for node in nodes:
             count = nodes[node]
             self.graph.add_node(node, size = count, ent_type = "column")
-            
+        
+        
         edges = Counter()
         for index, row in df.iterrows(): # Count edges 
             nodes_row = [] # Store list of nodes in this row # Shouldn't  have any duplicates
-            for column in columns:
+            for column in cols_logistical:
                 if row[column] == 1:
                     nodes_row.append(column)
             for node_start, node_end in combinations(nodes_row, 2):

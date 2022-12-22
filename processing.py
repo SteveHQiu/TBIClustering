@@ -34,6 +34,26 @@ COL_CRANI = "Craniotomy or craniectomy"
 COL_NSX_ANY = "Any neurosurgical intervention"
 
 
+LABELS = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease",
+             "pulmonary_circulation_disorder", "peripheral_vascular_disorder",
+             "hypertension_uncomplicated", "hypertension_complicated", "paralysis",
+             "other_neurological_disorder", "chronic_pulmonary_disease", "diabetes_uncomplicated",
+             "diabetes_complicated", "hypothyroidism", "renal_failure", "liver_disease",
+             "peptic_ulcer_disease_excluding_bleeding", "aids_hiv", "lymphoma", "metastatic_cancer",
+             "solid_tumor_wo_metastasis", "rheumatoid_arhritis", "coagulopathy", "obesity",
+             "weight_loss", "fluid_and_electrolyte_disorders", "blood_loss_anemia",
+             "deficiency_anemia", "alcohol_abuse", "drug_abuse", "psychoses", "depression"]
+
+BETTER_LABELS = ["CHF", "Arrhythmia", "Valvular disease", "Pulmonary circulation disorder",
+                "Peripheral vascular disorder", "Uncomplicated hypertension",
+                "Complicated hypertension", "Paralysis", "Other neurological disorder",
+                "COPD", "Uncomplicated diabetes", "Complicated diabetes", "Hypothyroidism",
+                "Renal failure", "Liver disease", "Peptic ulcer disease", "AID/HIV",
+                "Lymphoma", "Metastatic cancer", "Solid tumor (no metastasis)",
+                "Rheumatoid arthritis", "Coagulopathy", "Obesity", "Weight loss",
+                "Fluid and electrolyte disorders", "Blood loss anemia", "Deficiency anemia",
+                "Alcohol abuse", "Drug abuse", "Psychoses", "Depression"]
+
 #%% Functions
 def deriveAdmitData(df_base: DataFrame,
                     col_id = "SUBJECT_ID",
@@ -265,7 +285,7 @@ df_labelled.fillna({COL_NSX_ANY: False, COL_VENTRIC: False, # Need dict to speci
 df_labelled.to_excel(F"{ROOT_NAME}_dates_nsx_gcs_elix.xlsx")
 
 
-
+######### End of normal pipeline 
 
 
 #%% Check frequency of GCS reports across patients
@@ -304,3 +324,12 @@ fig, ax = plt.subplots()
 fig.set_size_inches(18, 10)
 ax.bar(df2.index, df2["comorb_prop"])
 ax.set_xticklabels(df2.index, rotation=45, ha="right") # df2.index re-writes previous labels
+
+#%% Rename columns
+DF_ANNOTATED_PATH = F"data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4.xlsx"
+DF_ANNOTATED_ROOT = os.path.splitext(DF_ANNOTATED_PATH)[0]
+
+df_annotated = pd.read_excel(DF_ANNOTATED_PATH)
+col_name_dict = {pair[0]: pair[1] for pair in zip(LABELS, BETTER_LABELS)}
+df_annotated.rename(columns=col_name_dict, inplace=True)
+df_annotated.to_excel(F"{DF_ANNOTATED_ROOT}_BL.xlsx")

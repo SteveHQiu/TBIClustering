@@ -1,14 +1,14 @@
 #%% Installation
-# install.packages("mclust")
-# install.packages("poLCA")
-# install.packages("tidyLPA")
-# install.packages("tidyverse")
-# install.packages("dplyr")
-# install.packages("comprehenr")
-# install.packages("inflection")
-# install.packages("patchwork")
-# install.packages("viridis")
-# install.packages("colorspace")
+install.packages("mclust")
+install.packages("poLCA")
+install.packages("tidyLPA")
+install.packages("tidyverse")
+install.packages("dplyr")
+install.packages("comprehenr")
+install.packages("inflection")
+install.packages("patchwork")
+install.packages("viridis")
+install.packages("colorspace")
 
 #%%
 #%% Imports
@@ -501,7 +501,7 @@ if (1) {
   
 }
 
-if (1) { # Exploring only chi-squared outcome
+if (0) { # Exploring only chi-squared outcome
   lowest_aics <- which(r_aics == 31273.835) # Second local minima
   lowest_aics <- which(r_aics == min(r_aics)) # Largest local minima
   for (i in lowest_aics) {
@@ -519,7 +519,7 @@ if (1) { # Exploring only chi-squared outcome
   print(table(r_aics))
 }
 
-if (1) { # Visualize specific plots
+if (0) { # Visualize specific clusters
   i = 1
   model_means <- results[["all_means"]][[i]] # Need double brackets as all of these are lists
   clust_model <- results[["clusts"]][[i]]

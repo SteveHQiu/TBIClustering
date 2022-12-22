@@ -1,5 +1,7 @@
 #%%
 import os, json
+from itertools import combinations
+
 import seaborn as sns
 import pandas as pd
 from pandas import DataFrame
@@ -7,9 +9,11 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
 from scipy import stats
+
 from statsmodels.stats.proportion import proportions_chisquare_allpairs
 from statsmodels.stats.multicomp import MultiComparison
 from statsmodels.compat.python import lzip
+from statsmodels.stats.multitest import multipletests
 
 import warnings
 warnings.simplefilter(action='ignore', category=FutureWarning)
@@ -31,11 +35,26 @@ COL_VENTRIC = "Ventriculostomy"
 COL_CRANI = "Craniotomy or craniectomy"
 COL_NSX_ANY = "Any neurosurgical intervention"
 
+LABELS = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease",
+             "pulmonary_circulation_disorder", "peripheral_vascular_disorder",
+             "hypertension_uncomplicated", "hypertension_complicated", "paralysis",
+             "other_neurological_disorder", "chronic_pulmonary_disease", "diabetes_uncomplicated",
+             "diabetes_complicated", "hypothyroidism", "renal_failure", "liver_disease",
+             "peptic_ulcer_disease_excluding_bleeding", "aids_hiv", "lymphoma", "metastatic_cancer",
+             "solid_tumor_wo_metastasis", "rheumatoid_arhritis", "coagulopathy", "obesity",
+             "weight_loss", "fluid_and_electrolyte_disorders", "blood_loss_anemia",
+             "deficiency_anemia", "alcohol_abuse", "drug_abuse", "psychoses", "depression"]
+
+
 #%%
 df_labels = pd.read_excel("data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4.xlsx")
 df_labels[COL_LOS] = df_labels[COL_LOS].mask(df_labels[COL_LOS].sub(df_labels[COL_LOS].mean()).div(df_labels[COL_LOS].std()).abs().gt(3))
-# Remove outliers from LOS, 95 values removed at SD of 2, 33 at 3
-#%%
+# Remove outliers from LOS, 95 values removed at SD of 2, 33 at SD of 3
+COL_COMORBS = "No. Comorbs"
+df_labels[COL_COMORBS] = df_labels[LABELS].sum(axis=1)
+
+
+#%% Functions
 def visStackedProp(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
     df_grped = DataFrame(df_labels.groupby([primary_ind])[secondary_ind].value_counts(normalize=True))
     df_grped.columns = ["Proportion"]
@@ -46,11 +65,7 @@ def visStackedProp(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
     ax = df_grped.unstack().plot(kind="bar", stacked=True)
     ax.set_ylabel("Proportion")
 
-visStackedProp(df_labels, "Endotype", COL_GCS_CAT)
-visStackedProp(df_labels, "Endotype", COL_GCS_CAT2)
-visStackedProp(df_labels, "Endotype", COL_AGE_CAT)
-
-#%%
+# Visualization Functions
 def _desatColors(colors, percent):
     # Colors should be in np format of RGBA with range of 0-1
     vector_diff = 1 - colors # Subtract color from pure white
@@ -103,26 +118,48 @@ def visGrpedContinuous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str
 
         df_clust.plot(kind="bar", ylim=(0, max(df_grped[col_outcome])), ax=axes[label-1], color=colors_norm[ind])
 
-#%% Survival
-visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_SURV)
-visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_SURV)
-visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_SURV)
-visGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_SURV)
+# Stats test
+def compareDistributions(df_labels: DataFrame, col_groups: str, col_cat: str):
 
-#%% Surg
-visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
-visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_NSX_ANY)
-visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_NSX_ANY)
-visGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_NSX_ANY)
+    df_grped = DataFrame(df_labels.groupby([col_groups])[col_cat].value_counts())
+    df_grped.columns = ["Count"]
+    df_grped = df_grped.reset_index()
+    df_grped
 
+    comparisons: list[list] = []
+    for a, b in combinations(df_grped[col_groups].unique(), 2):
+        counts_a = []
+        counts_b = []
+        for cat in df_grped[col_cat].unique(): # Iterate through individual categories to ensure proper pairing and fill in missing values
+            results_a = df_grped.loc[(df_grped[col_groups] == a) & (df_grped[col_cat] == cat)]["Count"]
+            results_b = df_grped.loc[(df_grped[col_groups] == b) & (df_grped[col_cat] == cat)]["Count"]
+            if results_a.values.size > 0:
+                val_a = results_a.values
+            else:
+                val_a = 0 # Append 0 if there was no entries 
+                
+            if results_b.values.size > 0:
+                val_b = results_b.values
+            else:
+                val_b = 0
+        
+            if val_a != 0 and val_b != 0: # Only append if neither values are 0, otherwise will end up with expected value of 0 which throws error 
+                counts_a.append(val_a)
+                counts_b.append(val_b)
+        
+        data = [counts_a, counts_b]
+        chi2, pval, dof, expected = stats.chi2_contingency(data)
+        comparisons.append([(a, b), pval])
 
-#%% LOS
-visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_LOS)
-visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT2, COL_LOS)
-visGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_LOS)
-visGrpedContinuous(df_labels, "Endotype", "GENDER", COL_LOS)
+    pval_raw = [comp[1] for comp in comparisons]
+    multitest_results = multipletests(pval_raw, method="h")
+    pval_corr = multitest_results[1]
+    for i, comp in enumerate(comparisons):
+        comp.append(pval_corr[i]) # Modify original list by adding to items
 
-#%% Stats test
+    print("Comparison, Raw p-value, Corrected p-value")
+    print(*comparisons, sep="\n") # Print each element on separate line
+
 
 def compareGrpedDichotomous(df_labels: DataFrame, col_groups: str, col_strata: str,
                     col_outcome: str):
@@ -191,25 +228,44 @@ def compareGrpedContinuous(df_labels: DataFrame, col_groups: str, col_strata: st
             # tbl, a1, a2 = comp_results.allpairtest(stats.wilcoxon, method="h")
             
             print(tbl)
-#%% Survival
+            
+#%% Survival visualization
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_SURV)
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_SURV)
+visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_SURV)
+visGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_SURV)
+
+#%% Surg visualization
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_NSX_ANY)
+visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_NSX_ANY)
+visGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_NSX_ANY)
+
+
+#%% LOS visualization
+visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_LOS)
+visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT2, COL_LOS)
+visGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_LOS)
+visGrpedContinuous(df_labels, "Endotype", "GENDER", COL_LOS)
+
+
+#%% Survival analysis
 compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_SURV)
 compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_SURV)
 compareGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_SURV)
 compareGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_SURV)
 
-#%% NSX intervention 
+#%% NSX intervention analysis
 compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
 compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT2, COL_NSX_ANY)
 compareGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_NSX_ANY)
 compareGrpedDichotomous(df_labels, "Endotype", "GENDER", COL_NSX_ANY)
 
-#%% LOS
+#%% LOS analysis
 compareGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_LOS)
 compareGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT2, COL_LOS)
 compareGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_LOS)
 compareGrpedContinuous(df_labels, "Endotype", "GENDER", COL_LOS)
-
-
 
 #%% Age analysis with clusters
 df3 = pd.read_excel(F"data/tbi2_admit_icd_age_elix_annotated.xlsx")
@@ -219,3 +275,37 @@ df3.groupby(["Endotype"])[COL_AGE].plot(kind="kde", xticks=list(range(100)[::5])
 #%%
 from scipy.stats import shapiro # Normality test
 df_labels.groupby(["Endotype", COL_GCS_CAT])["Length of stay (days)"].apply(shapiro)
+
+######### Relevant analyses for paper 
+#%% Demographic segmentation 
+visStackedProp(df_labels, "Endotype", COL_GCS_CAT)
+visStackedProp(df_labels, "Endotype", COL_AGE_CAT)
+visStackedProp(df_labels, "Endotype", "GENDER")
+
+#%% Segmentation stats
+compareDistributions(df_labels, "Endotype", COL_AGE_CAT)
+compareDistributions(df_labels, "Endotype", COL_GCS_CAT)
+compareDistributions(df_labels, "Endotype", "GENDER")
+
+#%% Survival
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_SURV)
+visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_SURV)
+
+compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_SURV)
+compareGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_SURV)
+
+#%% Surg
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_NSX_ANY)
+
+compareGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+compareGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_NSX_ANY)
+
+#%% LOS
+visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_LOS)
+visGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_LOS)
+
+compareGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_LOS)
+compareGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_LOS)
+
+
