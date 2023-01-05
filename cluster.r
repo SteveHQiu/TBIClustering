@@ -89,7 +89,7 @@ genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", l
     return() # Exit function early
   }
   if (scale100) {
-    model_means <- model_means * 100 # Scale everything by 100
+    model_means <- model_b_means * 100 # Scale everything by 100
   }
   # model_means <- model_means + 50 # Add 50 to all values as base
 
@@ -396,13 +396,17 @@ regressionSurvival <- function(df_orig, df_annot, col_symbols) {
   print(anova(lg_model, lg_model3))
 
 }
+
+
   
-chisqSurvival <- function(df_annotated) {
-  df <- df_annotated %>% dplyr::select("Survival to discharge", "Endotype")
-  cross_tab <- table(df$Endotype, df$`Survival to discharge`)
+chisqSurvival <- function(df_annotated, col_outcome = "Survival to discharge") {
+  df <- df_annotated %>% dplyr::select(col_outcome, "Endotype")
+  cross_tab <- table(df$Endotype, df[[col_outcome]]) # Need to use brackets to extract using string variables
   pairwise.prop.test(cross_tab, p.adjust.method="holm")
 
 }
+
+
 
 #%%
 #%% Misc displays/analyses
@@ -462,6 +466,13 @@ meta_counts <- meta_results[["clust_counts"]]
 visRadialPlots(model_means=meta_means, fig_labels=fig_labels, clust_counts=meta_counts)
 
 }
+
+if (0) { # Import annotated df and get chi-square of survival 
+df_annotated <- read_excel("data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4.xlsx")
+chisqSurvival(df_annotated)
+  
+}
+
 
 #%%
 #%% Visualizing lowest AIC/BIC clusters (i.e., finding best performing clusters)

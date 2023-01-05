@@ -193,6 +193,8 @@ class GraphBuilder:
             df = df[df[col_sub] == subset]
 
         # Calculations
+        
+        total_n = len(df)
 
         nodes = {column: df[column].sum() for column in cols_logistical if df[column].sum() > 0} # Dict comprehension to get sums of each column
         for node in nodes:
@@ -202,7 +204,7 @@ class GraphBuilder:
         
         edges = Counter()
         for index, row in df.iterrows(): # Count edges 
-            nodes_row = [] # Store list of nodes in this row # Shouldn't  have any duplicates
+            nodes_row = [] # Store list of nodes in this row # Shouldn't have any duplicates
             for column in cols_logistical:
                 if row[column] == 1:
                     nodes_row.append(column)
@@ -212,9 +214,22 @@ class GraphBuilder:
             
         for node_s, node_t in edges:
             count = edges[(node_s, node_t)]
+            
             node_s_mentions = nodes[node_s]
+            node_t_mentions = nodes[node_t]
             probability = count/node_s_mentions # Probability of this connection is number of articles supporting this connection divided by total number of articles mentioning source
+            # if node_s_mentions >= 0.1 * total_n and node_t_mentions >= 0.1 * total_n: # Only append edge if counts are greater than 10% of total (to reduce noise)
             self.graph.add_edge(node_s, node_t, width=count, prob=probability, prob2=probability**2)
+            
+            if 0: # Using relative risk instead            
+                relative_risk = (count * total_n) / (nodes[node_s] * nodes[node_t])# https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000353
+                p_corr = ((count * total_n) - (nodes[node_s] * nodes[node_t])) / (nodes[node_s] * nodes[node_t] * (total_n - nodes[node_s]) * (total_n - nodes[node_t])) ** 0.5
+                t_stat = (p_corr * (total_n - 2) ** 0.5) / (1 - p_corr ** 2) ** 0.5
+                # print(p_corr, t_stat)
+                
+                if relative_risk > 1 and t_stat >= 1.96: # Filter for only positive associations and significance by t_stat
+                    self.graph.add_edge(node_s, node_t, width=count, prob=relative_risk, prob2=relative_risk**2)
+            
         return None
 
     def exportGraph(self, path: Union[str, bytes, os.PathLike] = ""):

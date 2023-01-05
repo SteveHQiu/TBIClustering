@@ -112,7 +112,8 @@ class GraphVisualizer:
         self.edge_widths_alpha = edge_alphas # For manually width to transparency 
         
         edge_probs = [prob for (node1, node2, prob) in self.graph.edges(data="prob")]
-        edge_probs = [prob**2 for prob in edge_probs]
+        edge_probs = [prob/max(edge_probs) for prob in edge_probs] # Normalize in case different type of data is used for prob
+        edge_probs = [prob**2 for prob in edge_probs] # Original
         self.edge_probs = edge_probs
         
         edge_zeroes = [0 for i in edge_width_true]

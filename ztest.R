@@ -1,11 +1,13 @@
-path_df_annotated <- "data/tbi2_admit_icd_age_elix_annotated_v1.xlsx"
+# Multitest development 
+path_df_annotated <- "data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4_BL.xlsx"
 
 df_orig <- read_excel(path_df_annotated)
-df_orig$survival <- with(df_orig, ifelse(is.na(DOD), "Alive", "Expired"))
-df <- df_orig %>% dplyr::select("survival", "df_annot")
-cross_tab <- table(df$df_annot, df$survival)
+df_orig$`Survival to discharge` <- with(df_orig, ifelse(is.na(DOD), "Alive", "Expired"))
+df <- df_orig %>% dplyr::select("Survival to discharge", "Endotype")
+cross_tab <- table(df$Endotype, df$`Survival to discharge`)
 pairwise.prop.test(cross_tab, p.adjust.method="holm")
 # pairwise.prop.test(cross_tab, p.adjust.method="bonferroni") # More conservative method
+
 
 
 
@@ -18,5 +20,15 @@ colnames(df_counts_series) <- c("Endotype", "Survival", "Count")
 ggplot(df_counts_series, aes(fill=Survival, y=Count, x=Endotype))
 
 
-
-aggregate(df_orig$age, list(df_orig$df_annot), FUN=mean)
+## 
+df_orig <- read_excel("data/tbi2_admit_icd_dates_nsx_gcs_elix.xlsx")
+df_orig$`Survival to discharge` <- with(df_orig, ifelse(is.na(DOD), TRUE, FALSE))
+df <- df_orig %>% dplyr::select("Survival to discharge", "Age (years)", "No. Comorbs")
+lg_model <- lm(`Survival to discharge` ~ `Age (years)` * `No. Comorbs`, data=df) # "*" to indicate interaction term
+print(summary(lg_model))
+lg_model <- lm(`Survival to discharge` ~ `Age (years)` + `No. Comorbs`, data=df) # "*" to indicate interaction term
+print(summary(lg_model))
+lg_model <- lm(`Survival to discharge` ~  `No. Comorbs`, data=df) # "*" to indicate interaction term
+print(summary(lg_model))
+lg_model <- lm(`No. Comorbs` ~ `Age (years)`, data=df) # "*" to indicate interaction term
+print(summary(lg_model))

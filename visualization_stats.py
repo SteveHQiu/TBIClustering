@@ -50,6 +50,7 @@ LABELS = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease",
 df_labels = pd.read_excel("data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4.xlsx")
 df_labels[COL_LOS] = df_labels[COL_LOS].mask(df_labels[COL_LOS].sub(df_labels[COL_LOS].mean()).div(df_labels[COL_LOS].std()).abs().gt(3))
 # Remove outliers from LOS, 95 values removed at SD of 2, 33 at SD of 3
+#%% MOVE THIS TO PROCESSING
 COL_COMORBS = "No. Comorbs"
 df_labels[COL_COMORBS] = df_labels[LABELS].sum(axis=1)
 
@@ -64,6 +65,15 @@ def visStackedProp(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
 
     ax = df_grped.unstack().plot(kind="bar", stacked=True)
     ax.set_ylabel("Proportion")
+
+def visContinuous(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
+    df_grped = DataFrame(df_labels.groupby([primary_ind])[secondary_ind].mean())
+    df_grped = df_grped.reset_index()
+    df_grped = df_grped.set_index(primary_ind)
+    
+    ax = df_grped.plot(kind="bar")
+    ax.set_ylabel(secondary_ind)
+
 
 # Visualization Functions
 def _desatColors(colors, percent):
@@ -119,7 +129,7 @@ def visGrpedContinuous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str
         df_clust.plot(kind="bar", ylim=(0, max(df_grped[col_outcome])), ax=axes[label-1], color=colors_norm[ind])
 
 # Stats test
-def compareDistributions(df_labels: DataFrame, col_groups: str, col_cat: str):
+def compareDichot(df_labels: DataFrame, col_groups: str, col_cat: str):
 
     df_grped = DataFrame(df_labels.groupby([col_groups])[col_cat].value_counts())
     df_grped.columns = ["Count"]
@@ -277,15 +287,23 @@ from scipy.stats import shapiro # Normality test
 df_labels.groupby(["Endotype", COL_GCS_CAT])["Length of stay (days)"].apply(shapiro)
 
 ######### Relevant analyses for paper 
-#%% Demographic segmentation 
+#%% Demographic segmentation (dichot)
 visStackedProp(df_labels, "Endotype", COL_GCS_CAT)
 visStackedProp(df_labels, "Endotype", COL_AGE_CAT)
 visStackedProp(df_labels, "Endotype", "GENDER")
+#%% Demographic segmentation (continuous)
+visContinuous(df_labels, "Endotype", COL_AGE)
+visContinuous(df_labels, "Endotype", COL_COMORBS)
+
+#%% Outcomes 
+visStackedProp(df_labels, "Endotype", COL_SURV)
+visStackedProp(df_labels, "Endotype", COL_NSX_ANY)
+visContinuous(df_labels, "Endotype", COL_LOS)
 
 #%% Segmentation stats
-compareDistributions(df_labels, "Endotype", COL_AGE_CAT)
-compareDistributions(df_labels, "Endotype", COL_GCS_CAT)
-compareDistributions(df_labels, "Endotype", "GENDER")
+compareDichot(df_labels, "Endotype", COL_AGE_CAT)
+compareDichot(df_labels, "Endotype", COL_GCS_CAT)
+compareDichot(df_labels, "Endotype", "GENDER")
 
 #%% Survival
 visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_SURV)
@@ -309,3 +327,93 @@ compareGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_LOS)
 compareGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_LOS)
 
 
+#%% Differences in age groups between endotypes 
+visGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_AGE)
+compareGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_AGE)
+
+#%% Stratification analysis 
+visGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_GCS)
+visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, COL_GCS_CAT)
+compareGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_GCS)
+
+visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_AGE)
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, COL_AGE_CAT)
+compareGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_AGE)
+
+#%% Other analyses 
+visGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_AGE)
+visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_GCS)
+visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_COMORBS)
+
+
+visGrpedDichotomous(df_labels, "Endotype", COL_GCS_CAT, "GENDER")
+visGrpedDichotomous(df_labels, "Endotype", COL_AGE_CAT, "GENDER")
+
+
+#%% Young only
+df_custom3 = df_labels[~((df_labels["Endotype"] == 2) & (df_labels[COL_AGE_CAT] != AGE_LABELS[0]))]
+df_custom3 = df_custom3[~((df_custom3["Endotype"] == 4) & (df_custom3[COL_AGE_CAT] != AGE_LABELS[0]))]
+df_custom3 = df_custom3[~((df_custom3["Endotype"] == 5) & (df_custom3[COL_AGE_CAT] != AGE_LABELS[0]))]
+
+# df_custom3 = df_labels[df_labels[COL_AGE_CAT] == AGE_LABELS[1]]
+
+visGrpedDichotomous(df_custom3, "Endotype", COL_GCS_CAT, COL_AGE_CAT)
+
+visGrpedContinuous(df_custom3, "Endotype", COL_AGE_CAT, COL_GCS)
+compareGrpedContinuous(df_custom3, "Endotype", COL_AGE_CAT, COL_GCS)
+visGrpedContinuous(df_custom3, "Endotype", COL_GCS_CAT, COL_AGE)
+compareGrpedContinuous(df_custom3, "Endotype", COL_GCS_CAT, COL_AGE)
+#%%
+visGrpedDichotomous(df_custom3, "Endotype", COL_GCS_CAT, COL_SURV)
+compareGrpedDichotomous(df_custom3, "Endotype", COL_GCS_CAT, COL_SURV)
+visGrpedDichotomous(df_custom3, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+compareGrpedDichotomous(df_custom3, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+visGrpedContinuous(df_custom3, "Endotype", COL_GCS_CAT, COL_LOS)
+compareGrpedContinuous(df_custom3, "Endotype", COL_GCS_CAT, COL_LOS)
+#%% Middle-aged only
+df_custom1 = df_labels[~((df_labels["Endotype"] == 2) & (df_labels[COL_AGE_CAT] != AGE_LABELS[1]))]
+df_custom1 = df_custom1[~((df_custom1["Endotype"] == 4) & (df_custom1[COL_AGE_CAT] != AGE_LABELS[1]))]
+df_custom1 = df_custom1[~((df_custom1["Endotype"] == 5) & (df_custom1[COL_AGE_CAT] != AGE_LABELS[1]))]
+
+# df_custom1 = df_labels[df_labels[COL_AGE_CAT] == AGE_LABELS[1]]
+
+visGrpedDichotomous(df_custom1, "Endotype", COL_GCS_CAT, COL_AGE_CAT)
+
+visGrpedContinuous(df_custom1, "Endotype", COL_AGE_CAT, COL_GCS)
+compareGrpedContinuous(df_custom1, "Endotype", COL_AGE_CAT, COL_GCS)
+visGrpedContinuous(df_custom1, "Endotype", COL_GCS_CAT, COL_AGE)
+compareGrpedContinuous(df_custom1, "Endotype", COL_GCS_CAT, COL_AGE)
+#%%
+visGrpedDichotomous(df_custom1, "Endotype", COL_GCS_CAT, COL_SURV)
+compareGrpedDichotomous(df_custom1, "Endotype", COL_GCS_CAT, COL_SURV)
+visGrpedDichotomous(df_custom1, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+compareGrpedDichotomous(df_custom1, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+visGrpedContinuous(df_custom1, "Endotype", COL_GCS_CAT, COL_LOS)
+compareGrpedContinuous(df_custom1, "Endotype", COL_GCS_CAT, COL_LOS)
+#%% Old Aged only
+df_custom2 = df_labels[~((df_labels["Endotype"] == 2) & (df_labels[COL_AGE_CAT] != AGE_LABELS[2]))]
+df_custom2 = df_custom2[~((df_custom2["Endotype"] == 4) & (df_custom2[COL_AGE_CAT] != AGE_LABELS[2]))]
+df_custom2 = df_custom2[~((df_custom2["Endotype"] == 5) & (df_custom2[COL_AGE_CAT] != AGE_LABELS[2]))]
+
+# df_custom2 = df_labels[df_labels[COL_AGE_CAT] == AGE_LABELS[2]]
+
+visGrpedDichotomous(df_custom2, "Endotype", COL_GCS_CAT, COL_AGE_CAT)
+
+visGrpedContinuous(df_custom2, "Endotype", COL_AGE_CAT, COL_GCS)
+compareGrpedContinuous(df_custom2, "Endotype", COL_AGE_CAT, COL_GCS)
+visGrpedContinuous(df_custom2, "Endotype", COL_GCS_CAT, COL_AGE)
+compareGrpedContinuous(df_custom2, "Endotype", COL_GCS_CAT, COL_AGE)
+
+#%%
+visGrpedDichotomous(df_custom2, "Endotype", COL_GCS_CAT, COL_SURV)
+compareGrpedDichotomous(df_custom2, "Endotype", COL_GCS_CAT, COL_SURV)
+visGrpedDichotomous(df_custom2, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+compareGrpedDichotomous(df_custom2, "Endotype", COL_GCS_CAT, COL_NSX_ANY)
+visGrpedContinuous(df_custom2, "Endotype", COL_GCS_CAT, COL_LOS)
+compareGrpedContinuous(df_custom2, "Endotype", COL_GCS_CAT, COL_LOS)
+
+# %%
+visStackedProp(df_labels, "Endotype", COL_NSX_ANY)
+visContinuous(df_labels, "Endotype", COL_LOS)
+
+# %%

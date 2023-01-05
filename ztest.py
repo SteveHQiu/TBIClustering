@@ -29,13 +29,15 @@ if 0:
     b.genLegend()
     b.renderGraphNX(title="", cmap=False)
 
-for endotype in DF[COL_SUB].unique():
-    a = GraphBuilder()
-    a.buildGraphLogistic(DF_PATH, cols_logistical=BETTER_LABELS,
-                         col_sub=COL_SUB, subset=endotype)
-    a.exportGraph()
+if 1:
+    for endotype in DF[COL_SUB].unique():
+        a = GraphBuilder()
+        a.buildGraphLogistic(DF_PATH, cols_logistical=BETTER_LABELS,
+                            col_sub=COL_SUB, subset=endotype)
+        a.exportGraph()
 
-    b = GraphVisualizer(F"{DF_ROOT_NAME}_logi_{COL_SUB}_{endotype}.xml")
-    b.genRenderArgs()
-    b.genLegend()
-    b.renderGraphNX(title="", cmap=False)
+        b = GraphVisualizer(F"{DF_ROOT_NAME}_logi_{COL_SUB}_{endotype}.xml")
+        b.genRenderArgs()
+        b.genLegend()
+        # b.renderGraphNX(title=F"Endotype {endotype}", cmap=False)
+        b.renderGraphNX(title=F"Endotype {endotype}", cmap=True)

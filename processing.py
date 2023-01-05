@@ -32,6 +32,8 @@ COL_ICPMON = "ICP monitoring"
 COL_VENTRIC = "Ventriculostomy"
 COL_CRANI = "Craniotomy or craniectomy"
 COL_NSX_ANY = "Any neurosurgical intervention"
+COL_COMORBS = "No. Comorbs"
+
 
 
 LABELS = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease",
@@ -280,7 +282,7 @@ df_labelled = df_grped_data.merge(df_nsx_annot, on="SUBJECT_ID", how="left") \
     
 df_labelled.fillna({COL_NSX_ANY: False, COL_VENTRIC: False, # Need dict to specify multiple columns (can't use slice since read-only)
                         COL_CRANI: False, COL_ICPMON: False}, inplace=True) # Fill NAs after merge
-
+df_labelled[COL_COMORBS] = df_labelled[LABELS].sum(axis=1)
 #%%
 df_labelled.to_excel(F"{ROOT_NAME}_dates_nsx_gcs_elix.xlsx")
 
