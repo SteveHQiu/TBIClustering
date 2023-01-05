@@ -56,12 +56,21 @@ df_labels[COL_COMORBS] = df_labels[LABELS].sum(axis=1)
 
 
 #%% Functions
+
+# Visualization Functions
+
+def _desatColors(colors, percent):
+    # Colors should be in np format of RGBA with range of 0-1
+    vector_diff = 1 - colors # Subtract color from pure white
+    return colors + vector_diff * percent # Add difference vector scaled by percent
+
 def visStackedProp(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
     df_grped = DataFrame(df_labels.groupby([primary_ind])[secondary_ind].value_counts(normalize=True))
     df_grped.columns = ["Proportion"]
     df_grped = df_grped.reset_index()
     df_grped.columns = [primary_ind, secondary_ind, "Proportion"]
     df_grped = df_grped.set_index([primary_ind, secondary_ind]).Proportion
+
 
     ax = df_grped.unstack().plot(kind="bar", stacked=True)
     ax.set_ylabel("Proportion")
@@ -74,13 +83,6 @@ def visContinuous(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
     ax = df_grped.plot(kind="bar")
     ax.set_ylabel(secondary_ind)
 
-
-# Visualization Functions
-def _desatColors(colors, percent):
-    # Colors should be in np format of RGBA with range of 0-1
-    vector_diff = 1 - colors # Subtract color from pure white
-    return colors + vector_diff * percent # Add difference vector scaled by percent
-    
 
 def visGrpedDichotomous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str,
                     col_outcome: str, ylab: str = "Proportion"):
@@ -170,6 +172,12 @@ def compareDichot(df_labels: DataFrame, col_groups: str, col_cat: str):
     print("Comparison, Raw p-value, Corrected p-value")
     print(*comparisons, sep="\n") # Print each element on separate line
 
+def compareContinuous(df_labels: DataFrame, col_groups: str, col_cont: str):
+    comp_results = MultiComparison(df_labels[col_cont], df_labels[col_groups])
+    # tbl, a1, a2 = comp_results.allpairtest(stats.ttest_ind, method="h")
+    tbl, a1, a2 = comp_results.allpairtest(stats.ranksums, method="h")
+    # tbl, a1, a2 = comp_results.allpairtest(stats.wilcoxon, method="h")
+    print(tbl)
 
 def compareGrpedDichotomous(df_labels: DataFrame, col_groups: str, col_strata: str,
                     col_outcome: str):
@@ -416,4 +424,8 @@ compareGrpedContinuous(df_custom2, "Endotype", COL_GCS_CAT, COL_LOS)
 visStackedProp(df_labels, "Endotype", COL_NSX_ANY)
 visContinuous(df_labels, "Endotype", COL_LOS)
 
+# %%
+compareDichot(df_labels, "Endotype", COL_SURV)
+compareDichot(df_labels, "Endotype", COL_NSX_ANY)
+compareContinuous(df_labels, "Endotype", COL_LOS)
 # %%
