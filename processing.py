@@ -14,6 +14,7 @@ ROOT_NAME = os.path.splitext(DF_PATH)[0]
 # TBI_v2 = (2713 - 2629) extra admissions
 
 df_init: DataFrame = pd.read_excel(DF_PATH)
+#%%
 df_nsx_proc = pd.read_excel(F"data/tbi2_admit_proced.xlsx")
 df_gcs_events = pd.read_excel(F"data/tbi2_admit_chevents_gcs.xlsx")
 #%%
@@ -287,51 +288,50 @@ df_labelled[COL_COMORBS] = df_labelled[LABELS].sum(axis=1)
 df_labelled.to_excel(F"{ROOT_NAME}_dates_nsx_gcs_elix.xlsx")
 
 
-######### End of normal pipeline 
+###### End of core data processing pipeline 
+
+if 0: # Auxilliary processing pipelines 
+    #%% Rename columns
+    DF_ANNOTATED_PATH = F"data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4.xlsx"
+    DF_ANNOTATED_ROOT = os.path.splitext(DF_ANNOTATED_PATH)[0]
+
+    df_annotated = pd.read_excel(DF_ANNOTATED_PATH)
+    col_name_dict = {pair[0]: pair[1] for pair in zip(LABELS, BETTER_LABELS)}
+    df_annotated.rename(columns=col_name_dict, inplace=True)
+    df_annotated.to_excel(F"{DF_ANNOTATED_ROOT}_BL.xlsx")
+    
+    #%% Check frequency of GCS reports across patients
+    df_temp1 = DataFrame(df_gcs_events.groupby(["SUBJECT_ID"])["CHARTTIME"].value_counts())
+    df_temp1.columns = ["VAL"]
+    df_temp1 = df_temp1.reset_index()
+    df_temp2 = df_temp1.groupby(["SUBJECT_ID"])["VAL"].count()
+    df_temp3 = df_temp2.value_counts()
+    df_temp3[[1, 2, 3]] # Counts for those with only 1, 2, 3 measurements 
 
 
-#%% Check frequency of GCS reports across patients
-df_temp1 = DataFrame(df_gcs_events.groupby(["SUBJECT_ID"])["CHARTTIME"].value_counts())
-df_temp1.columns = ["VAL"]
-df_temp1 = df_temp1.reset_index()
-df_temp2 = df_temp1.groupby(["SUBJECT_ID"])["VAL"].count()
-df_temp3 = df_temp2.value_counts()
-df_temp3[[1, 2, 3]] # Counts for those with only 1, 2, 3 measurements 
+    #%% Getting df for population info
+    col_origin = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease", "pulmonary_circulation_disorder", "peripheral_vascular_disorder", "hypertension_uncomplicated", "hypertension_complicated", "paralysis", "other_neurological_disorder", "chronic_pulmonary_disease", "diabetes_uncomplicated", "diabetes_complicated", "hypothyroidism", "renal_failure", "liver_disease", "peptic_ulcer_disease_excluding_bleeding", "aids_hiv", "lymphoma", "metastatic_cancer", "solid_tumor_wo_metastasis", "rheumatoid_arhritis", "coagulopathy", "obesity", "weight_loss", "fluid_and_electrolyte_disorders", "blood_loss_anemia", "deficiency_anemia", "alcohol_abuse", "drug_abuse", "psychoses", "depression"]
+    df_raw_info = pd.read_excel(F"{ROOT_NAME}_age_elix.xlsx")
+    num_subjs = len(df_raw_info) # Each row is a unique patient 
+
+    #%% Export of population info
+    df1 = df_raw_info[["SUBJECT_ID", COL_AGE, "GENDER"]]
+    df1["alive_logical"] = df_raw_info["DOD"].isnull() # NaN counts as null, if Nan then is considered alive
+    df1["alive"] = df1["alive_logical"].apply(lambda x: "Alive" if x else "Expired") # Label for coding category (ggplot2 doesn't consider logical as categorical)
+    df1["num_comorbs"] = df_raw_info[col_origin].sum(axis=1)
+    survival = df1["alive_logical"].sum(axis=0)/num_subjs # 0.5843676618584368
+    df1.to_excel(F"{ROOT_NAME}_popinfo.xlsx")
 
 
+    #%% Export of comorbidity distributions
+    df2 = DataFrame()
+    df2["comorb_count"] = df_raw_info[col_origin].sum(axis=0)
+    df2["comorb_prop"] = df2["comorb_count"]/num_subjs
+    df2.to_excel(F"{ROOT_NAME}_comorbdistr.xlsx")
 
-#%% Getting df for population info
-col_origin = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease", "pulmonary_circulation_disorder", "peripheral_vascular_disorder", "hypertension_uncomplicated", "hypertension_complicated", "paralysis", "other_neurological_disorder", "chronic_pulmonary_disease", "diabetes_uncomplicated", "diabetes_complicated", "hypothyroidism", "renal_failure", "liver_disease", "peptic_ulcer_disease_excluding_bleeding", "aids_hiv", "lymphoma", "metastatic_cancer", "solid_tumor_wo_metastasis", "rheumatoid_arhritis", "coagulopathy", "obesity", "weight_loss", "fluid_and_electrolyte_disorders", "blood_loss_anemia", "deficiency_anemia", "alcohol_abuse", "drug_abuse", "psychoses", "depression"]
-df_raw_info = pd.read_excel(F"{ROOT_NAME}_age_elix.xlsx")
-num_subjs = len(df_raw_info) # Each row is a unique patient 
-
-#%%
-df1 = df_raw_info[["SUBJECT_ID", COL_AGE, "GENDER"]]
-df1["alive_logical"] = df_raw_info["DOD"].isnull() # NaN counts as null, if Nan then is considered alive
-df1["alive"] = df1["alive_logical"].apply(lambda x: "Alive" if x else "Expired") # Label for coding category (ggplot2 doesn't consider logical as categorical)
-df1["num_comorbs"] = df_raw_info[col_origin].sum(axis=1)
-survival = df1["alive_logical"].sum(axis=0)/num_subjs # 0.5843676618584368
-df1.to_excel(F"{ROOT_NAME}_popinfo.xlsx")
-
-
-#%%
-df2 = DataFrame()
-df2["comorb_count"] = df_raw_info[col_origin].sum(axis=0)
-df2["comorb_prop"] = df2["comorb_count"]/num_subjs
-df2.to_excel(F"{ROOT_NAME}_comorbdistr.xlsx")
-
-#%%
-sns.set_theme()
-fig, ax = plt.subplots()
-fig.set_size_inches(18, 10)
-ax.bar(df2.index, df2["comorb_prop"])
-ax.set_xticklabels(df2.index, rotation=45, ha="right") # df2.index re-writes previous labels
-
-#%% Rename columns
-DF_ANNOTATED_PATH = F"data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4.xlsx"
-DF_ANNOTATED_ROOT = os.path.splitext(DF_ANNOTATED_PATH)[0]
-
-df_annotated = pd.read_excel(DF_ANNOTATED_PATH)
-col_name_dict = {pair[0]: pair[1] for pair in zip(LABELS, BETTER_LABELS)}
-df_annotated.rename(columns=col_name_dict, inplace=True)
-df_annotated.to_excel(F"{DF_ANNOTATED_ROOT}_BL.xlsx")
+    #%% Jupyter notebook visulization of comorbidity disitributions
+    sns.set_theme()
+    fig, ax = plt.subplots()
+    fig.set_size_inches(18, 10)
+    ax.bar(df2.index, df2["comorb_prop"])
+    ax.set_xticklabels(df2.index, rotation=45, ha="right") # df2.index re-writes previous labels

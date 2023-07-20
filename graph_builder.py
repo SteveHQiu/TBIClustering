@@ -4,14 +4,14 @@ from collections import Counter
 from itertools import combinations, product, permutations
 from difflib import SequenceMatcher
 from typing import Union
-import re, os, json
+import re, os, json, math
 
 # Data science
 import pandas as pd
 from pandas import DataFrame
 import numpy as np
 import networkx as nx
-
+from scipy import stats
 
 # Internal imports
 from internals import importData, LOG
@@ -217,19 +217,30 @@ class GraphBuilder:
             
             node_s_mentions = nodes[node_s]
             node_t_mentions = nodes[node_t]
+            max_n_mentions = max(node_s_mentions, node_t_mentions)
             probability = count/node_s_mentions # Probability of this connection is number of articles supporting this connection divided by total number of articles mentioning source
             # if node_s_mentions >= 0.1 * total_n and node_t_mentions >= 0.1 * total_n: # Only append edge if counts are greater than 10% of total (to reduce noise)
-            self.graph.add_edge(node_s, node_t, width=count, prob=probability, prob2=probability**2)
             
-            if 0: # Using relative risk instead            
-                relative_risk = (count * total_n) / (nodes[node_s] * nodes[node_t])# https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000353
+            
+            
+            if 1: # Using relative risk instead            
+                rr = (count * total_n) / (nodes[node_s] * nodes[node_t]) # https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1000353
                 p_corr = ((count * total_n) - (nodes[node_s] * nodes[node_t])) / (nodes[node_s] * nodes[node_t] * (total_n - nodes[node_s]) * (total_n - nodes[node_t])) ** 0.5
-                t_stat = (p_corr * (total_n - 2) ** 0.5) / (1 - p_corr ** 2) ** 0.5
-                # print(p_corr, t_stat)
+                t_stat = (p_corr * (total_n - 2) ** 0.5) / (1 - p_corr ** 2) ** 0.5 # n=max(Pi,Pj) << N, which represents the most stringent way in which t can be calculated given our data, as using n=N will produce a larger number of significant links
+                t_stat = (p_corr * (max_n_mentions - 2) ** 0.5) / (1 - p_corr ** 2) ** 0.5 # n=max(Pi,Pj) << N, which represents the most stringent way in which t can be calculated given our data, as using n=N will produce a larger number of significant links
                 
-                if relative_risk > 1 and t_stat >= 1.96: # Filter for only positive associations and significance by t_stat
-                    self.graph.add_edge(node_s, node_t, width=count, prob=relative_risk, prob2=relative_risk**2)
-            
+                sd_rr = (1 / count) + (1 / (nodes[node_s] * nodes[node_t])) - (1 / total_n) - (1 / total_n ** 2) # Real formula for RR distribution
+                t_stat = (1 - abs(rr))/sd_rr
+                
+                p_val = stats.t.sf(np.abs(t_stat), max_n_mentions - 1)
+                
+                LOG.info(F"{node_s} | {node_t} | RR: {rr} ({rr * math.exp(-1.96 * sd_rr)} - {rr * math.exp(1.96 * sd_rr)}) | Pcorr: {p_corr} | Pval: {p_val}")
+                
+                if rr > 1.5 and p_val < 0.05: # Filter for only positive associations and significance by t_stat
+                    self.graph.add_edge(node_s, node_t, width=count, prob=rr, prob2=rr**2)
+            else: # Otherwise use raw association 
+                self.graph.add_edge(node_s, node_t, width=count, prob=probability, prob2=probability**2)
+                
         return None
 
     def exportGraph(self, path: Union[str, bytes, os.PathLike] = ""):

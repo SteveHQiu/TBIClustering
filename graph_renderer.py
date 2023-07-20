@@ -112,8 +112,9 @@ class GraphVisualizer:
         self.edge_widths_alpha = edge_alphas # For manually width to transparency 
         
         edge_probs = [prob for (node1, node2, prob) in self.graph.edges(data="prob")]
-        edge_probs = [prob/max(edge_probs) for prob in edge_probs] # Normalize in case different type of data is used for prob
-        edge_probs = [prob**2 for prob in edge_probs] # Original
+        edge_probs = np.clip(edge_probs, None, 5) # Cap at RR = 5 for relative risk
+        # edge_probs = [prob/max(edge_probs) for prob in edge_probs] # Normalize in case different type of data is used for prob
+        # edge_probs = [prob**2 for prob in edge_probs] # Original
         self.edge_probs = edge_probs
         
         edge_zeroes = [0 for i in edge_width_true]
@@ -213,8 +214,8 @@ class GraphVisualizer:
         # prop = container deciding properties of text relating to the size demos
         # 10 is default font size
         
-        plt_cmap = plt.cm.Wistia
         plt_cmap = plt.cm.summer
+        plt_cmap = plt.cm.Wistia
         
         widths = self.true_edge_widths
         if max(widths) <= 10: # If range is less than 10, need to use static transparency
@@ -227,14 +228,14 @@ class GraphVisualizer:
                 pos=layout,
                 alpha=alphas, # Can add transparency on top to accentuate
                 width=self.edge_widths,
-                edge_color=self.edge_widths_alpha, # Map color to transparency (calculated based on true widths)
+                edge_color=self.edge_probs, # Map color to transparency (calculated based on true widths)
                 edge_cmap=plt_cmap, # Colors edges but doesn't generate colorbar scale legend
                 arrows=arrows
                 )
             cbar_edges = nx.draw_networkx_edges(self.graph, # Dummy variable for if color assignment is cube rooted, (transparency set to zero)
                 pos=layout,
                 alpha=self.edge_zeroes, # Array of zeroes
-                edge_color=self.true_edge_widths, # NOTE THAT THIS IS NOT EXACTLY THE SAME SCALE (due to cube root)
+                edge_color=self.edge_probs, # NOTE THAT THIS IS NOT EXACTLY THE SAME SCALE (due to cube root)
                 edge_cmap=plt_cmap, 
                 arrows=False, # Need to disable arrows, otherwise draw_edges method returns a FancyArrowPatch for every edge, unable to
                 )
@@ -243,6 +244,7 @@ class GraphVisualizer:
             plt.sci(cbar_edges) # Set current image to edges created by nx 
             colorbar = plt.colorbar() # Creats actual colorbar legend with ticks coresponding to true_edge_widths
             colorbar.set_label("Number of articles reporting association")
+            colorbar.set_label("Relative risk ratio of association")
             # Available colormaps: https://matplotlib.org/3.5.0/tutorials/colors/colormaps.html
             # Tested colormaps: GnBu is too similar to node color scheme, [YlOrRd, PuRd, Wistia] makes small edges too light, 
         else:
@@ -424,5 +426,3 @@ if __name__ == "__main__": # For testing
     a.renderGraphNX(cmap=False)
 
 
-
-# %%

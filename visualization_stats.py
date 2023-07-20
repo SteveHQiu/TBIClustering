@@ -34,6 +34,7 @@ COL_ICPMON = "ICP monitoring"
 COL_VENTRIC = "Ventriculostomy"
 COL_CRANI = "Craniotomy or craniectomy"
 COL_NSX_ANY = "Any neurosurgical intervention"
+COL_COMORBS = "No. Comorbs"
 
 LABELS = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease",
              "pulmonary_circulation_disorder", "peripheral_vascular_disorder",
@@ -48,14 +49,18 @@ LABELS = ["congestive_heart_failure", "cardiac_arrhythmia", "valvular_disease",
 
 #%%
 df_labels = pd.read_excel("data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4.xlsx")
-df_labels[COL_LOS] = df_labels[COL_LOS].mask(df_labels[COL_LOS].sub(df_labels[COL_LOS].mean()).div(df_labels[COL_LOS].std()).abs().gt(3))
+df_labels[COL_LOS] = df_labels[COL_LOS].mask(df_labels[COL_LOS].sub(df_labels[COL_LOS].mean())
+                                             .div(df_labels[COL_LOS].std())
+                                             .abs()
+                                             .gt(2))
+
 # Remove outliers from LOS, 95 values removed at SD of 2, 33 at SD of 3
-#%% MOVE THIS TO PROCESSING
-COL_COMORBS = "No. Comorbs"
-df_labels[COL_COMORBS] = df_labels[LABELS].sum(axis=1)
-
-
+#%%
+df_labels[COL_AGE].mean()
+df_labels["GENDER"].value_counts()
+df_labels[COL_SURV].value_counts()
 #%% Functions
+DF_CONT = []
 
 # Visualization Functions
 
@@ -64,16 +69,26 @@ def _desatColors(colors, percent):
     vector_diff = 1 - colors # Subtract color from pure white
     return colors + vector_diff * percent # Add difference vector scaled by percent
 
+
 def visStackedProp(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
     df_grped = DataFrame(df_labels.groupby([primary_ind])[secondary_ind].value_counts(normalize=True))
     df_grped.columns = ["Proportion"]
     df_grped = df_grped.reset_index()
     df_grped.columns = [primary_ind, secondary_ind, "Proportion"]
+    
     df_grped = df_grped.set_index([primary_ind, secondary_ind]).Proportion
-
-
+    
     ax = df_grped.unstack().plot(kind="bar", stacked=True)
     ax.set_ylabel("Proportion")
+    
+    df_grped2 = DataFrame(df_labels.groupby([primary_ind])[secondary_ind].value_counts())
+    df_grped3 = DataFrame(df_labels.groupby([primary_ind])[secondary_ind].value_counts(normalize=True))
+    df_grped3.columns = ["Proportion"]
+    df_report = pd.concat([df_grped2, df_grped3], axis=1)
+    
+    print(df_report)
+    DF_CONT.append(df_report)
+
 
 def visContinuous(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
     df_grped = DataFrame(df_labels.groupby([primary_ind])[secondary_ind].mean())
@@ -82,6 +97,15 @@ def visContinuous(df_labels: DataFrame, primary_ind: str, secondary_ind: str):
     
     ax = df_grped.plot(kind="bar")
     ax.set_ylabel(secondary_ind)
+    
+    
+    df_grped2 = DataFrame(df_labels.groupby([primary_ind])[secondary_ind].mean())
+    df_grped3 = DataFrame(df_labels.groupby([primary_ind])[secondary_ind].std())
+    df_grped3.columns = ["Standard deviation"]
+    df_report = pd.concat([df_grped2, df_grped3], axis=1)
+    
+    print(df_report)
+    DF_CONT.append(df_report)
 
 
 def visGrpedDichotomous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str,
@@ -90,6 +114,14 @@ def visGrpedDichotomous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: st
     df_grped.columns = ["Proportion"]
     df_grped = df_grped.reset_index()
     clust_labels = df_grped[col_prim_grp].unique()
+    
+    df_grped2 = DataFrame(df_labels.groupby([col_prim_grp, col_sec_grp])[col_outcome].value_counts())
+    df_grped3 = DataFrame(df_labels.groupby([col_prim_grp, col_sec_grp])[col_outcome].value_counts(normalize=True))
+    df_grped3.columns = ["Proportion"]
+    df_report = pd.concat([df_grped2, df_grped3], axis=1)
+    
+    print(df_report)
+    DF_CONT.append(df_report)
     
     colors_norm = plt.colormaps['gist_rainbow'](np.linspace(0.08, 0.89, len(clust_labels)))
     colors_desat = _desatColors(colors_norm, 0.75)
@@ -105,6 +137,8 @@ def visGrpedDichotomous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: st
 
         df_clust.unstack().plot(kind="bar", stacked=True, ax=axes[label-1],
                                 color=clust_color)
+        
+
 
 
 def visGrpedContinuous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str,
@@ -114,6 +148,15 @@ def visGrpedContinuous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str
     clust_labels = df_grped[col_prim_grp].unique()
     
     colors_norm = plt.colormaps['gist_rainbow'](np.linspace(0.08, 0.89, len(clust_labels)))
+
+    df_grped2 = DataFrame(df_labels.groupby([col_prim_grp, col_sec_grp])[col_outcome].mean())
+    df_grped3 = DataFrame(df_labels.groupby([col_prim_grp, col_sec_grp])[col_outcome].std())
+    df_grped3.columns = ["Standard deviation"]
+    df_report = pd.concat([df_grped2, df_grped3], axis=1)
+    
+    print(df_report)
+    DF_CONT.append(df_report)
+
 
     fig, axes = plt.subplots(ncols=5)
     fig.set_size_inches(15, 7)
@@ -129,6 +172,8 @@ def visGrpedContinuous(df_labels: DataFrame, col_prim_grp: str, col_sec_grp: str
         df_clust = df_clust.set_index([col_sec_grp]) # Set index to second grouping for labels to work
 
         df_clust.plot(kind="bar", ylim=(0, max(df_grped[col_outcome])), ax=axes[label-1], color=colors_norm[ind])
+
+
 
 # Stats test
 def compareDichot(df_labels: DataFrame, col_groups: str, col_cat: str):
@@ -428,4 +473,10 @@ visContinuous(df_labels, "Endotype", COL_LOS)
 compareDichot(df_labels, "Endotype", COL_SURV)
 compareDichot(df_labels, "Endotype", COL_NSX_ANY)
 compareContinuous(df_labels, "Endotype", COL_LOS)
-# %%
+#%%
+visGrpedContinuous(df_labels, "Endotype", COL_AGE_CAT, COL_GCS)
+visGrpedContinuous(df_labels, "Endotype", COL_GCS_CAT, COL_AGE)
+
+#%%
+df_final = pd.concat(DF_CONT)
+df_final.to_csv("Table outputs.csv")

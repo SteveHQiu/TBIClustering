@@ -9,6 +9,9 @@ install.packages("inflection")
 install.packages("patchwork")
 install.packages("viridis")
 install.packages("colorspace")
+install.packages("multcomp")
+install.packages("pROC")
+
 
 #%%
 #%% Imports
@@ -23,8 +26,10 @@ library(viridis) # Colormaps
 library(colorspace) # Color manipulation (e.g., desaturation colors)
 library(inflection) # For finding knee point
 library(comprehenr) # For python comprehensions
+library(multcomp)
+library(pROC) # AUC calculation 
 #%%
-#%% Definitions 
+#%% Constants
 DF_PATH <- "data/tbi2_admit_icd_dates_nsx_gcs_elix.xlsx"
 df_orig <- read_excel(DF_PATH)
 DF_ROOTNAME <- tools::file_path_sans_ext(DF_PATH)
@@ -33,7 +38,7 @@ col_labels <- c("congestive_heart_failure", "cardiac_arrhythmia", "valvular_dise
              "hypertension_uncomplicated", "hypertension_complicated", "paralysis",
              "other_neurological_disorder", "chronic_pulmonary_disease", "diabetes_uncomplicated",
              "diabetes_complicated", "hypothyroidism", "renal_failure", "liver_disease",
-             "peptic_ulcer_disease_excluding_bleeding", "aids_hiv", "lymphoma", "metastatic_cancer",
+             "aids_hiv", "lymphoma", "metastatic_cancer",
              "solid_tumor_wo_metastasis", "rheumatoid_arhritis", "coagulopathy", "obesity",
              "weight_loss", "fluid_and_electrolyte_disorders", "blood_loss_anemia",
              "deficiency_anemia", "alcohol_abuse", "drug_abuse", "psychoses", "depression")
@@ -42,19 +47,11 @@ fig_labels <- c("CHF", "Arrhythmia", "Valvular disease", "Pulmonary circulation 
                 "Peripheral vascular disorder", "Uncomplicated hypertension",
                 "Complicated hypertension", "Paralysis", "Other neurological disorder",
                 "COPD", "Uncomplicated diabetes", "Complicated diabetes", "Hypothyroidism",
-                "Renal failure", "Liver disease", "Peptic ulcer disease", "AID/HIV",
+                "Renal failure", "Liver disease", "AID/HIV",
                 "Lymphoma", "Metastatic cancer", "Solid tumor (no metastasis)",
                 "Rheumatoid arthritis", "Coagulopathy", "Obesity", "Weight loss",
                 "Fluid and electrolyte disorders", "Blood loss anemia", "Deficiency anemia",
                 "Alcohol abuse", "Drug abuse", "Psychoses", "Depression")
-
-# Remove certain factors
-col_symbols <- col_symbols[!col_symbols %in% c(as.name("peptic_ulcer_disease_excluding_bleeding"))] # Specific variables to remove from cluster
-fig_labels <- fig_labels[!fig_labels %in% c("Peptic ulcer disease")] # Specific labels to remove from cluster figures
-
-# Add age as needed
-# col_symbols <- append(col_symbols, as.name("age_normalized"), 0) # Add age if needed
-# fig_labels <- append(fig_labels, "Age", 0) # Add age if needed 
 
 
 genClusts <- function(df_orig, col_symbols = NULL, n_clusts = 7, mode = "lca", lpa_mode = "EII", scale100 = TRUE, annot = FALSE) {
@@ -397,7 +394,6 @@ regressionSurvival <- function(df_orig, df_annot, col_symbols) {
 
 }
 
-
   
 chisqSurvival <- function(df_annotated, col_outcome = "Survival to discharge") {
   df <- df_annotated %>% dplyr::select(col_outcome, "Endotype")
@@ -412,7 +408,7 @@ chisqSurvival <- function(df_annotated, col_outcome = "Survival to discharge") {
 #%% Misc displays/analyses
 
 # Exploration
-if (0) {
+if (1) {
   for (i in 1:7) {
     expl_results <- explModelsLCA(df_orig=df_orig, col_symbols=col_symbols, upper_bound=15)
     visPerformance(expl_results[[1]], expl_results[[2]], "BIC")
@@ -421,56 +417,9 @@ if (0) {
   }
 }
 
-if (0) {
+if (1) {
 expl_results <- explModelsLPA(df_orig=df_orig, col_symbols=col_symbols, upper_bound=15)
 visPerformance(expl_results[[1]], expl_results[[2]], "BIC")
-}
-
-
-# Regression analysis for survival
-if (0) {
-results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=7, mode="lpa")
-model_means <- results[[1]] # Need double brackets for list
-df_annot <- results[[4]]
-regressionSurvival(df_orig=df_orig, df_annot=df_annot, col_symbols=col_symbols)
-
-}
-
-
-
-#%%
-#%% Single cluster (main analysis)
-if (0) {
-results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=5, mode="lca", annot=TRUE)
-model_means <- results[["model_means"]] # Need double brackets for list
-clust_model <- results[["cluster"]]
-clust_counts <- results[["clust_counts"]]
-visRadialPlots(model_means=model_means, fig_labels=fig_labels, clust_counts=clust_counts,
-               clust_model=clust_model, save_path="figures/LCA_5.png")
-}
-
-#%%
-#%% LPA on LCA results 
-if (0) {
-results <- genMultClusts(n_clust=5, n_cycles=30, mode="lca")
-model_means <- results[["model_means"]] # Need double brackets for list
-analyzeClusts(meta_means=model_means) # Preview
-
-
-}
-
-if (0) { # Visualize after getting n_mclusts from preview
-meta_results <- analyzeClusts(meta_means=model_means, n_mclusts=13, lpa_mode="VEI")
-meta_means <- meta_results[["model_means"]]
-meta_counts <- meta_results[["clust_counts"]]
-visRadialPlots(model_means=meta_means, fig_labels=fig_labels, clust_counts=meta_counts)
-
-}
-
-if (0) { # Import annotated df and get chi-square of survival 
-df_annotated <- read_excel("data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated_v4.xlsx")
-chisqSurvival(df_annotated)
-  
 }
 
 
@@ -511,66 +460,34 @@ if (1) {
   }
   
 }
+#%%
+#%% LPA on LCA results 
+if (1) {
+results <- genMultClusts(n_clust=5, n_cycles=30, mode="lca")
+model_means <- results[["model_means"]] # Need double brackets for list
+analyzeClusts(meta_means=model_means) # Preview
 
-if (0) { # Exploring only chi-squared outcome
-  lowest_aics <- which(r_aics == 31273.835) # Second local minima
-  lowest_aics <- which(r_aics == min(r_aics)) # Largest local minima
-  for (i in lowest_aics) {
-    print(sprintf("======== %s ========", i))
-    model_means <- results[["all_means"]][[i]] # Need double brackets as all of these are lists
-    clust_model <- results[["clusts"]][[i]]
-    clust_counts <- results[["clust_counts"]][[i]]
 
-    df_annot <- results[["annotations"]][[i]]
-    df_annot <- data.frame(df_annot)
-    colnames(df_annot) <- "Endotype"
-    df_annotated <- cbind(df_orig, df_annot)
-    print(chisqSurvival(df_annotated))
-  }
-  print(table(r_aics))
 }
 
-if (0) { # Visualize specific clusters
-  i = 1
-  model_means <- results[["all_means"]][[i]] # Need double brackets as all of these are lists
-  clust_model <- results[["clusts"]][[i]]
-  clust_counts <- results[["clust_counts"]][[i]]
-  
-  visRadialPlots(model_means=model_means, fig_labels=fig_labels,
-                 clust_counts=clust_counts, clust_model=clust_model, save_path="figures/LCA_5v5.png")
-  
-  df_annot <- results[["annotations"]][[i]]
-  df_annot <- data.frame(df_annot)
-  colnames(df_annot) <- "Endotype"
-  df_annotated <- cbind(df_orig, df_annot)
-  write_xlsx(df_annotated, sprintf("%s_annotated.xlsx", DF_ROOTNAME))
-  visSurvival(df_annotated, save_path="figures/LCA_5v5_survival.png")
-  print(chisqSurvival(df_annotated))
+if (1) { # Visualize after getting n_mclusts from preview
+meta_results <- analyzeClusts(meta_means=model_means, n_mclusts=13, lpa_mode="VEI")
+meta_means <- meta_results[["model_means"]]
+meta_counts <- meta_results[["clust_counts"]]
+visRadialPlots(model_means=meta_means, fig_labels=fig_labels, clust_counts=meta_counts)
+
+}
+
+
+#%%
+#%% Focusing on Single cluster (main analysis)
+if (1) {
+results <- genClusts(df_orig=df_orig, col_symbols=col_symbols, n_clusts=5, mode="lca", annot=TRUE)
+model_means <- results[["model_means"]] # Need double brackets for list
+clust_model <- results[["cluster"]]
+clust_counts <- results[["clust_counts"]]
+visRadialPlots(model_means=model_means, fig_labels=fig_labels, clust_counts=clust_counts,
+               clust_model=clust_model, save_path="figures/LCA_5.png")
 }
 
 #%%
-#%% Export all figures
-if (0) {
-plots.dir.path <- list.files(tempdir(), pattern="rs-graphics", full.names = TRUE)
-plots.png.paths <- list.files(plots.dir.path, pattern=".png", full.names = TRUE)
-file.copy(from=plots.png.paths, to="figures/ztest_LCA_stability")
-
-}
-
-#%%
-#%% Survival analysis 
-if (0) {
-path_df_annotated <- "data/tbi2_admit_icd_dates_nsx_gcs_elix_annotated.xlsx"
-
-df_orig <- read_excel(path_df_annotated)
-
-  
-}
-
-#%% 
-#%% Misc
-# Age tabulation 
-if (0) {
-aggregate(df_orig$age, list(df_orig$Endotype), FUN=mean)
-  
-}
